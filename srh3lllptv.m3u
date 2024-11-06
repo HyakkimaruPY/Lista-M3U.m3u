@@ -1,0 +1,19 @@
+#EXTM3U
+
+#EXTINF:-1 tvg-id="CGNTV" tvg-name="CGNT" tvg-logo="https://espanol-static.cgtn.com/w/images/icon/logo@3x.png" group-title="Documentário", CGNTV
+https://espanol-livews.cgtn.com/hls/LSveOGBaBw41Ea7ukkVAUdKQ220802LSTexu6xAuFH8VZNBLE1ZNEa220802cd/playlist.m3u8
+
+#EXTINF:-1 tvg-id="WTV-Classicos" tvg-name="WTV-Classicos" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrI-zWuzJ0KGnPdIHlUg_xiQuhsxdCXso_lZl33pVUyw&s" group-title="Filmes", WTV-Classicos
+https://stmv1.srvif.com/movies1/movies1/playlist.m3u8
+
+#EXTINF:-1 tvg-id="Retrô-TV" tvg-name="Retrô-TV" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGqroR2ye0G8naAtCFnVB_QC0Ub7tasegjbA&usqp=CAU" group-title="Clássicos", Retrô-TV
+https://stmv1.srvif.com/retrotv/retrotv/playlist.m3u8
+
+#EXTINF:-1 tvg-id="Vila-TV" tvg-name="Vila-TV" tvg-logo="https://supertvaovivo.io/wp-content/uploads/2021/06/assistir-vila-tv-ao-vivo.webp" group-title="Clássicos", Vila-TV
+https://streamserver.streamingdevideo.com.br/8072/8072/playlist.m3u8
+
+#EXTINF:-1 tvg-id="Rede-Gospel" tvg-name="Rede-Gospel" tvg-logo="" group-title="Extras", Rede-Gospel
+https://cdn.live.br1.jmvstream.com/w/LVW-8719/LVW8719_AcLVAxWy5J/playlist.m3u8
+
+#EXTINF:-1 tvg-id="Tv-Series" tvg-name="Tv-Series" tvg-logo="https://supertvaovivo.io/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2021/06/TV-SERIES.jpg.webp" group-title="Series", Tv-Series
+https://stmv1.srvif.com/tvserie/tvserie/playlist.m3u8
