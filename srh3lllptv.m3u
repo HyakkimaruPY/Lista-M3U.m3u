@@ -3,17 +3,37 @@
 #EXTINF:-1 tvg-id="CGNTV" tvg-name="CGNT" tvg-logo="https://espanol-static.cgtn.com/w/images/icon/logo@3x.png" group-title="Documentário", CGNTV
 https://espanol-livews.cgtn.com/hls/LSveOGBaBw41Ea7ukkVAUdKQ220802LSTexu6xAuFH8VZNBLE1ZNEa220802cd/playlist.m3u8
 
+#EXTINF:-1 tvg-id="Tv-Series" tvg-name="Tv-Series" tvg-logo="https://supertvaovivo.io/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2021/06/TV-SERIES.jpg.webp" group-title="Series", Tv-Series
+https://stmv1.srvif.com/tvserie/tvserie/playlist.m3u8
+
+#EXTINF:-1 tvg-id="Run-Ação" tvg-name="Run-Ação" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv4Ur4EtdTzWMI61UpVQlqeukrHxp_wqtNbmKse1J0IPSfhUPVHFwvctAA&s=10" group-title="Filmes", Run-Ação
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=2552
+
 #EXTINF:-1 tvg-id="WTV-Classicos" tvg-name="WTV-Classicos" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrI-zWuzJ0KGnPdIHlUg_xiQuhsxdCXso_lZl33pVUyw&s" group-title="Filmes", WTV-Classicos
 https://stmv1.srvif.com/movies1/movies1/playlist.m3u8
+
+#EXTINF:-1 tvg-id="On-Filmes" tvg-name="On-Filmes" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHGtvJaxetxkwVoDWqlnYMyxxoQcCTPcp_3JkS2Dnk4WJKxIyk7I11v8A&s=10" group-title="Filmes", On-Filmes
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=6178
 
 #EXTINF:-1 tvg-id="Retrô-TV" tvg-name="Retrô-TV" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGqroR2ye0G8naAtCFnVB_QC0Ub7tasegjbA&usqp=CAU" group-title="Clássicos", Retrô-TV
 https://stmv1.srvif.com/retrotv/retrotv/playlist.m3u8
 
+#EXTINF:-1 tvg-id="Sony-One" tvg-name="Sony-One" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa3ZhOAXQ6hXwZt5fAEU3MbdweZQ0i7Hu9jQ&s" group-title="Classicos", Sony-One
+https://spt-sonyoneclassicas-1-br.samsung.wurl.tv/playlist.m3u8
+
 #EXTINF:-1 tvg-id="Vila-TV" tvg-name="Vila-TV" tvg-logo="https://supertvaovivo.io/wp-content/uploads/2021/06/assistir-vila-tv-ao-vivo.webp" group-title="Clássicos", Vila-TV
 https://streamserver.streamingdevideo.com.br/8072/8072/playlist.m3u8
+
+#EXTINF:-1 tvg-id="Loading" tvg-name="Loading" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt5pxJ4E-jZJ-ovS2sFvGslbM1Ylxm5Dj6FGOYKe-M4-XTV2HuG3pI6Nmy&s=10" group-title="Animes", Loading
+https://stmv1.srvif.com/loadingtv/loadingtv/playlist.m3u8
+
+#EXTINF:-1 tvg-id="Telemundo" tvg-name="Telemundo" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf0NHgBbFvoz4d0XLC0uiIvCgJ5vfL1XZ2bfVrG09mSfbcsMrqwMBk5cA&s=10" group-title="Variedades", Telemundo
+https://nbcu-telemundoflorida-firetv.amagi.tv/playlist1080.m3u8
+
+#EXTINF:-1 tvg-id="Rede-Super" tvg-name="Rede-Super" tvg-logo="https://play-lh.googleusercontent.com/anVTfVdwyewDErvXNWj3VwNbuKvywmE9YeXdykr11NFC9zsJbEPcQ2Q-lQQ2pg5Vg7k=w240-h480-rw" group-title="Extras", Rede-Super
+https://tv02.zas.media:1936/redesuper/redesuper/playlist.m3u8
 
 #EXTINF:-1 tvg-id="Rede-Gospel" tvg-name="Rede-Gospel" tvg-logo="" group-title="Extras", Rede-Gospel
 https://cdn.live.br1.jmvstream.com/w/LVW-8719/LVW8719_AcLVAxWy5J/playlist.m3u8
 
-#EXTINF:-1 tvg-id="Tv-Series" tvg-name="Tv-Series" tvg-logo="https://supertvaovivo.io/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2021/06/TV-SERIES.jpg.webp" group-title="Series", Tv-Series
-https://stmv1.srvif.com/tvserie/tvserie/playlist.m3u8
+
