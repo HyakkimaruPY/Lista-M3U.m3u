@@ -50,6 +50,9 @@ https://amg00627-amg00627c9-runtime-latam-2613.playouts.now.amagi.tv/playlist/am
 #EXTINF:-1 tvg-id="Rede-Super" tvg-name="Rede-Super" tvg-logo="https://play-lh.googleusercontent.com/anVTfVdwyewDErvXNWj3VwNbuKvywmE9YeXdykr11NFC9zsJbEPcQ2Q-lQQ2pg5Vg7k=w240-h480-rw" group-title="Extras", Rede-Super
 https://tv02.zas.media:1936/redesuper/redesuper/playlist.m3u8
 
+#EXTINF:-1 tvg-id="Rede-Super SOURCE 2" tvg-name="Rede-Super SOURCE 2" tvg-logo="https://play-lh.googleusercontent.com/anVTfVdwyewDErvXNWj3VwNbuKvywmE9YeXdykr11NFC9zsJbEPcQ2Q-lQQ2pg5Vg7k=w240-h480-rw" group-title="Extras", Rede-Super SOURCE 2
+https://cdn.live.br1.jmvstream.com/w/LVW-13567/ngrp:LVW13567_xsgHK13RHE_all/playlist.m3u8
+
 #EXTINF:-1 tvg-id="Rede-Gospel" tvg-name="Rede-Gospel" tvg-logo="" group-title="Extras", Rede-Gospel
 https://cdn.live.br1.jmvstream.com/w/LVW-8719/LVW8719_AcLVAxWy5J/playlist.m3u8
 
