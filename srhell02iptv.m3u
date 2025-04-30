@@ -3,6 +3,9 @@
 #EXTINF:-1 tvg-id="CGNTV" tvg-name="CGNT" tvg-logo="https://espanol-static.cgtn.com/w/images/icon/logo@3x.png" group-title="Documentário", CGNTV
 https://espanol-livews.cgtn.com/hls/LSveOGBaBw41Ea7ukkVAUdKQ220802LSTexu6xAuFH8VZNBLE1ZNEa220802cd/playlist.m3u8
 
+#EXTINF:-1 tvg-id="CN kid" tvg-name="CN kid" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5ABthIcloETZQehQwOGGjqqFjnghLMWYNdB5PBUPtBjZaqID9pr5aK1M&s=10" group-title="kid", CN Kid
+https://4gr3uomttgr31hcjtgczdep3pq7314a5ecfzgh3mcqczgs45upiuo.wslivehls.com/ws-channels.kksmg.com/live/hhxd/playlist.m3u8?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJsaXZlIiwiZG9tYWluIjoid3MtY2hhbm5lbHMua2tzbWcuY29tIiwiZXhwIjoxNzQ1OTkyOTgwLCJpYXQiOjE3NDU5NzEzODAsIm5vbmNlIjoiM2YzMnA1N2YiLCJzdHJlYW1fbmFtZSI6ImhoeGQiLCJ1c2VyX2lkIjowLCJ1c2VyX2lwIjoiMTg3LjEyMC4xMjIuMTczIiwidXVpZCI6ImEtNEI5Zm1SeThQRF9Mb0dfTjRlTiJ9.YIqq77qhgBM5RWnuDM9RljnxosYwuyBFEc5dR6cDbCo&wsSession=0e5319fc8f6b9f03ecac075d-174597138557891&wsIPSercert=cf33e7f5aeb689a18142761044bbc41e&wsiphost=local&wsBindIP=1
+
 #EXTINF:-1 tvg-id="Tv-Series" tvg-name="Tv-Series" tvg-logo="https://supertvaovivo.io/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2021/06/TV-SERIES.jpg.webp" group-title="Series", Tv-Series
 https://stmv1.srvif.com/tvserie/tvserie/playlist.m3u8
 
