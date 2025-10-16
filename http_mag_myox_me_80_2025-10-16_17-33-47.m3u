@@ -1,0 +1,399 @@
+#EXTM3U
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59297.png" group-title="BR| CRIANÇAS",BR| BABY TV
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59297&extension=ts&play_token=HQdwGMYeq5
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59290.png" group-title="BR| CRIANÇAS",BR| BOOMERANG HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59290&extension=ts&play_token=RWv58XpZKy
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59283.png" group-title="BR| CRIANÇAS",BR| CARTOON NETWORK HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59283&extension=ts&play_token=w9MzVbULaj
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/890653.png" group-title="BR| CRIANÇAS",BR| CARTOONITO HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=890653&extension=ts&play_token=BraYD389CH
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59274.png" group-title="BR| CRIANÇAS",BR| DISCOVERY KIDS HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59274&extension=ts&play_token=5Xpi8aGkOw
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/disneych.png" group-title="BR| CRIANÇAS",BR| DISNEY CHANNEL
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59270&extension=ts&play_token=WLLMOo0hkt
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59269.png" group-title="BR| CRIANÇAS",BR| DISNEY JUNIOR HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59269&extension=ts&play_token=FbskjI9pKO
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59208.png" group-title="BR| CRIANÇAS",BR| NICK JR HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59208&extension=ts&play_token=4iUWKxRHUu
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59209.png" group-title="BR| CRIANÇAS",BR| NICKELODEON HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59209&extension=ts&play_token=7sL7TniKh8
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59167.png" group-title="BR| CRIANÇAS",BR| TOONCAST HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59167&extension=ts&play_token=1kla4HUqTo
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59293.png" group-title="BR| CRIANÇAS",BR| ZOOMOO
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59293&extension=ts&play_token=zJjCku98NQ
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/aandehd.png" group-title="BR| CULTURA",BR| A&E HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59303&extension=ts&play_token=GkhA4Bv0AP
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59302.png" group-title="BR| CULTURA",BR| ANIMAL PLANET HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59302&extension=ts&play_token=ZW41JgXcY8
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59299.png" group-title="BR| CULTURA",BR| ARTE 1
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59299&extension=ts&play_token=e9mA7DuH9a
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59280.png" group-title="BR| CULTURA",BR| COMEDY CENTRAL HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59280&extension=ts&play_token=1i8qIreoQX
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/890654.png" group-title="BR| CULTURA",BR| CULTURA
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=890654&extension=ts&play_token=gRceBMMM8s
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59277.png" group-title="BR| CULTURA",BR| DISCOVERY CHANNEL HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59277&extension=ts&play_token=dSgtr63RXz
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59275.png" group-title="BR| CULTURA",BR| DISCOVERY H&H HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59275&extension=ts&play_token=0GbEPlHJZn
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59222.png" group-title="BR| CULTURA",BR| DISCOVERY ID HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59222&extension=ts&play_token=E2mYQ6pEej
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59273.png" group-title="BR| CULTURA",BR| DISCOVERY SCIENCE
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59273&extension=ts&play_token=o0k0ZWvw0H
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59272.png" group-title="BR| CULTURA",BR| DISCOVERY THEATER HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59272&extension=ts&play_token=HYzAjjklJl
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/890655.png" group-title="BR| CULTURA",BR| DISCOVERY TLC
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=890655&extension=ts&play_token=D6bQAakUjb
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59271.png" group-title="BR| CULTURA",BR| DISCOVERY TURBO HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59271&extension=ts&play_token=mKnnxGyeSt
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59166.png" group-title="BR| CULTURA",BR| DISCOVERY WORLD HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59166&extension=ts&play_token=jpojVr6JL5
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59267.png" group-title="BR| CULTURA",BR| E! HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59267&extension=ts&play_token=Rqh3rSQeNc
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59260.png" group-title="BR| CULTURA",BR| FOOD NETWORK HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59260&extension=ts&play_token=9fKpKxZ5OO
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59229.png" group-title="BR| CULTURA",BR| HISTORY 2 HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59229&extension=ts&play_token=SueiLvaDj6
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59223.png" group-title="BR| CULTURA",BR| HISTORY CHANNEL HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59223&extension=ts&play_token=eKzgAcgp5P
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/INVESTIGATION-DISCOVERY.png" group-title="BR| CULTURA",BR| INVESTIGAÇÃO DISCOVERY HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=890676&extension=ts&play_token=mdO2cmR91g
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59212.png" group-title="BR| CULTURA",BR| NAT GEO HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59212&extension=ts&play_token=mRe4NclDcS
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59210.png" group-title="BR| CULTURA",BR| NAT GEO WILD HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59210&extension=ts&play_token=tgEKDsne50
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59170.png" group-title="BR| CULTURA",BR| TLC HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59170&extension=ts&play_token=2i6dNzUdWG
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1061050.png" group-title="BR| CULTURA",BR| TRAVEL BOX HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1061050&extension=ts&play_token=kLOviRMObD
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1707271.png" group-title="BR| CULTURA",BR| TV CIDADE
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1707271&extension=ts&play_token=BY704vCNXJ
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/WOOHOO.png" group-title="BR| CULTURA",BR| WOOHOO
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59154&extension=ts&play_token=UBteBctrQL
+#EXTINF:-1 tvg-logo="" group-title="BR| FILMES-MUSICA-SHOW",BR| A GRANDE CONQUISTA
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1425672&extension=ts&play_token=UYZxwyfmwS
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/amcmehd.png" group-title="BR| FILMES-MUSICA-SHOW",BR| AMC HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59301&extension=ts&play_token=xtKGZJBWOK
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59298.png" group-title="BR| FILMES-MUSICA-SHOW",BR| AXN HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59298&extension=ts&play_token=owdCeYbhGU
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59292.png" group-title="BR| FILMES-MUSICA-SHOW",BR| BIS HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59292&extension=ts&play_token=YiP00HHVOP
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59284.png" group-title="BR| FILMES-MUSICA-SHOW",BR| CANAL SONY HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59284&extension=ts&play_token=orB70SJM2U
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1093610.png" group-title="BR| FILMES-MUSICA-SHOW",BR| CINE PIPOCA
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1093610&extension=ts&play_token=pKfuwoGyVJ
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59282.png" group-title="BR| FILMES-MUSICA-SHOW",BR| CINEMAX HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59282&extension=ts&play_token=ScePNKkekh
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59259.png" group-title="BR| FILMES-MUSICA-SHOW",BR| FOX HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59259&extension=ts&play_token=PyBnVieGSU
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59258.png" group-title="BR| FILMES-MUSICA-SHOW",BR| FOX LIFE HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59258&extension=ts&play_token=XffeJXYu7f
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59252.png" group-title="BR| FILMES-MUSICA-SHOW",BR| FX HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59252&extension=ts&play_token=JHzIMa9KeZ
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59227.png" group-title="BR| FILMES-MUSICA-SHOW",BR| HBO 2 HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59227&extension=ts&play_token=ee0nJq2jlb
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/laz.Hbo_family.png" group-title="BR| FILMES-MUSICA-SHOW",BR| HBO FAMILY HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59226&extension=ts&play_token=bD8y1GxEVw
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59228.png" group-title="BR| FILMES-MUSICA-SHOW",BR| HBO HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59228&extension=ts&play_token=BHjzrbk3xc
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/890672.png" group-title="BR| FILMES-MUSICA-SHOW",BR| HBO MUNDI HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=890672&extension=ts&play_token=XyBzrXiQmJ
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59225.png" group-title="BR| FILMES-MUSICA-SHOW",BR| HBO PLUS HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59225&extension=ts&play_token=ZJ25zzDBp1
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/890673.png" group-title="BR| FILMES-MUSICA-SHOW",BR| HBO POP HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=890673&extension=ts&play_token=Nc9TG0OQXT
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/laz.hbo_signature.png" group-title="BR| FILMES-MUSICA-SHOW",BR| HBO SIGNATURE HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59224&extension=ts&play_token=fglHGD1vgP
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/890674.png" group-title="BR| FILMES-MUSICA-SHOW",BR| HBO XTREME HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=890674&extension=ts&play_token=lMKodT2yGE
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/890675.png" group-title="BR| FILMES-MUSICA-SHOW",BR| HGTV HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=890675&extension=ts&play_token=weMJTggXdW
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/890715.png" group-title="BR| FILMES-MUSICA-SHOW",BR| IURD TV
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=890715&extension=ts&play_token=GwvxGOYJPo
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59221.png" group-title="BR| FILMES-MUSICA-SHOW",BR| LIFETIME HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59221&extension=ts&play_token=nCZUsD06R6
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59219.png" group-title="BR| FILMES-MUSICA-SHOW",BR| MAX HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59219&extension=ts&play_token=p8Cdoyqv7p
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59217.png" group-title="BR| FILMES-MUSICA-SHOW",BR| MAX UP
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59217&extension=ts&play_token=Vp7ZBYk74A
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59216.png" group-title="BR| FILMES-MUSICA-SHOW",BR| MEGAPIX
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59216&extension=ts&play_token=OVtFuetJXn
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59215.png" group-title="BR| FILMES-MUSICA-SHOW",BR| MTV HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59215&extension=ts&play_token=F2wUcLT6PP
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59193.png" group-title="BR| FILMES-MUSICA-SHOW",BR| MTV LIVE HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59193&extension=ts&play_token=nvj1C7LH6N
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59214.png" group-title="BR| FILMES-MUSICA-SHOW",BR| MULTI SHOW HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59214&extension=ts&play_token=4FLE5Sg3JP
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/music_box.png" group-title="BR| FILMES-MUSICA-SHOW",BR| MUSIC BOX
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59213&extension=ts&play_token=HYvocYPcfI
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/890677.png" group-title="BR| FILMES-MUSICA-SHOW",BR| OFF HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=890677&extension=ts&play_token=tWsogI10GJ
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/laz.paramounthd.png" group-title="BR| FILMES-MUSICA-SHOW",BR| PARAMOUNT HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59205&extension=ts&play_token=AJqzrqbpV3
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1093609.png" group-title="BR| FILMES-MUSICA-SHOW",BR| PRIME BOX
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1093609&extension=ts&play_token=ah8b8Vnhtd
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/890710.png" group-title="BR| FILMES-MUSICA-SHOW",BR| REDE SUPER
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=890710&extension=ts&play_token=InMGx7v6cP
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59220.png" group-title="BR| FILMES-MUSICA-SHOW",BR| SONY HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59220&extension=ts&play_token=AIFucTHgLf
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59185.png" group-title="BR| FILMES-MUSICA-SHOW",BR| SPACE HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59185&extension=ts&play_token=UtRbfkz8md
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1093611.png" group-title="BR| FILMES-MUSICA-SHOW",BR| STAR CHANNEL
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1093611&extension=ts&play_token=7MayUyWSqY
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59181.png" group-title="BR| FILMES-MUSICA-SHOW",BR| STUDIO UNIVERSAL HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59181&extension=ts&play_token=6TBBwUiXy3
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59180.png" group-title="BR| FILMES-MUSICA-SHOW",BR| SYFY HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59180&extension=ts&play_token=BqDwGObACS
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59178.png" group-title="BR| FILMES-MUSICA-SHOW",BR| TCM HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59178&extension=ts&play_token=qZme6DebFl
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59176.png" group-title="BR| FILMES-MUSICA-SHOW",BR| TELECINE ACTION HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59176&extension=ts&play_token=8BL6RYZjPq
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59175.png" group-title="BR| FILMES-MUSICA-SHOW",BR| TELECINE CULT HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59175&extension=ts&play_token=cdEhoMrGsb
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59174.png" group-title="BR| FILMES-MUSICA-SHOW",BR| TELECINE FUN HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59174&extension=ts&play_token=TCs62IJmfP
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59173.png" group-title="BR| FILMES-MUSICA-SHOW",BR| TELECINE PIPOCA HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59173&extension=ts&play_token=cEglB74dIC
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59172.png" group-title="BR| FILMES-MUSICA-SHOW",BR| TELECINE PREMIUM HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59172&extension=ts&play_token=qA0LNRdZsP
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59171.png" group-title="BR| FILMES-MUSICA-SHOW",BR| TELECINE TOUCH HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59171&extension=ts&play_token=JzgCRVdupg
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59169.png" group-title="BR| FILMES-MUSICA-SHOW",BR| TNT
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59169&extension=ts&play_token=wpDqHQWSEl
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59168.png" group-title="BR| FILMES-MUSICA-SHOW",BR| TNT SERIES HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59168&extension=ts&play_token=2l8NnjH0Wo
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1035047.png" group-title="BR| FILMES-MUSICA-SHOW",BR| TRU TV
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1035047&extension=ts&play_token=bTRHhApFIx
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59165.png" group-title="BR| FILMES-MUSICA-SHOW",BR| TV BRASIL HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59165&extension=ts&play_token=9qTna0iSmx
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/890706.png" group-title="BR| FILMES-MUSICA-SHOW",BR| TV GAZETA
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=890706&extension=ts&play_token=4eT6KzBkpw
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/890713.png" group-title="BR| FILMES-MUSICA-SHOW",BR| TV REDE GOSPEL
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=890713&extension=ts&play_token=H0nPRvQ4QN
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59158.png" group-title="BR| FILMES-MUSICA-SHOW",BR| UNIVERSAL CHANNEL
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59158&extension=ts&play_token=N6LdA81B6A
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59157.png" group-title="BR| FILMES-MUSICA-SHOW",BR| VH1 MEGA HITS
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59157&extension=ts&play_token=sY8SQwahJl
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/59155.png" group-title="BR| FILMES-MUSICA-SHOW",BR| WARNER CHANNEL HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=59155&extension=ts&play_token=U62eBSTQwv
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156420.png" group-title="CH| CHINA / HONGKONG",CHN| ANHUI TELEVISION
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156420&extension=ts&play_token=tjOmtoAd7W
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156416.png" group-title="CH| CHINA / HONGKONG",CHN| BEIJING TV
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156416&extension=ts&play_token=3on1lJYqDB
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90219.png" group-title="CH| CHINA / HONGKONG",CHN| BHTV 1
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90219&extension=ts&play_token=DC4tPiuJkH
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/903369.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 1
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=903369&extension=ts&play_token=QMMTRXsWtz
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/903392.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 14
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=903392&extension=ts&play_token=5umhJtTwpB
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/903370.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 2
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=903370&extension=ts&play_token=fKlKekI7bN
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90227.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 2 FINANCE
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90227&extension=ts&play_token=sZy6TnqElb
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/903374.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 3
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=903374&extension=ts&play_token=EcYYE7QiEJ
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156404.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 4
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156404&extension=ts&play_token=BX5wq1QTxw
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90226.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 4
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90226&extension=ts&play_token=LDkOsqFkLq
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/CCTV-5.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 5
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=903377&extension=ts&play_token=sbaj9IsjsA
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90224.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 8 TV
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90224&extension=ts&play_token=rcNlG4iKr9
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156405.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV ENTERTAINMENT
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156405&extension=ts&play_token=vEkZ6Cm5pv
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156406.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV OPERA
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156406&extension=ts&play_token=9U7VSdEuk0
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156413.png" group-title="CH| CHINA / HONGKONG",CHN| CGTN
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156413&extension=ts&play_token=Ng4oIDZQzW
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156414.png" group-title="CH| CHINA / HONGKONG",CHN| CGTN ESPANOL
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156414&extension=ts&play_token=6GJY7S7e6i
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/iptvlogos/CHILDRENS_GANSU_TV.png" group-title="CH| CHINA / HONGKONG",CHN| CHILDRENS GANSU TV
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90213&extension=ts&play_token=934DKVUCiZ
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156417.png" group-title="CH| CHINA / HONGKONG",CHN| CHINA MOVIE CHANNEL
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156417&extension=ts&play_token=aTlGEwVCjQ
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156421.png" group-title="CH| CHINA / HONGKONG",CHN| CHONGQING TELEVISION
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156421&extension=ts&play_token=72ddIzde7z
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90211.png" group-title="CH| CHINA / HONGKONG",CHN| CITY & FASHION
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90211&extension=ts&play_token=9UhCOtoJeX
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/DRAMA-CH.jpeg" group-title="CH| CHINA / HONGKONG",CHN| CULTURE & DRAMA CH
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90210&extension=ts&play_token=1PSVYC6A9X
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156415.png" group-title="CH| CHINA / HONGKONG",CHN| DRAGON TV
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156415&extension=ts&play_token=TnOZwDRqBR
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90208.png" group-title="CH| CHINA / HONGKONG",CHN| ECONOMY CHANNEL
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90208&extension=ts&play_token=TDg0Nji1ie
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156424.png" group-title="CH| CHINA / HONGKONG",CHN| FUJIAN STRAITS TV
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156424&extension=ts&play_token=XtEBDSJWxu
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156409.png" group-title="CH| CHINA / HONGKONG",CHN| GREAT WALL ELITE
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156409&extension=ts&play_token=MjOMYX1TA3
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156410.png" group-title="CH| CHINA / HONGKONG",CHN| GREAT WALL FRESH
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156410&extension=ts&play_token=l2cZR6JMZl
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156411.png" group-title="CH| CHINA / HONGKONG",CHN| GUANGDONG SOUTHERN TV
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156411&extension=ts&play_token=XMrtusvcXr
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156418.png" group-title="CH| CHINA / HONGKONG",CHN| HUNAN SATELLITE TV
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156418&extension=ts&play_token=u1P1QugVTp
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90151.png" group-title="CH| CHINA / HONGKONG",CHN| HZTV-1
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90151&extension=ts&play_token=tGcM41Kg6p
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90159.png" group-title="CH| CHINA / HONGKONG",CHN| INNER MONGOLIA SAT TV
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90159&extension=ts&play_token=CGO07vaMEl
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156423.png" group-title="CH| CHINA / HONGKONG",CHN| JIANGSU INTERNATIONAL CHANNEL
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156423&extension=ts&play_token=2qgfc04VaC
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90196.png" group-title="CH| CHINA / HONGKONG",CHN| JINSHAN TV
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90196&extension=ts&play_token=LOg3WhDSmM
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90188.png" group-title="CH| CHINA / HONGKONG",CHN| LYTV 1
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90188&extension=ts&play_token=YRaz9sLDzC
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90180.png" group-title="CH| CHINA / HONGKONG",CHN| NTDTV  SAN FRANCISCO
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90180&extension=ts&play_token=SZDmhd8ip8
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90179.png" group-title="CH| CHINA / HONGKONG",CHN| NTDTV  US WEST
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90179&extension=ts&play_token=LhsTBUVjrq
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90178.png" group-title="CH| CHINA / HONGKONG",CHN| NTDTV ASIA PACIFIC
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90178&extension=ts&play_token=ucMQ799czA
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/ntdtv.png" group-title="CH| CHINA / HONGKONG",CHN| NTDTV HOUSTON
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90177&extension=ts&play_token=NhtpuxpTxD
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/ntdtv.png" group-title="CH| CHINA / HONGKONG",CHN| NTDTV JIADONGTAI
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90176&extension=ts&play_token=s4rJA8IvAG
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/ntdtv.png" group-title="CH| CHINA / HONGKONG",CHN| NTDTV MEIDONGTAI
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90175&extension=ts&play_token=PpJ8IpYZSl
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90174.png" group-title="CH| CHINA / HONGKONG",CHN| OCJ
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90174&extension=ts&play_token=CXcBzJT1wG
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156422.png" group-title="CH| CHINA / HONGKONG",CHN| PACVIA TV
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156422&extension=ts&play_token=50RsmKCg0h
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156407.png" group-title="CH| CHINA / HONGKONG",CHN| PHOENIX INFONEWS
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156407&extension=ts&play_token=oe1e8P9eZq
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156408.png" group-title="CH| CHINA / HONGKONG",CHN| PHOENIX NEWS (NA)
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156408&extension=ts&play_token=eVOq2Yf7CT
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90171.png" group-title="CH| CHINA / HONGKONG",CHN| PUBLIC CHANNEL GANSU TV
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90171&extension=ts&play_token=MwnWmpMqVJ
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90166.png" group-title="CH| CHINA / HONGKONG",CHN| QUALITY LIFE CH
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90166&extension=ts&play_token=jBwso0HslZ
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156419.png" group-title="CH| CHINA / HONGKONG",CHN| SHENZHEN TELEVISION
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156419&extension=ts&play_token=jwNmTWTcnK
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90163.png" group-title="CH| CHINA / HONGKONG",CHN| TVS3
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90163&extension=ts&play_token=M7pTkGdMhK
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90162.png" group-title="CH| CHINA / HONGKONG",CHN| TVS5
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90162&extension=ts&play_token=NgUghiLyHX
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/URBAN-TV.png" group-title="CH| CHINA / HONGKONG",CHN| URBAN CH
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90161&extension=ts&play_token=TdbojMtJj6
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156412.png" group-title="CH| CHINA / HONGKONG",CHN| ZHEJIANG TV
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=156412&extension=ts&play_token=oTGpmmrdSh
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90352.png" group-title="CH| CHINA / HONGKONG",HK| FAIRCHILD 2 HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90352&extension=ts&play_token=lYsD5s2taV
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90350.png" group-title="CH| CHINA / HONGKONG",HK| FAIRCHILD EAST
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90350&extension=ts&play_token=pAN1jzFs3J
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/FAIRCHILD-WEST.png" group-title="CH| CHINA / HONGKONG",HK| FAIRCHILD WEST
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=90351&extension=ts&play_token=Qs4i14GCEN
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/554953.png" group-title="CH| CHINA / HONGKONG",HK| NOW PREMIER SPORTS 1 HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=554953&extension=ts&play_token=wZn4sHiUyd
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/nowsports.png" group-title="CH| CHINA / HONGKONG",HK| NOW SPORTS 1 HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=554949&extension=ts&play_token=k9RBS38ivk
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/nowsports.png" group-title="CH| CHINA / HONGKONG",HK| NOW SPORTS 2 HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=554948&extension=ts&play_token=kASYsjJ1j6
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/554947.png" group-title="CH| CHINA / HONGKONG",HK| NOW SPORTS 3 HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=554947&extension=ts&play_token=j6IBFZjq9c
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/554946.png" group-title="CH| CHINA / HONGKONG",HK| NOW SPORTS 4 HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=554946&extension=ts&play_token=sQrY0gGUvF
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/554945.png" group-title="CH| CHINA / HONGKONG",HK| NOW SPORTS 5 HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=554945&extension=ts&play_token=eAWlytcfNO
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/554944.png" group-title="CH| CHINA / HONGKONG",HK| NOW SPORTS 6 HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=554944&extension=ts&play_token=s4Ygk4lcLU
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/554943.png" group-title="CH| CHINA / HONGKONG",HK| NOW SPORTS 7 HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=554943&extension=ts&play_token=hBUF9alXFf
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/114695.png" group-title="CH| CHINA / HONGKONG",HK| PHOENIX CHINESE
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=114695&extension=ts&play_token=SKBttI4Aan
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/153402.png" group-title="CH| CHINA / HONGKONG",HK| PHOENIX HK CHANNEL
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=153402&extension=ts&play_token=ikMIrqPoA7
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/153401.png" group-title="CH| CHINA / HONGKONG",HK| TVB CHINESE
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=153401&extension=ts&play_token=yjLwi3lLHl
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/TVB-CLASSIC.jpeg" group-title="CH| CHINA / HONGKONG",HK| TVB CLASSIC
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=153503&extension=ts&play_token=OVP7YNKFPN
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/TVB-DRAMA.jpeg" group-title="CH| CHINA / HONGKONG",HK| TVB DRAMA
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=153400&extension=ts&play_token=xC7LUhkEJ9
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/153504.png" group-title="CH| CHINA / HONGKONG",HK| TVB E NEWS
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=153504&extension=ts&play_token=zA0iGvvrwa
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/153395.png" group-title="CH| CHINA / HONGKONG",HK| TVB HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=153395&extension=ts&play_token=1rsCsfNpvh
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/153505.png" group-title="CH| CHINA / HONGKONG",HK| TVB JADE
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=153505&extension=ts&play_token=UPBiKnWGSU
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/153399.png" group-title="CH| CHINA / HONGKONG",HK| TVB PEARL
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=153399&extension=ts&play_token=3LmyvB2Hck
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/153506.png" group-title="CH| CHINA / HONGKONG",HK| TVB XING HE
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=153506&extension=ts&play_token=ggm30w2azv
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/153396.png" group-title="CH| CHINA / HONGKONG",HK| TVB1
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=153396&extension=ts&play_token=jmviHI2S5b
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/153397.png" group-title="CH| CHINA / HONGKONG",HK| TVB2
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=153397&extension=ts&play_token=EjjHOALWYe
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/153398.png" group-title="CH| CHINA / HONGKONG",HK| TVBE
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=153398&extension=ts&play_token=eYGYbGg3Wc
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/153507.png" group-title="CH| CHINA / HONGKONG",HK| TVBS ASIA
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=153507&extension=ts&play_token=yPZkYpRFUo
+#EXTINF:-1 tvg-logo="" group-title="ES| DOCUMENTALES",##### DOCUMENTALES FHD #####
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1548492&extension=ts&play_token=bYWHBPHnWs
+#EXTINF:-1 tvg-logo="" group-title="ES| DOCUMENTALES",##### DOCUMENTALES HD #####
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1548490&extension=ts&play_token=bT7foaaZ1I
+#EXTINF:-1 tvg-logo="" group-title="ES| DOCUMENTALES",##### DOCUMENTALES SD #####
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1548491&extension=ts&play_token=vERZUXxFVh
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1547338.png" group-title="ES| DOCUMENTALES",ES| AMC BREAK FHD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547338&extension=ts&play_token=iEBE5DF4IE
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/1547339.png" group-title="ES| DOCUMENTALES",ES| AMC BREAK HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547339&extension=ts&play_token=1Dm3dgpZfL
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/107624.png" group-title="ES| DOCUMENTALES",ES| AMC BREAK SD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=107624&extension=ts&play_token=96X5pO5dQg
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1547341.png" group-title="ES| DOCUMENTALES",ES| AMC CRIME FHD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547341&extension=ts&play_token=1CoSXFuGrE
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/1547342.png" group-title="ES| DOCUMENTALES",ES| AMC CRIME HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547342&extension=ts&play_token=o74lINqcLt
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/1547340.png" group-title="ES| DOCUMENTALES",ES| AMC CRIME SD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547340&extension=ts&play_token=m0xy3cVgxD
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/1547343.png" group-title="ES| DOCUMENTALES",ES| AMC SELEKT TV HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547343&extension=ts&play_token=NRfOhGwo1o
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1547336.png" group-title="ES| DOCUMENTALES",ES| BUENVIAJE FHD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547336&extension=ts&play_token=Kl9BUsGlJZ
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/1547337.png" group-title="ES| DOCUMENTALES",ES| BUENVIAJE HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547337&extension=ts&play_token=s9x0ObNDnZ
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/228475.png" group-title="ES| DOCUMENTALES",ES| BUENVIAJE SD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=228475&extension=ts&play_token=fC8As5iiMe
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/174334.png" group-title="ES| DOCUMENTALES",ES| COSTA DEL SOL TV FHD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=174334&extension=ts&play_token=fgDZFbVHca
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/107611.png" group-title="ES| DOCUMENTALES",ES| CRIMEN INVES SD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=107611&extension=ts&play_token=cEfdiyOSGl
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1547332.png" group-title="ES| DOCUMENTALES",ES| DISCOVERY CHANNEL FHD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547332&extension=ts&play_token=zzgaUiFIS1
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/1547333.png" group-title="ES| DOCUMENTALES",ES| DISCOVERY CHANNEL HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547333&extension=ts&play_token=7AHvD8myAC
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/107609.png" group-title="ES| DOCUMENTALES",ES| DISCOVERY CHANNEL SD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=107609&extension=ts&play_token=KLOweHzjqV
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1547344.png" group-title="ES| DOCUMENTALES",ES| DMAX FHD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547344&extension=ts&play_token=AkHQl8kJv4
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/1547345.png" group-title="ES| DOCUMENTALES",ES| DMAX HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547345&extension=ts&play_token=xsSv0GLIBl
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/842314.png" group-title="ES| DOCUMENTALES",ES| DMAX SD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=842314&extension=ts&play_token=1w334SyzPc
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1547331.png" group-title="ES| DOCUMENTALES",ES| HISTORIA FHD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547331&extension=ts&play_token=ZqZ0Ost7fH
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/1547330.png" group-title="ES| DOCUMENTALES",ES| HISTORIA HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547330&extension=ts&play_token=J1MtpmYtzn
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/107597.png" group-title="ES| DOCUMENTALES",ES| HISTORIA SD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=107597&extension=ts&play_token=Jh8hWpvjvq
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1547325.png" group-title="ES| DOCUMENTALES",ES| NAT GEO FHD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547325&extension=ts&play_token=fGP0guMRUW
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/107545.png" group-title="ES| DOCUMENTALES",ES| NAT GEO HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=107545&extension=ts&play_token=TEXnvYGPD0
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/118995.png" group-title="ES| DOCUMENTALES",ES| NAT GEO HEVC
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=118995&extension=ts&play_token=OO1OGgWs21
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/1547326.png" group-title="ES| DOCUMENTALES",ES| NAT GEO SD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547326&extension=ts&play_token=Hvzotz64oU
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1547329.png" group-title="ES| DOCUMENTALES",ES| NAT GEO WILD FHD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547329&extension=ts&play_token=BQrdoYIHOU
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/107543.png" group-title="ES| DOCUMENTALES",ES| NAT GEO WILD HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=107543&extension=ts&play_token=LNEnM4t9RB
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/118994.png" group-title="ES| DOCUMENTALES",ES| NAT GEO WILD HEVC
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=118994&extension=ts&play_token=Jl950aabe5
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/1547328.png" group-title="ES| DOCUMENTALES",ES| NAT GEO WILD SD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547328&extension=ts&play_token=kVuNYsvgCe
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1547334.png" group-title="ES| DOCUMENTALES",ES| ODISEA 4K/UHD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547334&extension=ts&play_token=nyWxycYkad
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/107619.png" group-title="ES| DOCUMENTALES",ES| ODISEA FHD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=107619&extension=ts&play_token=xccpUE3lma
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/1547335.png" group-title="ES| DOCUMENTALES",ES| ODISEA HD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=1547335&extension=ts&play_token=WKGuy8NO6l
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/174331.png" group-title="ES| DOCUMENTALES",ES| ODISEA SD
+http://mag.myox.me:80/play/live.php?mac=A0:BB:3E:00:03:BC&stream=174331&extension=ts&play_token=NeZtQ9KSXf
