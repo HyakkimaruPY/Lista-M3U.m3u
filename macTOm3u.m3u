@@ -1,0 +1,163 @@
+#EXTM3U
+#EXTINF:-1 tvg-logo="" group-title="CA| AHL PPV",##### AHL PPV #####
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362723&extension=ts&play_token=OUfxqOgttJ
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362755.png" group-title="CA| AHL PPV",AHL 01 : 2025 Rockford IceHogs vs Iowa Wild Home
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1940907&extension=ts&play_token=98CriLTsH5
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362755.png" group-title="CA| AHL PPV",AHL 02 : 2025 Tucson Roadrunners vs Ontario Reign Away
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1940908&extension=ts&play_token=ClRcKl8xNR
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362755.png" group-title="CA| AHL PPV",AHL 03 : 6:00 PM San Jose Barracuda @ Bakersfield Condors
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1940909&extension=ts&play_token=6PudbaKSpR
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362755.png" group-title="CA| AHL PPV",AHL 04 : 6:00 PM Springfield Thunderbirds @ Charlotte Checkers
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1940910&extension=ts&play_token=MvAvw3KuYF
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362755.png" group-title="CA| AHL PPV",AHL 05 : 6:00 PM Wilkes-Barre/Scranton @ Hartford Wolf Pack
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1940911&extension=ts&play_token=ERS83kPZhs
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362755.png" group-title="CA| AHL PPV",AHL 06 : 7:00 PM Bridgeport Islanders @ Providence Bruins
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1940912&extension=ts&play_token=AlmDA2ZaZz
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362755.png" group-title="CA| AHL PPV",AHL 07 : 7:00 PM Hershey Bears @ Syracuse Crunch
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1940913&extension=ts&play_token=E0gKsLAibq
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362755.png" group-title="CA| AHL PPV",AHL 08 : 7:00 PM Iowa Wild @ Chicago Wolves
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1940914&extension=ts&play_token=thkx4aYpFH
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362755.png" group-title="CA| AHL PPV",AHL 09 : 7:00 PM Lehigh Valley Phantoms @ Belleville Senators
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1940915&extension=ts&play_token=Drd7DEhv8u
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362755.png" group-title="CA| AHL PPV",AHL 10 : 8:00 PM Rockford IceHogs @ Milwaukee Admirals
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1940916&extension=ts&play_token=wwMCP0DT7M
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362724.png" group-title="CA| AHL PPV",CA: ABBOTSFORD CANUCKS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362724&extension=ts&play_token=8VAR6uUNYF
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362725.png" group-title="CA| AHL PPV",CA: BAKERSFIELD CONDORS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362725&extension=ts&play_token=GmWhK4Xpfd
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362726.png" group-title="CA| AHL PPV",CA: BELLEVILLE SENATORS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362726&extension=ts&play_token=830HtrPl3N
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362727.png" group-title="CA| AHL PPV",CA: BRIDGEPORT ISLANDERS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362727&extension=ts&play_token=BMtXbZ2Vwa
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362728.png" group-title="CA| AHL PPV",CA: CALGARY WRANGLERS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362728&extension=ts&play_token=VoVQdb1ctV
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362729.png" group-title="CA| AHL PPV",CA: CHARLOTTE CHECKERS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362729&extension=ts&play_token=YaV6Rfh4LO
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362730.png" group-title="CA| AHL PPV",CA: CHICAGO WOLVES
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362730&extension=ts&play_token=Lgituea9MJ
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362731.png" group-title="CA| AHL PPV",CA: CLEVELAND MONSTERS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362731&extension=ts&play_token=xSrMGvEK2u
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362732.png" group-title="CA| AHL PPV",CA: COACHELLA VALLEY FIREBIRDS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362732&extension=ts&play_token=xATqLsqGfL
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362733.png" group-title="CA| AHL PPV",CA: COLORADO EAGLES
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362733&extension=ts&play_token=lMy9xq4Iny
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362734.png" group-title="CA| AHL PPV",CA: GRAND RAPIDS GRIFFINS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362734&extension=ts&play_token=xXDTaNjmPB
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362735.png" group-title="CA| AHL PPV",CA: HARTFORD WOLF PACK
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362735&extension=ts&play_token=8RuPi7iXhq
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/USA/ahl.png" group-title="CA| AHL PPV",CA: HENDERSON SILVER KNIGHTS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362736&extension=ts&play_token=nUGIl6RsuX
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362737.png" group-title="CA| AHL PPV",CA: HERSHEY BEARS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362737&extension=ts&play_token=AEuBaPb1D0
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362738.png" group-title="CA| AHL PPV",CA: IOWA WILD
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362738&extension=ts&play_token=xfGtTrFOTJ
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362739.png" group-title="CA| AHL PPV",CA: LAVAL ROCKET
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362739&extension=ts&play_token=n5PeLF2900
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362740.png" group-title="CA| AHL PPV",CA: LEHIGH VALLEY PHANTOMS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362740&extension=ts&play_token=5BlWI4uVXI
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362741.png" group-title="CA| AHL PPV",CA: MANITOBA MOOSE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362741&extension=ts&play_token=MUoBvIC9Mv
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362742.png" group-title="CA| AHL PPV",CA: MILWAUKEE ADMIRALS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362742&extension=ts&play_token=3o63CvT3hl
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362743.png" group-title="CA| AHL PPV",CA: ONTARIO REIGN
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362743&extension=ts&play_token=tRUonQB25C
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362744.png" group-title="CA| AHL PPV",CA: PROVIDENCE BRUINS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362744&extension=ts&play_token=D0HNKG0b4c
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362745.png" group-title="CA| AHL PPV",CA: ROCHESTER AMERICANS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362745&extension=ts&play_token=MDBzADw3GM
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362746.png" group-title="CA| AHL PPV",CA: ROCKFORD ICEHOGS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362746&extension=ts&play_token=qfQzA6bv02
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362747.png" group-title="CA| AHL PPV",CA: SAN DIEGO GULLS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362747&extension=ts&play_token=SymoZMRGp5
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362748.png" group-title="CA| AHL PPV",CA: SAN JOSE BARRACUDA
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362748&extension=ts&play_token=8zy4BwWVEV
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362749.png" group-title="CA| AHL PPV",CA: SPRINGFIELD THUNDERBIRDS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362749&extension=ts&play_token=MysiJWYKfM
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362750.png" group-title="CA| AHL PPV",CA: SYRACUSE CRUNCH
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362750&extension=ts&play_token=k92iktRmlF
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362751.png" group-title="CA| AHL PPV",CA: TEXAS STARS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362751&extension=ts&play_token=8Zh8I4DC5S
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362752.png" group-title="CA| AHL PPV",CA: TORONTO MARLIES
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362752&extension=ts&play_token=qqhwbAJz1e
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362753.png" group-title="CA| AHL PPV",CA: TUCSON ROADRUNNERS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362753&extension=ts&play_token=UHnXUw5GjQ
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362754.png" group-title="CA| AHL PPV",CA: UTICA COMETS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362754&extension=ts&play_token=CJxDlWiXCe
+#EXTINF:-1 tvg-logo="http://103.176.90.95/images/1362755.png" group-title="CA| AHL PPV",CA: W-B/SCRANTON PENGUINS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1362755&extension=ts&play_token=QhOLiW2b6d
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",#### DAZN PPV VIP ####
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1900230&extension=ts&play_token=tYArVwBEas
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 1 - GUADALAJARA OPEN - DAY 6 | Sat 13 Sep 21:50 | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919601&extension=ts&play_token=YzhOszvJWQ
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 10 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919592&extension=ts&play_token=prezR8D5p4
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 11 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919591&extension=ts&play_token=Jt3JL9tG3e
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 12 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919590&extension=ts&play_token=zdodQmUyfM
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 13 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919589&extension=ts&play_token=EWSUwCdIeO
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 14 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919588&extension=ts&play_token=JNte5DeZ6L
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 15 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919587&extension=ts&play_token=3H9iVuVttN
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 16 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919586&extension=ts&play_token=Wp8GeGd1qr
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 17 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919585&extension=ts&play_token=t3DZ1ytW3B
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 18 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919584&extension=ts&play_token=l8XBUK1FBD
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 19 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919583&extension=ts&play_token=3pYKeXYg8A
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 2 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919600&extension=ts&play_token=SvojGRIvQD
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 20 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919582&extension=ts&play_token=oTb0Nfx32V
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 21 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919581&extension=ts&play_token=VmFkNKSufU
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 22 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919580&extension=ts&play_token=QS2mAm5Atj
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 23 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919579&extension=ts&play_token=KT2nemphB0
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 24 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919578&extension=ts&play_token=Cfi8Orv0MI
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 25 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919577&extension=ts&play_token=RUnFq4FFCS
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 26 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919576&extension=ts&play_token=84CPKSRtCF
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 27 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919575&extension=ts&play_token=qE8zOqzhep
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 28 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919574&extension=ts&play_token=dZ6p9S39Xz
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 29 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919573&extension=ts&play_token=zL70INE121
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 3 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919599&extension=ts&play_token=tl82z5HguC
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 30 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919572&extension=ts&play_token=EsGU2M9kpL
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 31 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919571&extension=ts&play_token=SWP36z6XCr
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 32 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919570&extension=ts&play_token=BUZqE0QT5U
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 33 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919569&extension=ts&play_token=GQUrS8uGCo
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 34 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919568&extension=ts&play_token=Bv7JsWimC2
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 35 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919567&extension=ts&play_token=ndKW5EFMRz
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 36 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919566&extension=ts&play_token=yi5y4BylAh
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 37 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919565&extension=ts&play_token=ZUvKzBEEML
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 38 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919564&extension=ts&play_token=tIaboBwQWJ
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 39 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919563&extension=ts&play_token=V3ebXDmy1e
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 4 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919598&extension=ts&play_token=v0Ee1OPiKL
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 40 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919562&extension=ts&play_token=pUC8Dl3oHZ
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 5 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919597&extension=ts&play_token=jQCQk74K7i
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/daznppv.png" group-title="CA| DAZN PPV VIP",CA: DAZN PPV 6 - NO EVENT STREAMING - | 8K EXCLUSIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:10:DB:12&stream=1919596&extension=ts&play_token=JhBkuxfzAW
