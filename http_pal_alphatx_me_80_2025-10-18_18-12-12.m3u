@@ -1,0 +1,169 @@
+#EXTM3U
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156420.png" group-title="CH| CHINA / HONGKONG",CHN| ANHUI TELEVISION
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156420&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156416.png" group-title="CH| CHINA / HONGKONG",CHN| BEIJING TV
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156416&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90219.png" group-title="CH| CHINA / HONGKONG",CHN| BHTV 1
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90219&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/903369.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 1
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=903369&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/903392.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 14
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=903392&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/903370.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 2
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=903370&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90227.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 2 FINANCE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90227&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/903374.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 3
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=903374&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156404.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 4
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156404&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90226.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 4
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90226&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/CCTV-5.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 5
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=903377&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90224.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV 8 TV
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90224&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156405.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV ENTERTAINMENT
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156405&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156406.png" group-title="CH| CHINA / HONGKONG",CHN| CCTV OPERA
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156406&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156413.png" group-title="CH| CHINA / HONGKONG",CHN| CGTN
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156413&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156414.png" group-title="CH| CHINA / HONGKONG",CHN| CGTN ESPANOL
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156414&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/iptvlogos/CHILDRENS_GANSU_TV.png" group-title="CH| CHINA / HONGKONG",CHN| CHILDRENS GANSU TV
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90213&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156417.png" group-title="CH| CHINA / HONGKONG",CHN| CHINA MOVIE CHANNEL
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156417&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156421.png" group-title="CH| CHINA / HONGKONG",CHN| CHONGQING TELEVISION
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156421&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90211.png" group-title="CH| CHINA / HONGKONG",CHN| CITY & FASHION
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90211&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/DRAMA-CH.jpeg" group-title="CH| CHINA / HONGKONG",CHN| CULTURE & DRAMA CH
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90210&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156415.png" group-title="CH| CHINA / HONGKONG",CHN| DRAGON TV
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156415&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90208.png" group-title="CH| CHINA / HONGKONG",CHN| ECONOMY CHANNEL
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90208&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156424.png" group-title="CH| CHINA / HONGKONG",CHN| FUJIAN STRAITS TV
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156424&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156409.png" group-title="CH| CHINA / HONGKONG",CHN| GREAT WALL ELITE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156409&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156410.png" group-title="CH| CHINA / HONGKONG",CHN| GREAT WALL FRESH
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156410&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156411.png" group-title="CH| CHINA / HONGKONG",CHN| GUANGDONG SOUTHERN TV
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156411&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156418.png" group-title="CH| CHINA / HONGKONG",CHN| HUNAN SATELLITE TV
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156418&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90151.png" group-title="CH| CHINA / HONGKONG",CHN| HZTV-1
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90151&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90159.png" group-title="CH| CHINA / HONGKONG",CHN| INNER MONGOLIA SAT TV
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90159&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156423.png" group-title="CH| CHINA / HONGKONG",CHN| JIANGSU INTERNATIONAL CHANNEL
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156423&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90196.png" group-title="CH| CHINA / HONGKONG",CHN| JINSHAN TV
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90196&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90188.png" group-title="CH| CHINA / HONGKONG",CHN| LYTV 1
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90188&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90180.png" group-title="CH| CHINA / HONGKONG",CHN| NTDTV  SAN FRANCISCO
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90180&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90179.png" group-title="CH| CHINA / HONGKONG",CHN| NTDTV  US WEST
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90179&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90178.png" group-title="CH| CHINA / HONGKONG",CHN| NTDTV ASIA PACIFIC
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90178&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/ntdtv.png" group-title="CH| CHINA / HONGKONG",CHN| NTDTV HOUSTON
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90177&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/ntdtv.png" group-title="CH| CHINA / HONGKONG",CHN| NTDTV JIADONGTAI
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90176&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/ntdtv.png" group-title="CH| CHINA / HONGKONG",CHN| NTDTV MEIDONGTAI
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90175&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90174.png" group-title="CH| CHINA / HONGKONG",CHN| OCJ
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90174&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156422.png" group-title="CH| CHINA / HONGKONG",CHN| PACVIA TV
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156422&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156407.png" group-title="CH| CHINA / HONGKONG",CHN| PHOENIX INFONEWS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156407&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156408.png" group-title="CH| CHINA / HONGKONG",CHN| PHOENIX NEWS (NA)
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156408&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90171.png" group-title="CH| CHINA / HONGKONG",CHN| PUBLIC CHANNEL GANSU TV
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90171&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90166.png" group-title="CH| CHINA / HONGKONG",CHN| QUALITY LIFE CH
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90166&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156419.png" group-title="CH| CHINA / HONGKONG",CHN| SHENZHEN TELEVISION
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156419&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90163.png" group-title="CH| CHINA / HONGKONG",CHN| TVS3
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90163&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/90162.png" group-title="CH| CHINA / HONGKONG",CHN| TVS5
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90162&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/URBAN-TV.png" group-title="CH| CHINA / HONGKONG",CHN| URBAN CH
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=90161&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/156412.png" group-title="CH| CHINA / HONGKONG",CHN| ZHEJIANG TV
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=156412&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/554953.png" group-title="CH| CHINA / HONGKONG",HK| NOW PREMIER SPORTS 1 HD
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=554953&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/554946.png" group-title="CH| CHINA / HONGKONG",HK| NOW SPORTS 4 HD
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=554946&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/554945.png" group-title="CH| CHINA / HONGKONG",HK| NOW SPORTS 5 HD
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=554945&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/554944.png" group-title="CH| CHINA / HONGKONG",HK| NOW SPORTS 6 HD
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=554944&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/554943.png" group-title="CH| CHINA / HONGKONG",HK| NOW SPORTS 7 HD
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=554943&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.92/images/107611.png" group-title="ES| DOCUMENTALES",ES| CRIMEN INVES SD
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=107611&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432230.png" group-title="JP| JAPAN",JP| ANIMAX
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432230&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432228.png" group-title="JP| JAPAN",JP| BS TV TOKYO
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432228&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432226.png" group-title="JP| JAPAN",JP| BS-TBS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432226&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/763889.png" group-title="JP| JAPAN",JP| CGTN
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=763889&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432236.png" group-title="JP| JAPAN",JP| FUJI TELEVISION
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432236&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/EUROPE/J-SPORTS-1-SPORTS.png" group-title="JP| JAPAN",JP| J SPORTS 1 SPORTS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432224&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/EUROPE/J-SPORTS-1-SPORTS.png" group-title="JP| JAPAN",JP| J SPORTS 2 SPORTS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432223&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/EUROPE/J-SPORTS-1-SPORTS.png" group-title="JP| JAPAN",JP| J SPORTS 3 SPORTS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432222&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/EUROPE/J-SPORTS-1-SPORTS.png" group-title="JP| JAPAN",JP| J SPORTS 4 SPORTS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432221&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432225.png" group-title="JP| JAPAN",JP| MTV Japan
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432225&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/763888.png" group-title="JP| JAPAN",JP| NHK
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=763888&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432231.png" group-title="JP| JAPAN",JP| NHK BS
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432231&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432227.png" group-title="JP| JAPAN",JP| NHK EDUCATIONAL TV
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432227&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432229.png" group-title="JP| JAPAN",JP| NHK GENERAL TV
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432229&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/763890.png" group-title="JP| JAPAN",JP| NHK WORLD HD
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=763890&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/763884.png" group-title="JP| JAPAN",JP| NHK WORLD PREMIUM
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=763884&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432238.png" group-title="JP| JAPAN",JP| NIPPON TV
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432238&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432217.png" group-title="JP| JAPAN",JP| STAR CHANNEL 1
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432217&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432216.png" group-title="JP| JAPAN",JP| STAR CHANNEL 2
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432216&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432215.png" group-title="JP| JAPAN",JP| STAR CHANNEL 3
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432215&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432234.png" group-title="JP| JAPAN",JP| TBS TELEVISION
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432234&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432232.png" group-title="JP| JAPAN",JP| TOKYO MX
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432232&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/TOKYO-NOW-HD.jpg" group-title="JP| JAPAN",JP| TOKYO NOW HD
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=763885&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432237.png" group-title="JP| JAPAN",JP| TV ASAHI
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432237&extension=ts
+#EXTINF:-1 tvg-logo="http://picons.cmshulk.com/picons/1432235.png" group-title="JP| JAPAN",JP| TV TOKYO
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432235&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/EUROPE/WOWOW-CINEMA-MOVIES.png" group-title="JP| JAPAN",JP| WOWOW CINEMA MOVIES
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432218&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/EUROPE/WOWOW-LIVE.png" group-title="JP| JAPAN",JP| WOWOW LIVE
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432219&extension=ts
+#EXTINF:-1 tvg-logo="http://103.176.90.118/picons/logos/EUROPE/WOWOW-PRIME.png" group-title="JP| JAPAN",JP| WOWOW PRIME
+http://pal.alphatx.me:80/play/live.php?mac=00:1A:79:F5:77:3D&stream=1432220&extension=ts
