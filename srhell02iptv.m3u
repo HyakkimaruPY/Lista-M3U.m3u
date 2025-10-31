@@ -8,6 +8,10 @@ https://espanol-livews.cgtn.com/hls/LSveOGBaBw41Ea7ukkVAUdKQ220802LSTexu6xAuFH8V
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 http://171.83.100.198:85/tsfile/live/0015_1.m3u8?key=txiptv
 
+#EXTINF:-1 tvg-id="CCTV-15 音乐 2" tvg-name="CCTV-15 音乐 2" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5UqmnOSqHX6ClIU_7glcKxNHg3Nyc1Fvh4iOlnK9Ybg&s" group-title="China", CCTV-15 音乐 2
+#EXTVLCOPT:http-user-agent=Lavf53.32.100
+https://tv.iill.top/migu-1/cctv15
+
 #EXTINF:-1 tvg-id="Tv-Series" tvg-name="Tv-Series" tvg-logo="https://supertvaovivo.io/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2021/06/TV-SERIES.jpg.webp" group-title="Series", Tv-Series
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://stmv1.srvif.com/tvserie/tvserie/playlist.m3u8
