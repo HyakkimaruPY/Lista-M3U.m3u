@@ -1,19 +1,13 @@
 #EXTM3U
 
-#EXTINF:-1 tvg-id="CGNTV" tvg-name="CGNT" tvg-logo="https://espanol-static.cgtn.com/w/images/icon/logo@3x.png" group-title="Documentário", CGNTV
+#EXTINF:-1 tvg-id="CGNTV" tvg-name="CGNT" tvg-logo="https://espanol-static.cgtn.com/w/images/icon/logo@3x.png" group-title="China", CGNTV
 https://espanol-livews.cgtn.com/hls/LSveOGBaBw41Ea7ukkVAUdKQ220802LSTexu6xAuFH8VZNBLE1ZNEa220802cd/playlist.m3u8
 
-#EXTINF:-1 tvg-id="CN kid" tvg-name="CN kid" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5ABthIcloETZQehQwOGGjqqFjnghLMWYNdB5PBUPtBjZaqID9pr5aK1M&s=10" group-title="kid", CN Kid
-https://4gr3uomttgr31hcjtgczdep3pq7314a5ecfzgh3mcqczgs45upiuo.wslivehls.com/ws-channels.kksmg.com/live/hhxd/playlist.m3u8?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHAiOiJsaXZlIiwiZG9tYWluIjoid3MtY2hhbm5lbHMua2tzbWcuY29tIiwiZXhwIjoxNzQ1OTkyOTgwLCJpYXQiOjE3NDU5NzEzODAsIm5vbmNlIjoiM2YzMnA1N2YiLCJzdHJlYW1fbmFtZSI6ImhoeGQiLCJ1c2VyX2lkIjowLCJ1c2VyX2lwIjoiMTg3LjEyMC4xMjIuMTczIiwidXVpZCI6ImEtNEI5Zm1SeThQRF9Mb0dfTjRlTiJ9.YIqq77qhgBM5RWnuDM9RljnxosYwuyBFEc5dR6cDbCo&wsSession=0e5319fc8f6b9f03ecac075d-174597138557891&wsIPSercert=cf33e7f5aeb689a18142761044bbc41e&wsiphost=local&wsBindIP=1
+#EXTINF:-1 tvg-id="CN kid" tvg-name="CCTV-15 音乐" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5UqmnOSqHX6ClIU_7glcKxNHg3Nyc1Fvh4iOlnK9Ybg&s" group-title="China", CCTV-15 音乐
+http://171.83.100.198:85/tsfile/live/0015_1.m3u8?key=txiptv
 
 #EXTINF:-1 tvg-id="Tv-Series" tvg-name="Tv-Series" tvg-logo="https://supertvaovivo.io/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2021/06/TV-SERIES.jpg.webp" group-title="Series", Tv-Series
 https://stmv1.srvif.com/tvserie/tvserie/playlist.m3u8
-
-#EXTINF:-1 tvg-id="Reviva-TV" tvg-name="Reviva-TV" tvg-logo="https://www.cxtv.com.br/img/Tvs/Logo/webp-l/1da08d69331552d9dbcab51e2228c53d.webp" group-title="Series", Reviva-TV
-https://stmv3.webtvninjas.com.br/webtvni1/webtvni1/playlist.m3u8
-
-#EXTINF:-1 tvg-id="Chaves-24hr" tvg-name="Chaves-24hr" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt7_2wo6XfEHnlUcBOv2uYQslsUL_kofcHRxvJA6I12E6HgwiYse0K8HAM&s=10" group-title="Series", Chaves-24hr
-https://embedcanaistv.site/24h-chaves/video.m3u8
 
 #EXTINF:-1 tvg-id="Run-Ação" tvg-name="Run-Ação" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv4Ur4EtdTzWMI61UpVQlqeukrHxp_wqtNbmKse1J0IPSfhUPVHFwvctAA&s=10" group-title="Filmes", Run-Ação
 https://stream.ads.ottera.tv/playlist.m3u8?network_id=2552
@@ -24,14 +18,8 @@ https://stmv1.srvif.com/movies1/movies1/playlist.m3u8
 #EXTINF:-1 tvg-id="Sony-One" tvg-name="Sony-One" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa3ZhOAXQ6hXwZt5fAEU3MbdweZQ0i7Hu9jQ&s" group-title="Filmes", Sony-One
 https://spt-sonyoneclassicas-1-br.samsung.wurl.tv/playlist.m3u8
 
-#EXTINF:-1 tvg-id="Vila-TV" tvg-name="Vila-TV" tvg-logo="https://supertvaovivo.io/wp-content/uploads/2021/06/assistir-vila-tv-ao-vivo.webp" group-title="Filmes", Vila-TV
-https://streamserver.streamingdevideo.com.br/8072/8072/playlist.m3u8
-
 #EXTINF:-1 tvg-id="On-Filmes" tvg-name="On-Filmes" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHGtvJaxetxkwVoDWqlnYMyxxoQcCTPcp_3JkS2Dnk4WJKxIyk7I11v8A&s=10" group-title="Filmes", On-Filmes
 https://stream.ads.ottera.tv/playlist.m3u8?network_id=6178
-
-#EXTINF:-1 tvg-id="Sony-Novelas(ES)" tvg-name="Sony-Novelas(ES)" tvg-logo="" group-title="Novelas", Sony-Novelas(ES)
-https://spt-novelas-1-us.vizio.wurl.tv/playlist.m3u8
 
 #EXTINF:-1 tvg-id="Novelissima(ES)" tvg-name="Novelissima(ES)" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRicsDxtDGrzInNAZnCnZJuGcWCiaAZ9yBOkEnaHaFkytr0FAdNRIpCHcJY&s=10" group-title="Novelas", Novelissima(ES)
 https://stream.ads.ottera.tv/playlist.m3u8?network_id=2380
@@ -49,15 +37,8 @@ https://nbcu-telemundoflorida-firetv.amagi.tv/playlist1080.m3u8
 #EXTINF:-1 tvg-id="Master-Chef" tvg-name="Master-Chef" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHwO8J5FX3oi_6mn2g4c38ElGF22pIzF6dzA&s" group-title="Variedades", Master-Chef
 https://amg00627-amg00627c9-runtime-latam-2613.playouts.now.amagi.tv/playlist/amg00627-banijayfast-masterchefbrazil-runtimelatam/playlist.m3u8?ip=191.53.43.188&ua=Mozilla%2F5.0%20(Linux%3B%20Android%2013%3B%20Pixel%207)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F116.0.0.0%20Mobile%20Safari%2F537.36&dnt=0&app_bundle=com.ammo.runtime&app_name=runtime&app_store_url=https%3A%2F%2Fwww.runtime.tv%2Fdevices&content_episode=&content_season=&content_livestream=1&content_producer_name=REPLACEME&channel_name=run&network_name=&did=cc4f3f4efff6d0cdca401dd54c56ae6d&us_privacy=1YNN&gdpr_consent=1&gdpr=0&lmt=0&device_make=handset&device_model=&coppa=REPLACEME
 
-
 #EXTINF:-1 tvg-id="Rede-Super" tvg-name="Rede-Super" tvg-logo="https://play-lh.googleusercontent.com/anVTfVdwyewDErvXNWj3VwNbuKvywmE9YeXdykr11NFC9zsJbEPcQ2Q-lQQ2pg5Vg7k=w240-h480-rw" group-title="Extras", Rede-Super
-https://tv02.zas.media:1936/redesuper/redesuper/playlist.m3u8
-
-#EXTINF:-1 tvg-id="Rede-Super SOURCE 2" tvg-name="Rede-Super SOURCE 2" tvg-logo="https://play-lh.googleusercontent.com/anVTfVdwyewDErvXNWj3VwNbuKvywmE9YeXdykr11NFC9zsJbEPcQ2Q-lQQ2pg5Vg7k=w240-h480-rw" group-title="Extras", Rede-Super SOURCE 2
 https://tv02.zas.media:1936/redesuper/redesuper/playlist.m3u8
 
 #EXTINF:-1 tvg-id="Rede-Gospel" tvg-name="Rede-Gospel" tvg-logo="" group-title="Extras", Rede-Gospel
 https://cdn.live.br1.jmvstream.com/w/LVW-8719/LVW8719_AcLVAxWy5J/playlist.m3u8
-
-#EXTINF:-1 tvg-id="odisea.es" tvg-name="ES: ODISEA FHD" tvg-logo="https://miguia.tv/channels/big_131.png" group-title="Documentário",ES: ODISEA FHD
-http://730329297767825200.ofnm1026.xyz:80/play/te919785/89EBsJGgMf5y/825200.m3u8
