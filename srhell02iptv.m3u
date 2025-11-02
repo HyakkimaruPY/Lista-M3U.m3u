@@ -20,6 +20,10 @@ https://stmv1.srvif.com/tvserie/tvserie/playlist.m3u8
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://stream.ads.ottera.tv/playlist.m3u8?network_id=2552
 
+#EXTINF:-1 tvg-id="Run-Ação" tvg-name="Run-Ação 4k" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv4Ur4EtdTzWMI61UpVQlqeukrHxp_wqtNbmKse1J0IPSfhUPVHFwvctAA&s=10" group-title="Filmes", Run-Ação 4k
+#EXTVLCOPT:http-user-agent=Lavf53.32.100
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=2153&avod=1&coppa=0&is_lat=0&dnt=0&td=6&us_privacy=1---&did=ffaafb626fb713d123ad63375284e408&ifa_type=sessionid&app_bundle=&app_store_url=&app_domain=runtime.tv&app_name=runtime&custom_targeting=web&custom_4=internal&player_height=2160&player_width=3840&content_channel=runtime&content_network=runtime&partner_domain=runtime.tv&content_dist_name=internal&device_make=&device_model=&device_os=web&preferred_language=EN&consent=1&gdpr=0&custom_12=0&custom_15=pt-br&custom_16=EN&custom_17=pt-br&country=br&country_region=minas%20gerais&postal_code=38600&gender=not_specified&yob=0&site_page=https%253A%252F%252Fwww.runtime.tv%252F&livestream=1&custom_param_0=&custom_param_1=handset&custom_param_2=&custom_param_3=&custom_param_4=internal&custom_param_5=web&bitrate=20000&quality=uhd&audio_bitrate=384&channels=6&codecs=avc1.640032,ac-3&hls_version=7&cc=1&subtitles_url=&drm=widevine&hdcp=2.2&keywords=genre:action&ad_unit=[]runtime_main&low_latency=1&max_buffer=60&log_level=debug&start_time=0
+
 #EXTINF:-1 tvg-id="WTV-Classicos" tvg-name="WTV-Classicos" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrI-zWuzJ0KGnPdIHlUg_xiQuhsxdCXso_lZl33pVUyw&s" group-title="Filmes", WTV-Classicos
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://stmv1.srvif.com/movies1/movies1/playlist.m3u8
