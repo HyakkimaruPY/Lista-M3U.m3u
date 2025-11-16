@@ -526,14 +526,18 @@ https://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/5
 #EXTINF:-1 tvg-id="655e5c4d2c46f3000877a54b" tvg-name="Pluto TV Desenhos Clássicos" tvg-logo="https://images.pluto.tv/channels/655e5c4d2c46f3000877a54b/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Retrô", Pluto TV Desenhos Clássicos
 https://cfd-v4-service-channel-stitcher-use1-1.prd.pluto.tv/stitch/hls/channel/655e5c4d2c46f3000877a54b/master.m3u8?advertisingId=&appName=android&appVersion=5.15.0&appStoreUrl=&architecture=arm64-v8a&buildVersion=20251102&clientTime=0&deviceDNT=0&deviceId=5241f7fe-728b-4588-b33d-8951a09bbf89&deviceMake=Google&deviceModel=Pixel8&deviceType=mobile&deviceVersion=14&includeExtendedEvents=false&sid=54e4f166-3722-4bb5-a795-c64acc3585e6&userId=&profilesFromStream=true&serverSideAds=false&ssai=false&adBreakpoints=[]&vastAdTagUri=&includeSlate=false&manifestType=plain&adFree=true&disableMidrolls=true&hlsLiveEdge=1&adPreRoll=false&hlsSegmentDuration=10
 
-#EXTINF:-1 tvg-id="wc" tvg-name="Wild Cards Season 01" tvg-logo="" group-title="Wild Cards temp1", S01EP01
-https://lh3.googleusercontent.com/pw/AP1GczNiSplveqli60i9P-Qe2_XLP7P-ek0Rjcsq1xInvDBymBnC17CUfRKUm4p6pKWw9B87OVBHEC3V9lDrh-p-NoZL-Tf5nFOeOyPHiLGTthm-KT5sGRI=m37
+#EXTINF:-1 tvg-id="wc" tvg-name="Wild Cards Season 01" tvg-logo="" group-title="Wild Cards 01", S01EP01
+#EXTVLCOPT:http-user-agent=Lavf53.32.100
+https://lh3.googleusercontent.com/pw/AP1GczPIp87Ekydy0JhqyBznoPHJwQo4jaQXtBbcKwbtDp2zG5c0njUeCvnhH5MIeOZsgNWEXnYKy21t-DiUanX7YOHUJBxNINf8pvTXLlZxAZpCxV0TiKM=m37
 
-#EXTINF:-1 tvg-id="wc" tvg-name="Wild Cards Season 01" tvg-logo="" group-title="Wild Cards temp1", S01EP02
-https://lh3.googleusercontent.com/pw/AP1GczNR4ZUfPBc3bFgTghOQfGdbHFQ_4PWcOZXOzGhKnNN4Kk93DgFgD8j5DptfoeUfoY3UWQj3OlduyAPgutvVa2heqrjPj0_n1SDttI8n6w2Wk2RlQUc=m37
+#EXTINF:-1 tvg-id="wc" tvg-name="Wild Cards Season 01" tvg-logo="" group-title="Wild Cards 02", S01EP02
+#EXTVLCOPT:http-user-agent=Lavf53.32.100
+https://lh3.googleusercontent.com/pw/AP1GczNnLboBHN3Y35w9UQ65RRntL_Vo7x6s93j4nxR4HQNEjrZ6FTjPELPjcUksWv-qouKEYnlQTpyfFf1_WoKSNDaPzPkC0oEFTcTgf9CpYrwRYbvqK0c=m37
 
-#EXTINF:-1 tvg-id="wc" tvg-name="Wild Cards Season 01" tvg-logo="" group-title="Wild Cards temp1", S01EP03
-https://lh3.googleusercontent.com/pw/AP1GczPi3yqE4GQIHOjjauE3mjWH-bVe84bX4RxmYU6eCJAgshKHusk7KIuLz_m230Ydw3wBW_hBNE2u0hfz18GjKWIlrZMUuOH9jEDbFF-t-XCe2s9eiAw=m37
+#EXTINF:-1 tvg-id="wc" tvg-name="Wild Cards Season 01" tvg-logo="" group-title="Wild Cards 04", S01EP03
+#EXTVLCOPT:http-user-agent=Lavf53.32.100
+https://lh3.googleusercontent.com/pw/AP1GczOKHn3hA89HtmZ-mI2s5p9f97JWWZ8MVEnS3F96BzSufq7Z3RBxaCQyTmH2zvy46cRKBmJeNC0BU4OZ6EqSPW4XMNovOnV7cnFJTmsaUHuMI8ix3oc=m37
 
-#EXTINF:-1 tvg-id="wc" tvg-name="Wild Cards Season 01" tvg-logo="" group-title="Wild Cards temp1", S01EP04
-https://lh3.googleusercontent.com/pw/AP1GczNOzvqfcC-U1bTchlj25KNnFfuC8nd_NW2tGJK7a_3ZqVBgm83Xzw_ysxCKUXUKcjBqaUJrVb7-hnFfuJD61VIXObiE5vxkcfycWeK88ZbJKNNctTk=m37
+#EXTINF:-1 tvg-id="wc" tvg-name="Wild Cards Season 01" tvg-logo="" group-title="Wild Cards 05", S01EP04
+#EXTVLCOPT:http-user-agent=Lavf53.32.100
+https://lh3.googleusercontent.com/pw/AP1GczNih8ntxdipLPVCb0p5Wxxz4wKACchdXoaKqhqUh4vJwOcq1zwoDW0gsso5QZ49DadmbkbTECIOiksVyG8oBQvfeau0UUKL_C6sloz--x5_E_O0Zb8=m37
