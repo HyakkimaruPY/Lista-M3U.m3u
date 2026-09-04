@@ -13,6 +13,13 @@ on:
         required: true
         default: "0"
         type: string
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "srhell02iptv.m3u"
+      - "scripts/validate_streams.py"
+      - ".github/workflows/validate-streams.yml"
   schedule:
     - cron: "17 6 * * *"
 
@@ -50,6 +57,9 @@ jobs:
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             APPLY="${{ inputs.apply_removals }}"
             LIMIT="${{ inputs.limit }}"
+          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            APPLY=false
+            LIMIT=10
           elif [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
             APPLY=true
           fi
