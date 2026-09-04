@@ -4,12 +4,12 @@ on:
   workflow_dispatch:
     inputs:
       apply_removals:
-        description: "Remover automaticamente canais confirmadamente invalidos"
+        description: "Aplicar remocoes confirmadas na playlist principal"
         required: true
         default: false
         type: boolean
       limit:
-        description: "Quantidade maxima de canais para testar (0 = todos)"
+        description: "Quantidade maxima por playlist (0 = todos)"
         required: true
         default: "0"
         type: string
@@ -17,7 +17,7 @@ on:
     branches:
       - main
     paths:
-      - "srhell02iptv.m3u"
+      - "*.m3u"
       - "scripts/validate_streams.py"
       - ".github/workflows/validate-streams.yml"
   schedule:
@@ -26,13 +26,35 @@ on:
 permissions:
   contents: write
 
-env:
-  PLAYLIST: srhell02iptv.m3u
-
 jobs:
   validate:
+    name: Validar ${{ matrix.playlist }}
     runs-on: ubuntu-latest
     timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - playlist: srhell02iptv.m3u
+            slug: principal
+            auto_apply: true
+          - playlist: cn.m3u
+            slug: china
+            auto_apply: false
+          - playlist: testNew.m3u
+            slug: test-new
+            auto_apply: false
+          - playlist: teste_vai.m3u
+            slug: teste-vai
+            auto_apply: false
+          - playlist: teteNew2.m3u
+            slug: teste-new-2
+            auto_apply: false
+
+    env:
+      PLAYLIST: ${{ matrix.playlist }}
+      REPORT_DIR: reports/stream-validation/${{ matrix.slug }}
 
     steps:
       - name: Checkout
@@ -55,12 +77,14 @@ jobs:
           LIMIT=0
 
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            APPLY="${{ inputs.apply_removals }}"
             LIMIT="${{ inputs.limit }}"
+            if [[ "${{ inputs.apply_removals }}" == "true" && "${{ matrix.auto_apply }}" == "true" ]]; then
+              APPLY=true
+            fi
           elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
             APPLY=false
-            LIMIT=10
-          elif [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            LIMIT=0
+          elif [[ "${{ github.ref }}" == "refs/heads/main" && "${{ matrix.auto_apply }}" == "true" ]]; then
             APPLY=true
           fi
 
@@ -71,7 +95,7 @@ jobs:
 
           echo "apply=$APPLY" >> "$GITHUB_OUTPUT"
           echo "limit=$LIMIT" >> "$GITHUB_OUTPUT"
-          echo "Modo: apply=$APPLY, limit=$LIMIT"
+          echo "Playlist: $PLAYLIST | apply=$APPLY | limit=$LIMIT"
 
       - name: Validar audio e video
         id: validate
@@ -84,7 +108,7 @@ jobs:
             --timeout 25
             --decode-seconds 4
             --limit "${{ steps.mode.outputs.limit }}"
-            --report-dir reports/stream-validation
+            --report-dir "$REPORT_DIR"
           )
 
           if [[ "${{ steps.mode.outputs.apply }}" == "true" ]]; then
@@ -97,24 +121,25 @@ jobs:
         if: always()
         shell: bash
         run: |
-          if [[ -f reports/stream-validation/summary.md ]]; then
-            cat reports/stream-validation/summary.md >> "$GITHUB_STEP_SUMMARY"
+          if [[ -f "$REPORT_DIR/summary.md" ]]; then
+            cat "$REPORT_DIR/summary.md" >> "$GITHUB_STEP_SUMMARY"
           else
-            echo "O validador nao produziu relatorio." >> "$GITHUB_STEP_SUMMARY"
+            echo "O validador nao produziu relatorio para $PLAYLIST." >> "$GITHUB_STEP_SUMMARY"
           fi
 
       - name: Salvar relatorio como artefato
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: stream-validation-report
-          path: reports/stream-validation/
+          name: stream-validation-${{ matrix.slug }}
+          path: ${{ env.REPORT_DIR }}/
           if-no-files-found: warn
           retention-days: 14
 
       - name: Commitar remocoes confirmadas
         if: >-
           github.ref == 'refs/heads/main' &&
+          matrix.auto_apply == true &&
           steps.mode.outputs.apply == 'true' &&
           steps.validate.outputs.changed == 'true'
         shell: bash
@@ -123,5 +148,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add "$PLAYLIST"
-          git commit -m "Remove streams IPTV invalidos [skip ci]"
+          git commit -m "Remove streams IPTV invalidos de $PLAYLIST [skip ci]"
           git push
