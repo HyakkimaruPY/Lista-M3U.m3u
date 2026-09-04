@@ -1,0 +1,207 @@
+name: Validar e manter streams IPTV
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply_changes:
+        description: "Aplicar manutencao segura na main"
+        required: true
+        default: false
+        type: boolean
+      limit:
+        description: "Quantidade maxima por playlist no dry-run (0 = todos)"
+        required: true
+        default: "0"
+        type: string
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "*.m3u"
+      - "scripts/**"
+      - ".github/workflows/validate-streams.yml"
+  schedule:
+    - cron: "17 6 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stream-maintenance-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: >-
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'workflow_dispatch' && inputs.apply_changes != true)
+    name: Validar ${{ matrix.playlist }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - playlist: srhell02iptv.m3u
+            slug: principal-pluto
+            include_host: jmp2.uk
+            repair_sources: false
+          - playlist: cn.m3u
+            slug: china
+            include_host: ""
+            repair_sources: true
+          - playlist: testNew.m3u
+            slug: test-new
+            include_host: ""
+            repair_sources: false
+          - playlist: teste_vai.m3u
+            slug: teste-vai
+            include_host: ""
+            repair_sources: false
+          - playlist: teteNew2.m3u
+            slug: teste-new-2
+            include_host: ""
+            repair_sources: false
+
+    env:
+      PLAYLIST: ${{ matrix.playlist }}
+      REPORT_DIR: reports/stream-validation/${{ matrix.slug }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Instalar FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+
+      - name: Validar audio e video
+        id: validate
+        shell: bash
+        run: |
+          LIMIT=0
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            LIMIT="${{ inputs.limit }}"
+          fi
+          if ! [[ "$LIMIT" =~ ^[0-9]+$ ]]; then
+            echo "limit precisa ser um inteiro >= 0"
+            exit 2
+          fi
+
+          ARGS=(
+            --playlist "$PLAYLIST"
+            --workers 6
+            --retries 2
+            --timeout 25
+            --decode-seconds 4
+            --limit "$LIMIT"
+            --report-dir "$REPORT_DIR"
+          )
+          if [[ -n "${{ matrix.include_host }}" ]]; then
+            ARGS+=(--include-host "${{ matrix.include_host }}")
+          fi
+          python3 scripts/validate_streams.py "${ARGS[@]}"
+
+      - name: Procurar substitutos nas fontes chinesas
+        if: matrix.repair_sources == true
+        shell: bash
+        run: |
+          python3 scripts/refresh_cn_sources.py             --playlist "$PLAYLIST"             --validation-report "$REPORT_DIR/results.json"             --report-dir "$REPORT_DIR/source-refresh"
+
+      - name: Publicar resumo
+        if: always()
+        shell: bash
+        run: |
+          if [[ -f "$REPORT_DIR/summary.md" ]]; then
+            cat "$REPORT_DIR/summary.md" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [[ -f "$REPORT_DIR/source-refresh/summary.md" ]]; then
+            cat "$REPORT_DIR/source-refresh/summary.md" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Salvar relatorio como artefato
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: stream-validation-${{ matrix.slug }}
+          path: ${{ env.REPORT_DIR }}/
+          if-no-files-found: warn
+          retention-days: 14
+
+  daily-maintenance:
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      (
+        github.event_name == 'schedule' ||
+        (github.event_name == 'workflow_dispatch' && inputs.apply_changes == true)
+      )
+    name: Manutencao diaria segura
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Instalar FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Validar e remover somente Pluto confirmadamente offline
+        id: pluto
+        run: |
+          python3 scripts/validate_streams.py             --playlist srhell02iptv.m3u             --include-host jmp2.uk             --workers 6             --retries 2             --timeout 25             --decode-seconds 4             --report-dir reports/stream-validation/principal-pluto             --apply
+
+      - name: Validar canais chineses
+        run: |
+          python3 scripts/validate_streams.py             --playlist cn.m3u             --workers 6             --retries 2             --timeout 25             --decode-seconds 4             --report-dir reports/stream-validation/china
+
+      - name: Substituir URLs chinesas por alternativas saudaveis
+        id: china
+        run: |
+          python3 scripts/refresh_cn_sources.py             --playlist cn.m3u             --validation-report reports/stream-validation/china/results.json             --report-dir reports/stream-validation/china/source-refresh             --apply
+
+      - name: Validar demais playlists sem alterar
+        shell: bash
+        run: |
+          python3 scripts/validate_streams.py --playlist testNew.m3u --workers 6 --retries 2 --timeout 25 --decode-seconds 4 --report-dir reports/stream-validation/test-new
+          python3 scripts/validate_streams.py --playlist teste_vai.m3u --workers 6 --retries 2 --timeout 25 --decode-seconds 4 --report-dir reports/stream-validation/teste-vai
+          python3 scripts/validate_streams.py --playlist teteNew2.m3u --workers 6 --retries 2 --timeout 25 --decode-seconds 4 --report-dir reports/stream-validation/teste-new-2
+
+      - name: Publicar resumos
+        if: always()
+        shell: bash
+        run: |
+          while IFS= read -r -d '' FILE; do
+            cat "$FILE" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+          done < <(find reports -name summary.md -print0 | sort -z)
+
+      - name: Salvar relatorios
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: stream-validation-daily
+          path: reports/stream-validation/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Commitar somente manutencao autorizada
+        shell: bash
+        run: |
+          git add srhell02iptv.m3u cn.m3u
+          if git diff --cached --quiet; then
+            echo "Nenhuma URL autorizada precisou ser alterada."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Atualiza streams IPTV confirmadamente offline [skip ci]"
+          git push
