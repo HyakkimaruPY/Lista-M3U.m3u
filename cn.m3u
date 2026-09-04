@@ -3,7 +3,7 @@
 # Fontes: https://github.com/BurningC4/Chinese-IPTV
 #         https://github.com/Free-TV/IPTV
 #         https://github.com/iptv-org/iptv
-# Politica: sem URLs malformadas, assinadas/temporarias ou marcadas como geobloqueadas;
+# Validacao GitHub Actions 2026-09-04: 9 streams confirmadamente invalidos removidos.\n# Politica: sem URLs malformadas, assinadas/temporarias ou marcadas como geobloqueadas;
 #           duplicatas exatas removidas e no maximo 3 alternativas por canal.
 
 # Fonte: BurningC4
@@ -334,9 +334,6 @@ http://play1-qk.nmtv.cn/live/1735546697341033.m3u8
 #EXTINF:-1 tvg-id="CNDFilmMiddleSchoolChannel.cn@SD" group-title="China • IPTV-org" x-source="IPTV-org",CND Film Middle School Channel
 http://live2.rxip.sc96655.com/live/zxs_4000.m3u8?A=&E=&K=&P=&S=&U=
 
-#EXTINF:-1 tvg-id="CNDFilmMiddleSchoolChannel.cn@SD" group-title="China • IPTV-org" x-source="IPTV-org",CND Film Middle School Channel
-http://live-play.zxstv.com.cn/zhongxuesheng/zhongxuesheng.m3u8
-
 #EXTINF:-1 tvg-id="DragonTVInternational.cn@SD" group-title="China • IPTV-org" x-source="IPTV-org",Dragon TV International
 https://restream.pdtvhd.com/memfs/0b1b95c9-3543-4af9-9fdb-cf45f1602f17.m3u8
 
@@ -483,15 +480,6 @@ http://php.jdshipin.com:8880/xztv.php?id=zy
 
 #EXTINF:-1 tvg-id="ZhejiangInternationalChannel.cn@SD" group-title="China • IPTV-org" x-source="IPTV-org",Zhejiang TV International
 https://ali-m-l.cztv.com/channels/lantian/channel10/1080p.m3u8
-
-#EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",万州三峡移民 (576p) [Not 24/7]
-http://123.146.162.24:8013/tslslive/PU2vzMI/hls/live_sd.m3u8
-
-#EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",万州影视 (576p) [Not 24/7]
-http://123.146.162.24:8013/tslslive/vWlnEzU/hls/live_sd.m3u8
-
-#EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",万州综合 (576p) [Not 24/7]
-http://123.146.162.24:8013/tslslive/noEX9SG/hls/live_sd.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",上虞1新闻综合 (720p) [Not 24/7]
 https://l.cztvcloud.com/channels/lantian/SXshangyu1/720p.m3u8
@@ -769,9 +757,6 @@ http://117.156.28.119/270000001111/1110000130/index.m3u8
 #EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",嵊州综合 (720p) [Not 24/7]
 https://l.cztvcloud.com/channels/lantian/SXshengzhou1/720p.m3u8
 
-#EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",广东 Ⅰ 韶关公共台 (720p) [Not 24/7]
-https://www.sgmsw.cn/videos/tv/201805/1308/9P424TC5M000AFO13CXK6GN6BOA889D2/hls/live.m3u8
-
 #EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",广东 Ⅰ 韶关综合台 (720p) [Not 24/7]
 https://www.sgmsw.cn/videos/tv/201805/1308/SB05RIYZOU8JR418AUQOF62CAJQ08D0E/hls/live.m3u8
 
@@ -897,9 +882,6 @@ https://live.wjyanghu.com/live/CH2.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",江津新闻综合 (480p)
 http://222.179.155.21:1935/ch1.m3u8
-
-#EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",江津经济生活 (480p)
-http://222.179.155.21:1935/ch0.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",江苏 Ⅰ 连云港公共 (480p) [Not 24/7]
 https://live.lyg1.com/ggpd/sd/live.m3u8
@@ -1090,20 +1072,11 @@ http://123.146.162.24:8017/c2F0hmi/1000/live.m3u8
 #EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",萬州三峽移民 (576p)
 http://wanzhoulive.cbg.cn:8017/c2F0hmi/1000/live.m3u8
 
-#EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",萬州影視文藝 (576p) [Not 24/7]
-http://123.146.162.24:8017/d4ceB1a/1000/live.m3u8
-
 #EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",萬州影視文藝 (576p)
 http://wanzhoulive.cbg.cn:8017/d4ceB1a/1000/live.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",萬州科教頻道 (576p)
-http://123.146.162.24:8017/Cz7WPb8/800/live.m3u8
-
-#EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",萬州科教頻道 (576p)
 http://wanzhoulive.cbg.cn:8017/Cz7WPb8/800/live.m3u8
-
-#EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",萬州綜合頻道 (576p)
-http://123.146.162.24:8017/iTXwrGs/800/live.m3u8
 
 #EXTINF:-1 tvg-id="" group-title="China • IPTV-org" x-source="IPTV-org",萬州綜合頻道 (576p)
 http://wanzhoulive.cbg.cn:8017/iTXwrGs/800/live.m3u8
