@@ -1,0 +1,117 @@
+name: Validar streams IPTV
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply_removals:
+        description: "Remover automaticamente canais confirmadamente invalidos"
+        required: true
+        default: false
+        type: boolean
+      limit:
+        description: "Quantidade maxima de canais para testar (0 = todos)"
+        required: true
+        default: "0"
+        type: string
+  schedule:
+    - cron: "17 6 * * *"
+
+permissions:
+  contents: write
+
+env:
+  PLAYLIST: srhell02iptv.m3u
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Instalar FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+
+      - name: Definir modo da execucao
+        id: mode
+        shell: bash
+        run: |
+          APPLY=false
+          LIMIT=0
+
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            APPLY="${{ inputs.apply_removals }}"
+            LIMIT="${{ inputs.limit }}"
+          elif [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            APPLY=true
+          fi
+
+          if ! [[ "$LIMIT" =~ ^[0-9]+$ ]]; then
+            echo "limit precisa ser um inteiro >= 0"
+            exit 2
+          fi
+
+          echo "apply=$APPLY" >> "$GITHUB_OUTPUT"
+          echo "limit=$LIMIT" >> "$GITHUB_OUTPUT"
+          echo "Modo: apply=$APPLY, limit=$LIMIT"
+
+      - name: Validar audio e video
+        id: validate
+        shell: bash
+        run: |
+          ARGS=(
+            --playlist "$PLAYLIST"
+            --workers 6
+            --retries 2
+            --timeout 25
+            --decode-seconds 4
+            --limit "${{ steps.mode.outputs.limit }}"
+            --report-dir reports/stream-validation
+          )
+
+          if [[ "${{ steps.mode.outputs.apply }}" == "true" ]]; then
+            ARGS+=(--apply)
+          fi
+
+          python3 scripts/validate_streams.py "${ARGS[@]}"
+
+      - name: Publicar resumo no GitHub Actions
+        if: always()
+        shell: bash
+        run: |
+          if [[ -f reports/stream-validation/summary.md ]]; then
+            cat reports/stream-validation/summary.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "O validador nao produziu relatorio." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Salvar relatorio como artefato
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stream-validation-report
+          path: reports/stream-validation/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Commitar remocoes confirmadas
+        if: >-
+          github.ref == 'refs/heads/main' &&
+          steps.mode.outputs.apply == 'true' &&
+          steps.validate.outputs.changed == 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add "$PLAYLIST"
+          git commit -m "Remove streams IPTV invalidos [skip ci]"
+          git push
