@@ -1,15 +1,15 @@
-name: Validar streams IPTV
+name: Validar e manter streams IPTV
 
 on:
   workflow_dispatch:
     inputs:
-      apply_removals:
-        description: "Aplicar remocoes confirmadas na playlist principal"
+      apply_changes:
+        description: "Aplicar manutencao segura na main"
         required: true
         default: false
         type: boolean
       limit:
-        description: "Quantidade maxima por playlist (0 = todos)"
+        description: "Quantidade maxima por playlist no dry-run (0 = todos)"
         required: true
         default: "0"
         type: string
@@ -18,7 +18,7 @@ on:
       - main
     paths:
       - "*.m3u"
-      - "scripts/validate_streams.py"
+      - "scripts/**"
       - ".github/workflows/validate-streams.yml"
   schedule:
     - cron: "17 6 * * *"
@@ -26,8 +26,15 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: stream-maintenance-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   validate:
+    if: >-
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'workflow_dispatch' && inputs.apply_changes != true)
     name: Validar ${{ matrix.playlist }}
     runs-on: ubuntu-latest
     timeout-minutes: 120
@@ -37,20 +44,25 @@ jobs:
       matrix:
         include:
           - playlist: srhell02iptv.m3u
-            slug: principal
-            auto_apply: true
+            slug: principal-pluto
+            include_host: jmp2.uk
+            repair_sources: false
           - playlist: cn.m3u
             slug: china
-            auto_apply: false
+            include_host: ""
+            repair_sources: true
           - playlist: testNew.m3u
             slug: test-new
-            auto_apply: false
+            include_host: ""
+            repair_sources: false
           - playlist: teste_vai.m3u
             slug: teste-vai
-            auto_apply: false
+            include_host: ""
+            repair_sources: false
           - playlist: teteNew2.m3u
             slug: teste-new-2
-            auto_apply: false
+            include_host: ""
+            repair_sources: false
 
     env:
       PLAYLIST: ${{ matrix.playlist }}
@@ -59,8 +71,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
 
       - name: Instalar FFmpeg
         run: |
@@ -69,62 +79,48 @@ jobs:
           ffmpeg -version | head -n 1
           ffprobe -version | head -n 1
 
-      - name: Definir modo da execucao
-        id: mode
+      - name: Validar audio e video
+        id: validate
         shell: bash
         run: |
-          APPLY=false
           LIMIT=0
-
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             LIMIT="${{ inputs.limit }}"
-            if [[ "${{ inputs.apply_removals }}" == "true" && "${{ matrix.auto_apply }}" == "true" ]]; then
-              APPLY=true
-            fi
-          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            APPLY=false
-            LIMIT=0
-          elif [[ "${{ github.ref }}" == "refs/heads/main" && "${{ matrix.auto_apply }}" == "true" ]]; then
-            APPLY=true
           fi
-
           if ! [[ "$LIMIT" =~ ^[0-9]+$ ]]; then
             echo "limit precisa ser um inteiro >= 0"
             exit 2
           fi
 
-          echo "apply=$APPLY" >> "$GITHUB_OUTPUT"
-          echo "limit=$LIMIT" >> "$GITHUB_OUTPUT"
-          echo "Playlist: $PLAYLIST | apply=$APPLY | limit=$LIMIT"
-
-      - name: Validar audio e video
-        id: validate
-        shell: bash
-        run: |
           ARGS=(
             --playlist "$PLAYLIST"
             --workers 6
             --retries 2
             --timeout 25
             --decode-seconds 4
-            --limit "${{ steps.mode.outputs.limit }}"
+            --limit "$LIMIT"
             --report-dir "$REPORT_DIR"
           )
-
-          if [[ "${{ steps.mode.outputs.apply }}" == "true" ]]; then
-            ARGS+=(--apply)
+          if [[ -n "${{ matrix.include_host }}" ]]; then
+            ARGS+=(--include-host "${{ matrix.include_host }}")
           fi
-
           python3 scripts/validate_streams.py "${ARGS[@]}"
 
-      - name: Publicar resumo no GitHub Actions
+      - name: Procurar substitutos nas fontes chinesas
+        if: matrix.repair_sources == true
+        shell: bash
+        run: |
+          python3 scripts/refresh_cn_sources.py             --playlist "$PLAYLIST"             --validation-report "$REPORT_DIR/results.json"             --report-dir "$REPORT_DIR/source-refresh"
+
+      - name: Publicar resumo
         if: always()
         shell: bash
         run: |
           if [[ -f "$REPORT_DIR/summary.md" ]]; then
             cat "$REPORT_DIR/summary.md" >> "$GITHUB_STEP_SUMMARY"
-          else
-            echo "O validador nao produziu relatorio para $PLAYLIST." >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [[ -f "$REPORT_DIR/source-refresh/summary.md" ]]; then
+            cat "$REPORT_DIR/source-refresh/summary.md" >> "$GITHUB_STEP_SUMMARY"
           fi
 
       - name: Salvar relatorio como artefato
@@ -136,17 +132,76 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
-      - name: Commitar remocoes confirmadas
-        if: >-
-          github.ref == 'refs/heads/main' &&
-          matrix.auto_apply == true &&
-          steps.mode.outputs.apply == 'true' &&
-          steps.validate.outputs.changed == 'true'
+  daily-maintenance:
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      (
+        github.event_name == 'schedule' ||
+        (github.event_name == 'workflow_dispatch' && inputs.apply_changes == true)
+      )
+    name: Manutencao diaria segura
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Instalar FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Validar e remover somente Pluto confirmadamente offline
+        id: pluto
+        run: |
+          python3 scripts/validate_streams.py             --playlist srhell02iptv.m3u             --include-host jmp2.uk             --workers 6             --retries 2             --timeout 25             --decode-seconds 4             --report-dir reports/stream-validation/principal-pluto             --apply
+
+      - name: Validar canais chineses
+        run: |
+          python3 scripts/validate_streams.py             --playlist cn.m3u             --workers 6             --retries 2             --timeout 25             --decode-seconds 4             --report-dir reports/stream-validation/china
+
+      - name: Substituir URLs chinesas por alternativas saudaveis
+        id: china
+        run: |
+          python3 scripts/refresh_cn_sources.py             --playlist cn.m3u             --validation-report reports/stream-validation/china/results.json             --report-dir reports/stream-validation/china/source-refresh             --apply
+
+      - name: Validar demais playlists sem alterar
         shell: bash
         run: |
+          python3 scripts/validate_streams.py --playlist testNew.m3u --workers 6 --retries 2 --timeout 25 --decode-seconds 4 --report-dir reports/stream-validation/test-new
+          python3 scripts/validate_streams.py --playlist teste_vai.m3u --workers 6 --retries 2 --timeout 25 --decode-seconds 4 --report-dir reports/stream-validation/teste-vai
+          python3 scripts/validate_streams.py --playlist teteNew2.m3u --workers 6 --retries 2 --timeout 25 --decode-seconds 4 --report-dir reports/stream-validation/teste-new-2
+
+      - name: Publicar resumos
+        if: always()
+        shell: bash
+        run: |
+          while IFS= read -r -d '' FILE; do
+            cat "$FILE" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+          done < <(find reports -name summary.md -print0 | sort -z)
+
+      - name: Salvar relatorios
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: stream-validation-daily
+          path: reports/stream-validation/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Commitar somente manutencao autorizada
+        shell: bash
+        run: |
+          git add srhell02iptv.m3u cn.m3u
+          if git diff --cached --quiet; then
+            echo "Nenhuma URL autorizada precisou ser alterada."
+            exit 0
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add "$PLAYLIST"
-          git commit -m "Remove streams IPTV invalidos de $PLAYLIST [skip ci]"
+          git commit -m "Atualiza streams IPTV confirmadamente offline [skip ci]"
           git push

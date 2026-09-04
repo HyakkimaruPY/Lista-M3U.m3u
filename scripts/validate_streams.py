@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Valida streams de uma playlist M3U usando ffprobe + ffmpeg.
 
-O validador foi desenhado para auto-remocao conservadora:
+O validador foi desenhado para auto-remocao conservadora e pode restringir a verificacao por host:
 - remove URLs malformadas;
 - remove 404/410 confirmados em todas as tentativas;
 - remove streams que abrem, mas repetidamente nao possuem video e audio;
@@ -36,6 +36,7 @@ class Entry:
     line: int
     title: str
     url: str | None
+    metadata: str = ""
     user_agent: str | None = None
     referer: str | None = None
 
@@ -129,6 +130,7 @@ def parse_playlist(lines: list[str]) -> list[Entry]:
                 line=start + 1,
                 title=title,
                 url=url,
+                metadata=lines[start],
                 user_agent=user_agent,
                 referer=referer,
             )
@@ -262,7 +264,10 @@ def ffprobe_once(entry: Entry, timeout: int) -> tuple[str, str]:
         return "uncertain", classify_error(output, timed_out)
 
     try:
-        payload = json.loads(output)
+        json_start = output.find("{")
+        if json_start < 0:
+            raise json.JSONDecodeError("JSON ausente", output, 0)
+        payload = json.loads(output[json_start:])
     except json.JSONDecodeError:
         return "uncertain", "ffprobe respondeu, mas o resultado nao pode ser interpretado"
 
@@ -430,6 +435,12 @@ def main() -> int:
     parser.add_argument("--decode-seconds", type=int, default=4)
     parser.add_argument("--limit", type=int, default=0, help="0 = todas as entradas")
     parser.add_argument("--report-dir", default="reports/stream-validation")
+    parser.add_argument(
+        "--include-host",
+        action="append",
+        default=[],
+        help="Testa somente hosts informados; pode ser repetido",
+    )
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()
 
@@ -451,10 +462,24 @@ def main() -> int:
         print("ERRO: nenhuma entrada #EXTINF encontrada", file=sys.stderr)
         return 2
 
-    selected = entries if args.limit <= 0 else entries[: args.limit]
-    skipped = entries[len(selected) :]
+    allowed_hosts = {item.strip().lower() for item in args.include_host if item.strip()}
+    eligible: list[Entry] = []
+    filtered_out: list[Entry] = []
+    for entry in entries:
+        url, _, _ = probe_url_and_headers(entry)
+        host = host_of(url).lower()
+        matches = not allowed_hosts or any(
+            host == allowed or host.endswith("." + allowed) for allowed in allowed_hosts
+        )
+        (eligible if matches else filtered_out).append(entry)
 
-    print(f"Validando {len(selected)} de {len(entries)} entradas em {playlist}...")
+    selected = eligible if args.limit <= 0 else eligible[: args.limit]
+    limited_out = eligible[len(selected) :]
+
+    print(
+        f"Validando {len(selected)} de {len(eligible)} entradas elegiveis "
+        f"({len(entries)} totais) em {playlist}..."
+    )
     results: list[Result] = []
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=max(1, args.workers)) as executor:
@@ -467,7 +492,9 @@ def main() -> int:
             results.append(result)
             print(f"[{result.status.upper():9}] linha {result.entry.line}: {result.entry.title} ({result.host}) - {result.reason}")
 
-    for entry in skipped:
+    for entry in filtered_out:
+        results.append(Result(entry, "skipped", "fora do filtro seguro desta playlist", host_of(entry.url), 0.0))
+    for entry in limited_out:
         results.append(Result(entry, "skipped", "nao testado por limite desta execucao", host_of(entry.url), 0.0))
 
     results.sort(key=lambda r: r.entry.number)

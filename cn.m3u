@@ -3,7 +3,8 @@
 # Fontes: https://github.com/BurningC4/Chinese-IPTV
 #         https://github.com/Free-TV/IPTV
 #         https://github.com/iptv-org/iptv
-# Validacao GitHub Actions 2026-09-04: 9 streams confirmadamente invalidos removidos.\n# Politica: sem URLs malformadas, assinadas/temporarias ou marcadas como geobloqueadas;
+# Validacao GitHub Actions 2026-09-04: 9 streams confirmadamente invalidos removidos.
+# Politica: sem URLs malformadas, assinadas/temporarias ou marcadas como geobloqueadas;
 #           duplicatas exatas removidas e no maximo 3 alternativas por canal.
 
 # Fonte: BurningC4
