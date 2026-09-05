@@ -21,7 +21,9 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
@@ -74,6 +76,28 @@ AMBIGUOUS_MARKERS = (
     "could not resolve",
     "i/o error",
 )
+
+
+def normalize_ocr_text(value: str) -> str:
+    value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
+    return re.sub(r"[^a-z0-9]+", " ", value.lower()).strip()
+
+
+def is_pluto_unavailable_slate(ocr_text: str) -> bool:
+    """Reconhece a tela que ainda possui A/V, mas nao entrega o canal pedido."""
+    text = normalize_ocr_text(ocr_text)
+    words = set(text.split())
+    if "pluto" not in words:
+        return False
+    if "wrap" in words:
+        return True
+    if {"longer", "available"}.issubset(words) and ("device" in words or "tv" in words):
+        return True
+    if {"nao", "mais", "disponivel"}.issubset(words):
+        return True
+    if {"ya", "no", "disponible"}.issubset(words):
+        return True
+    return False
 
 
 def extract_title(extinf: str, fallback: str) -> str:
@@ -316,7 +340,65 @@ def decode_once(entry: Entry, timeout: int, decode_seconds: int) -> tuple[str, s
     return "uncertain", classify_error(output, timed_out)
 
 
-def validate_entry(entry: Entry, retries: int, timeout: int, decode_seconds: int) -> Result:
+def inspect_pluto_frames(entry: Entry, timeout: int, decode_seconds: int) -> tuple[str, str]:
+    """Extrai amostras e usa OCR para rejeitar a tela de indisponibilidade da Pluto."""
+    url, user_agent, referer = probe_url_and_headers(entry)
+    assert url is not None
+
+    with tempfile.TemporaryDirectory(prefix="iptv-pluto-") as temp_dir:
+        frame_pattern = str(Path(temp_dir) / "frame-%02d.png")
+        sample_seconds = max(6, decode_seconds)
+        cmd = [
+            "ffmpeg",
+            "-v",
+            "error",
+            "-nostdin",
+            "-hide_banner",
+            *command_prefix(url, user_agent, referer),
+            "-i",
+            url,
+            "-t",
+            str(sample_seconds),
+            "-an",
+            "-vf",
+            "fps=1/2,scale=960:-2:flags=fast_bilinear",
+            "-frames:v",
+            "3",
+            frame_pattern,
+        ]
+        rc, output, timed_out = run_command(cmd, max(timeout, sample_seconds + 10))
+        if rc != 0:
+            if is_definite_dead(output):
+                return "definite", classify_error(output, timed_out)
+            return "uncertain", "nao foi possivel extrair quadros para a verificacao visual"
+
+        frames = sorted(Path(temp_dir).glob("frame-*.png"))
+        if not frames:
+            return "uncertain", "nenhum quadro foi gerado para a verificacao visual"
+
+        ocr_parts: list[str] = []
+        for frame in frames:
+            ocr_cmd = ["tesseract", str(frame), "stdout", "-l", "eng", "--psm", "11"]
+            ocr_rc, ocr_output, _ = run_command(ocr_cmd, 15)
+            if ocr_rc == 0:
+                ocr_parts.append(ocr_output)
+
+        if not ocr_parts:
+            return "uncertain", "OCR nao conseguiu analisar os quadros do stream"
+
+        combined = "\n".join(ocr_parts)
+        if is_pluto_unavailable_slate(combined):
+            return "unavailable", "tela de indisponibilidade da Pluto detectada por OCR"
+        return "clear", "conteudo visual sem tela de indisponibilidade conhecida"
+
+
+def validate_entry(
+    entry: Entry,
+    retries: int,
+    timeout: int,
+    decode_seconds: int,
+    detect_pluto_slate: bool,
+) -> Result:
     started = time.monotonic()
     url, _, _ = probe_url_and_headers(entry)
     host = host_of(url)
@@ -332,7 +414,22 @@ def validate_entry(entry: Entry, retries: int, timeout: int, decode_seconds: int
         if kind == "av":
             decode_kind, decode_reason = decode_once(entry, timeout, decode_seconds)
             if decode_kind == "healthy":
-                return Result(entry, "healthy", decode_reason, host, time.monotonic() - started)
+                if not detect_pluto_slate:
+                    return Result(entry, "healthy", decode_reason, host, time.monotonic() - started)
+                content_kind, content_reason = inspect_pluto_frames(entry, timeout, decode_seconds)
+                if content_kind == "clear":
+                    return Result(
+                        entry,
+                        "healthy",
+                        f"{decode_reason}; {content_reason}",
+                        host,
+                        time.monotonic() - started,
+                    )
+                attempt_kinds[-1] = "definite" if content_kind in {"unavailable", "definite"} else "uncertain"
+                attempt_reasons[-1] = content_reason
+                if attempt + 1 < retries:
+                    time.sleep(1.0)
+                continue
             attempt_kinds[-1] = decode_kind
             attempt_reasons[-1] = decode_reason
 
@@ -433,6 +530,11 @@ def main() -> int:
     parser.add_argument("--retries", type=int, default=2)
     parser.add_argument("--timeout", type=int, default=25)
     parser.add_argument("--decode-seconds", type=int, default=4)
+    parser.add_argument(
+        "--detect-pluto-slate",
+        action="store_true",
+        help="Usa OCR para detectar a tela 'Pluto TV is no longer available'",
+    )
     parser.add_argument("--limit", type=int, default=0, help="0 = todas as entradas")
     parser.add_argument("--report-dir", default="reports/stream-validation")
     parser.add_argument(
@@ -444,7 +546,10 @@ def main() -> int:
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()
 
-    for binary in ("ffprobe", "ffmpeg"):
+    required_binaries = ["ffprobe", "ffmpeg"]
+    if args.detect_pluto_slate:
+        required_binaries.append("tesseract")
+    for binary in required_binaries:
         if not shutil.which(binary):
             print(f"ERRO: {binary} nao encontrado no PATH", file=sys.stderr)
             return 2
@@ -484,7 +589,14 @@ def main() -> int:
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=max(1, args.workers)) as executor:
         future_map = {
-            executor.submit(validate_entry, entry, max(1, args.retries), args.timeout, args.decode_seconds): entry
+            executor.submit(
+                validate_entry,
+                entry,
+                max(1, args.retries),
+                args.timeout,
+                args.decode_seconds,
+                args.detect_pluto_slate,
+            ): entry
             for entry in selected
         }
         for future in concurrent.futures.as_completed(future_map):
