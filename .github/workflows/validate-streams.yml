@@ -72,12 +72,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Instalar FFmpeg
+      - name: Instalar FFmpeg e OCR
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg
+          sudo apt-get install -y ffmpeg tesseract-ocr tesseract-ocr-eng
           ffmpeg -version | head -n 1
           ffprobe -version | head -n 1
+          tesseract --version | head -n 1
 
       - name: Validar audio e video
         id: validate
@@ -104,6 +105,9 @@ jobs:
           if [[ -n "${{ matrix.include_host }}" ]]; then
             ARGS+=(--include-host "${{ matrix.include_host }}")
           fi
+          if [[ "${{ matrix.include_host }}" == "jmp2.uk" ]]; then
+            ARGS+=(--detect-pluto-slate)
+          fi
           python3 scripts/validate_streams.py "${ARGS[@]}"
 
       - name: Procurar substitutos nas fontes chinesas
@@ -111,6 +115,12 @@ jobs:
         shell: bash
         run: |
           python3 scripts/refresh_cn_sources.py             --playlist "$PLAYLIST"             --validation-report "$REPORT_DIR/results.json"             --report-dir "$REPORT_DIR/source-refresh"
+
+      - name: Procurar IDs Pluto regionais atualizados
+        if: matrix.include_host == 'jmp2.uk'
+        shell: bash
+        run: |
+          python3 scripts/refresh_pluto_sources.py             --playlist "$PLAYLIST"             --validation-report "$REPORT_DIR/results.json"             --report-dir "$REPORT_DIR/source-refresh"
 
       - name: Publicar resumo
         if: always()
@@ -149,15 +159,23 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Instalar FFmpeg
+      - name: Instalar FFmpeg e OCR
         run: |
           sudo apt-get update
-          sudo apt-get install -y ffmpeg
+          sudo apt-get install -y ffmpeg tesseract-ocr tesseract-ocr-eng
 
-      - name: Validar e remover somente Pluto confirmadamente offline
+      - name: Validar canais Pluto da playlist principal
         id: pluto
         run: |
-          python3 scripts/validate_streams.py             --playlist srhell02iptv.m3u             --include-host jmp2.uk             --workers 6             --retries 2             --timeout 25             --decode-seconds 4             --report-dir reports/stream-validation/principal-pluto             --apply
+          python3 scripts/validate_streams.py             --playlist srhell02iptv.m3u             --include-host jmp2.uk             --detect-pluto-slate             --workers 6             --retries 2             --timeout 25             --decode-seconds 4             --report-dir reports/stream-validation/principal-pluto
+
+      - name: Corrigir IDs Pluto alterados na fonte regional
+        run: |
+          python3 scripts/refresh_pluto_sources.py             --playlist srhell02iptv.m3u             --validation-report reports/stream-validation/principal-pluto/results.json             --report-dir reports/stream-validation/principal-pluto/source-refresh             --apply
+
+      - name: Confirmar e remover Pluto ainda invalido
+        run: |
+          python3 scripts/validate_streams.py             --playlist srhell02iptv.m3u             --include-host jmp2.uk             --detect-pluto-slate             --workers 6             --retries 2             --timeout 25             --decode-seconds 4             --report-dir reports/stream-validation/principal-pluto/final             --apply
 
       - name: Validar canais chineses
         run: |
