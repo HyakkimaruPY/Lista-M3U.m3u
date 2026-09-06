@@ -34,6 +34,11 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
 
+      - name: Restaurar cn.m3u limpa da main no PR
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: git show origin/main:cn.m3u > cn.m3u
+
       - name: Instalar FFmpeg
         run: |
           sudo apt-get update
@@ -62,7 +67,7 @@ jobs:
             echo "BurningC4 ainda aparece como provedor de stream"
             exit 1
           fi
-          echo "BurningC4 removido como provedor; logos reaproveitadas quando houve correspondencia."
+          echo "BurningC4 removido como provedor; logos reaproveitadas apenas em correspondencias seguras."
 
       - name: Commitar correcoes que passaram nos testes direcionados
         shell: bash
