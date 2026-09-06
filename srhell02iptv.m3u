@@ -3,26 +3,26 @@
 #EXTINF:-1 tvg-id="CGTNSpanish.cn" tvg-name="CGTN Español" tvg-logo="https://i.imgur.com/Poz3xfi.png" group-title="China • Internacional", CGTN Español
 https://livees.cgtn.com/1000e/prog_index.m3u8
 
-#EXTINF:-1 tvg-id="CCTV15.cn" tvg-name="CCTV-15 音乐 1" tvg-logo="https://i.imgur.com/CCV0eRG.png" group-title="China • Música", CCTV-15 音乐 1
+#EXTINF:-1 tvg-id="CCTV15.cn" tvg-name="CCTV-15 音乐 1" tvg-logo="https://i.imgur.com/CCV0eRG.png" group-title="China • Música" x-source="IPTV-org", CCTV-15 音乐 1
 https://xykt-fix.github.io/play/a02e/index.m3u8
 
-#EXTINF:-1 tvg-id="CCTV15.cn" tvg-name="CCTV-15 音乐 2" tvg-logo="https://i.imgur.com/CCV0eRG.png" group-title="China • Música", CCTV-15 音乐 2
+#EXTINF:-1 tvg-id="CCTV15.cn" tvg-name="CCTV-15 音乐 2" tvg-logo="https://i.imgur.com/CCV0eRG.png" group-title="China • Música" x-source="IPTV-org", CCTV-15 音乐 2
 http://74.91.26.218:82/live/cctv15hd.m3u8
 
 
 
 
 
-#EXTINF:-1 tvg-id="CCTV6.cn" tvg-name="CCTV-6 电影" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv6.png" group-title="China • Cinema", CCTV-6 电影
+#EXTINF:-1 tvg-id="CCTV6.cn" tvg-name="CCTV-6 电影" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv6.png" group-title="China • Cinema" x-source="Free-TV", CCTV-6 电影
 http://69.30.245.50/live/cctv6.m3u8
 
-#EXTINF:-1 tvg-id="CCTV8.cn" tvg-name="CCTV-8 电视剧" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv8.png" group-title="China • Séries", CCTV-8 电视剧
+#EXTINF:-1 tvg-id="CCTV8.cn" tvg-name="CCTV-8 电视剧" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv8.png" group-title="China • Séries" x-source="Free-TV", CCTV-8 电视剧
 http://74.91.26.218:82/live/cctv8hd.m3u8
 
-#EXTINF:-1 tvg-id="CCTV11.cn" tvg-name="CCTV-11 戏曲" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv11.png" group-title="China • Cultura", CCTV-11 戏曲
+#EXTINF:-1 tvg-id="CCTV11.cn" tvg-name="CCTV-11 戏曲" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv11.png" group-title="China • Cultura" x-source="Free-TV", CCTV-11 戏曲
 http://74.91.26.218:82/live/cctv11hd.m3u8
 
-#EXTINF:-1 tvg-id="CCTV14.cn" tvg-name="CCTV-14 少儿" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctvchild.png" group-title="China • Infantil", CCTV-14 少儿
+#EXTINF:-1 tvg-id="CCTV14.cn" tvg-name="CCTV-14 少儿" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctvchild.png" group-title="China • Infantil" x-source="Free-TV", CCTV-14 少儿
 http://74.91.26.218:82/live/cctv14hd.m3u8
 
 #EXTINF:-1 tvg-id="HunanSatelliteTV.cn" tvg-name="湖南卫视" tvg-logo="https://iptv.burningc4.com/tvg-logo/hunan.png" group-title="China • Variedades", 湖南卫视

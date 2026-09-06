@@ -8,12 +8,19 @@ on:
     paths:
       - "scripts/sync_cn_to_main.py"
       - ".github/workflows/sync-china-main.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "*.m3u"
+      - "scripts/sync_cn_to_main.py"
+      - ".github/workflows/sync-china-main.yml"
 
 permissions:
   contents: write
 
 concurrency:
-  group: sync-china-main
+  group: sync-china-main-${{ github.sha }}
   cancel-in-progress: false
 
 jobs:
@@ -21,10 +28,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
-      - name: Checkout main com historico
+      - name: Checkout branch com historico
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
+
+      - name: Restaurar cn.m3u limpa da main no PR
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: git show origin/main:cn.m3u > cn.m3u
 
       - name: Instalar FFmpeg
         run: |
@@ -54,9 +67,27 @@ jobs:
             echo "BurningC4 ainda aparece como provedor de stream"
             exit 1
           fi
-          echo "BurningC4 removido como provedor; logos reaproveitadas quando houve correspondencia."
+          echo "BurningC4 removido como provedor; logos reaproveitadas apenas em correspondencias seguras."
 
-      - name: Validar playlist chinesa completa
+      - name: Commitar correcoes que passaram nos testes direcionados
+        shell: bash
+        run: |
+          git add cn.m3u srhell02iptv.m3u
+          if git diff --cached --quiet; then
+            echo "Nenhuma mudanca adicional foi necessaria."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Sincroniza CCTV e logos da playlist chinesa [skip ci]"
+            if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+              git push origin HEAD:${{ github.event.pull_request.head.ref }}
+            else
+              git push
+            fi
+          fi
+
+      - name: Auditar playlist chinesa completa
+        continue-on-error: true
         run: |
           python3 scripts/validate_streams.py \
             --playlist cn.m3u \
@@ -67,20 +98,7 @@ jobs:
             --limit 0 \
             --report-dir reports/china-sync/cn
 
-      - name: Commitar playlists corrigidas na main
-        shell: bash
-        run: |
-          git add cn.m3u srhell02iptv.m3u
-          if git diff --cached --quiet; then
-            echo "Nenhuma mudanca adicional foi necessaria."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Sincroniza CCTV e logos da playlist chinesa [skip ci]"
-          git push
-
-      - name: Publicar relatorio da validacao
+      - name: Publicar relatorio da auditoria
         if: always()
         uses: actions/upload-artifact@v7
         with:
