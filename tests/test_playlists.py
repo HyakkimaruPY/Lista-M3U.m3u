@@ -52,6 +52,33 @@ class ValidationTests(unittest.TestCase):
             e=self.entry();e.title=name
             self.assertEqual(cctv_key(e),key)
 
+    def test_central_yellow_slate_but_not_corner_logo(self):
+        def fixture(left, top):
+            pixels = bytearray(200 * 120 * 3)
+            for y in range(top, top + 30):
+                for x in range(left, left + 36):
+                    index = (y * 200 + x) * 3
+                    pixels[index:index+3] = bytes([255, 240, 0])
+            return bytes(pixels)
+        self.assertTrue(v.pluto_logo_colors(fixture(82,45),200,120))
+        self.assertFalse(v.pluto_logo_colors(fixture(0,0),200,120))
+        self.assertFalse(v.pluto_logo_colors(bytes(200*120*3),200,120))
+
+    def test_logo_requires_central_large_text(self):
+        header = "level\tpage_num\tblock_num\tpar_num\tline_num\tword_num\tleft\ttop\twidth\theight\tconf\ttext\n"
+        center = header + "5\t1\t1\t1\t1\t1\t390\t240\t150\t60\t95\tpluto\n"
+        corner = header + "5\t1\t1\t1\t1\t1\t850\t20\t70\t25\t95\tpluto\n"
+        self.assertTrue(v.pluto_logo_sample(center,960,540)[1])
+        self.assertFalse(v.pluto_logo_sample(corner,960,540)[1])
+        show = center + "5\t1\t1\t1\t1\t2\t30\t400\t120\t30\t95\tNickelodeon\n"
+        self.assertFalse(v.pluto_logo_sample(show,960,540)[1])
+
+    def test_logo_bumper_does_not_imply_persistent_slate(self):
+        self.assertTrue(v.persistent_pluto_logo([True]*5,24))
+        self.assertFalse(v.persistent_pluto_logo([True]*5,6))
+        self.assertFalse(v.persistent_pluto_logo([True,True,False,False,False],24))
+        self.assertFalse(v.persistent_pluto_logo([True]*3,24))
+
     def test_slate_not_generic_wrap(self):
         self.assertFalse(v.is_pluto_unavailable_slate('Pluto TV cooking wrap'))
         self.assertTrue(v.is_pluto_unavailable_slate('Pluto TV is no longer available on this device'))

@@ -14,6 +14,8 @@ Nenhuma URL completa e escrita nos relatorios/logs para evitar republicar tokens
 from __future__ import annotations
 
 import argparse
+import csv
+import io
 import hashlib
 import concurrent.futures
 import json
@@ -369,14 +371,67 @@ def decode_once(entry: Entry, timeout: int, decode_seconds: int) -> tuple[str, s
     return "uncertain", classify_error(output, timed_out)
 
 
+def pluto_logo_colors(rgb: bytes, width: int, height: int) -> bool:
+    """Conservative yellow central slate heuristic, only grounds for uncertainty."""
+    if width <= 0 or height <= 0 or len(rgb) != width * height * 3:
+        return False
+    dark = total = 0
+    yellow = []
+    for y in range(0, height, 4):
+        for x in range(0, width, 4):
+            offset = (y * width + x) * 3
+            red, green, blue = rgb[offset:offset + 3]
+            total += 1
+            dark += max(red, green, blue) < 55
+            if red > 160 and green > 145 and blue < 90:
+                yellow.append((x, y))
+    if not yellow or dark / total < 0.85 or not 0.01 <= len(yellow) / total <= 0.15:
+        return False
+    central = sum(0.3 <= x / width <= 0.7 and 0.2 <= y / height <= 0.8 for x, y in yellow)
+    xs, ys = zip(*yellow)
+    return (central / len(yellow) >= 0.95 and (max(xs) - min(xs)) / width >= 0.12
+            and (max(ys) - min(ys)) / height >= 0.15)
+
+
+def pluto_logo_sample(tsv: str, width: int, height: int) -> tuple[str, bool]:
+    """A central, large logo differs from the ordinary corner channel watermark."""
+    start = tsv.find("level\tpage_num")
+    if start < 0 or width <= 0 or height <= 0:
+        return "", False
+    words = []
+    central = False
+    for row in csv.DictReader(io.StringIO(tsv[start:]), delimiter="\t"):
+        text = normalize_ocr_text(row.get("text") or "")
+        if not text:
+            continue
+        try:
+            confidence = float(row.get("conf", -1))
+            left, top, w, h = (int(row[key]) for key in ("left", "top", "width", "height"))
+        except (ValueError, TypeError, KeyError):
+            continue
+        if confidence < 30:
+            continue
+        words.append(text)
+        if text in {"pluto", "plutotv"}:
+            central |= (w / width >= 0.12 and 0.3 <= (left + w / 2) / width <= 0.7
+                        and 0.25 <= (top + h / 2) / height <= 0.75)
+    joined = " ".join(words)
+    logo_only = central and set(joined.split()).issubset({"pluto", "tv", "plutotv"})
+    return joined, logo_only
+
+
+def persistent_pluto_logo(samples: list[bool], observed_seconds: int) -> bool:
+    return observed_seconds >= 24 and len(samples) >= 5 and sum(samples) >= 4
+
+
 def inspect_pluto_frames(entry: Entry, timeout: int, decode_seconds: int) -> tuple[str, str]:
     """Extrai amostras e usa OCR para rejeitar a tela de indisponibilidade da Pluto."""
     url, user_agent, referer = probe_url_and_headers(entry)
     assert url is not None
 
     with tempfile.TemporaryDirectory(prefix="iptv-pluto-") as temp_dir:
-        frame_pattern = str(Path(temp_dir) / "frame-%02d.png")
-        sample_seconds = max(6, decode_seconds)
+        frame_pattern = str(Path(temp_dir) / "frame-%02d.ppm")
+        sample_seconds = max(30, decode_seconds)
         cmd = [
             "ffmpeg",
             "-v",
@@ -390,9 +445,9 @@ def inspect_pluto_frames(entry: Entry, timeout: int, decode_seconds: int) -> tup
             str(sample_seconds),
             "-an",
             "-vf",
-            "fps=1/2,scale=960:-2:flags=fast_bilinear",
+            "fps=1/6,scale=960:-2:flags=fast_bilinear",
             "-frames:v",
-            "3",
+            "5",
             frame_pattern,
         ]
         rc, output, timed_out = run_command(cmd, max(timeout, sample_seconds + 10))
@@ -401,23 +456,38 @@ def inspect_pluto_frames(entry: Entry, timeout: int, decode_seconds: int) -> tup
                 return "definite", classify_error(output, timed_out)
             return "uncertain", "nao foi possivel extrair quadros para a verificacao visual"
 
-        frames = sorted(Path(temp_dir).glob("frame-*.png"))
+        frames = sorted(Path(temp_dir).glob("frame-*.ppm"))
         if not frames:
             return "uncertain", "nenhum quadro foi gerado para a verificacao visual"
 
         ocr_parts: list[str] = []
+        logo_samples: list[bool] = []
         for frame in frames:
-            ocr_cmd = ["tesseract", str(frame), "stdout", "-l", "eng", "--psm", "11"]
+            ocr_cmd = ["tesseract", str(frame), "stdout", "-l", "eng", "--psm", "11", "tsv"]
             ocr_rc, ocr_output, _ = run_command(ocr_cmd, 15)
+            data = frame.read_bytes()
+            header = re.match(rb"P6\s+(\d+)\s+(\d+)\s+255\s", data)
+            if not header:
+                continue
+            width, height = map(int, header.groups())
+            colors = pluto_logo_colors(data[header.end():], width, height)
             if ocr_rc == 0:
-                ocr_parts.append(ocr_output)
+                text, logo_only = pluto_logo_sample(ocr_output, width, height)
+                ocr_parts.append(text)
+                logo_samples.append(logo_only or colors)
+            else:
+                logo_samples.append(colors)
 
+        if persistent_pluto_logo(logo_samples, (len(frames) - 1) * 6):
+            return "uncertain", "logo Pluto persistente: programacao nao confirmada na amostra de 30s"
         if not ocr_parts:
             return "uncertain", "OCR nao conseguiu analisar os quadros do stream"
 
         if sum(is_pluto_unavailable_slate(part) for part in ocr_parts) >= 2:
             return "unavailable", "tela de indisponibilidade da Pluto detectada por OCR"
-        return "clear", "conteudo visual sem tela de indisponibilidade conhecida"
+        if len(ocr_parts) < 5:
+            return "uncertain", "amostra visual incompleta; programacao nao confirmada"
+        return "clear", "amostra visual de 30s sem tela de indisponibilidade ou logo persistente reconhecido"
 
 
 def validate_entry(

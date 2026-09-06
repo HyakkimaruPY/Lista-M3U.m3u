@@ -41,3 +41,9 @@ As rotinas que escrevem na main compartilham um grupo de concorrência, e o push
 Curadoria preservou todas as 372 entradas chinesas e 257 da principal, incluindo URLs e cabeçalhos. A principal passou de 41 para 33 grupos; a chinesa passou de dois grupos por fornecedor para 11 grupos por conteúdo. Não havia solicitações de reprodução exatamente duplicadas para excluir.
 
 Verificação: 13 testes de regressão aprovados, quatro workflows com YAML válido, estrutura M3U verificada e stream HTTP local com áudio/vídeo decodificado por quatro segundos. Na tentativa de auditoria externa, 193 resultados chineses e 115 da principal foram registrados como inconclusivos por timeout. A auditoria foi interrompida, sem remoções e sem comprovar disponibilidade externa. Não houve conclusão de OCR externo nessa execução. Os workflows conservam a auditoria no ambiente GitHub Actions.
+
+### Tela persistente com o logo Pluto
+
+A inspeção visual usa cinco quadros ao longo de 30 segundos. Um logo grande e central, identificado por OCR ou pela composição amarela sobre fundo escuro, em pelo menos quatro quadros com cobertura de 24 segundos resulta em `uncertain`. A heurística não prova um loop infinito e não remove canais; ela impede atestar programação quando somente a vinheta foi observada. Logos pequenos de canto e vinhetas breves não satisfazem esse critério.
+
+A captura enviada da Nickelodeon Clássico foi reconhecida pela heurística de cores; o OCR isolado não reconheceu o logo estilizado. O ID 6824ce10c5d53e1351ceb8d1 coincide com a grade BR consultada em 6/9/2026. O link foi preservado, pois não foi possível comprovar outro stream reproduzindo programação nesta sessão.
