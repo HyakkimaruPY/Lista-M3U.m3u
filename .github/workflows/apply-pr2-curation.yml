@@ -1,0 +1,36 @@
+name: Aplicar curadoria da principal nesta branch
+
+on:
+  push:
+    branches:
+      - fix/pr2-main-playlist-china
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: ${{ !contains(github.event.head_commit.message, '[curation-applied]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout da branch
+        uses: actions/checkout@v7
+        with:
+          ref: fix/pr2-main-playlist-china
+          fetch-depth: 0
+
+      - name: Aplicar curadoria M3U
+        run: python3 scripts/curate_main_playlist.py
+
+      - name: Commitar resultado
+        shell: bash
+        run: |
+          git add srhell02iptv.m3u
+          if git diff --cached --quiet; then
+            echo "Curadoria nao produziu alteracoes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Curadoria da playlist principal e canais China [curation-applied]"
+          git push origin HEAD:fix/pr2-main-playlist-china
