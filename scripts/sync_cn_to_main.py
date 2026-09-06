@@ -8,7 +8,6 @@ from pathlib import Path
 
 from validate_streams import Entry, parse_playlist, probe_url_and_headers, validate_entry
 
-ATTR_RE = re.compile(r'\b([\w-]+)="([^"]*)"')
 URL_RE = re.compile(r'^https?://', re.I)
 
 
@@ -34,9 +33,9 @@ def cctv_key(entry: Entry) -> str:
     if re.search(r'cctv\s*-?\s*5\s*\+', text) or 'cctv5plus' in text:
         return 'cctv5plus'
     if re.search(r'cctv\s*-?\s*4k', text):
-        return 'cctv4k'
+        return 'cctv4'
     if re.search(r'cctv\s*-?\s*8k', text):
-        return 'cctv8k'
+        return 'cctv8'
     m = re.search(r'cctv\s*-?\s*(\d{1,2})', text)
     return f'cctv{int(m.group(1))}' if m else ''
 
@@ -49,6 +48,10 @@ def source_rank(entry: Entry) -> int:
     if source == 'iptv-org' or 'iptv-org' in group:
         return 1
     return 9
+
+
+def source_name(entry: Entry) -> str:
+    return 'Free-TV' if source_rank(entry) == 0 else 'IPTV-org'
 
 
 def historical_burning_text() -> str:
@@ -70,16 +73,28 @@ def norm_ascii(value: str) -> str:
     return re.sub(r'[^a-z0-9]+', '', value.lower())
 
 
-def chinese(value: str) -> str:
-    return ''.join(re.findall(r'[\u3400-\u9fff]', value))
+def base_station_id(entry: Entry) -> str:
+    raw = attr(entry.metadata, 'tvg-id').split('.cn')[0]
+    value = norm_ascii(raw)
+    aliases = {
+        'beijingsatellitetv': 'btv1',
+        'brtvkakuchildrenschannel': 'btvchild',
+        'shaanxisatellitetv': 'shan3xi',
+        'shaanxitv': 'shan3xi',
+        'neimonggolsatellitetv': 'neimenggu',
+        'neimonggolt': 'neimenggu',
+    }
+    for prefix, target in aliases.items():
+        if value.startswith(prefix):
+            return target
+    return value
 
 
 def build_logo_catalog(text: str):
     catalog = []
     if not text:
         return catalog
-    lines = text.splitlines()
-    for e in parse_playlist(lines):
+    for e in parse_playlist(text.splitlines()):
         if attr(e.metadata, 'x-source').lower() != 'burningc4' and 'burningc4' not in attr(e.metadata, 'group-title').lower():
             continue
         logo = attr(e.metadata, 'tvg-logo')
@@ -88,8 +103,6 @@ def build_logo_catalog(text: str):
         catalog.append({
             'key': cctv_key(e),
             'id': norm_ascii(attr(e.metadata, 'tvg-id')),
-            'name': norm_ascii(e.title),
-            'zh': chinese(e.title),
             'logo': logo,
         })
     return catalog
@@ -101,17 +114,19 @@ def match_logo(entry: Entry, catalog) -> str:
         for item in catalog:
             if item['key'] == key:
                 return item['logo']
-    eid = norm_ascii(attr(entry.metadata, 'tvg-id').split('.cn')[0])
-    ename = norm_ascii(entry.title)
-    ezh = chinese(entry.title)
-    for item in catalog:
-        if ezh and item['zh'] and (ezh in item['zh'] or item['zh'] in ezh) and min(len(ezh), len(item['zh'])) >= 2:
-            return item['logo']
+
+    eid = base_station_id(entry)
+    if not eid:
+        return ''
     for item in catalog:
         iid = item['id']
-        if eid and iid and (eid == iid or (len(iid) >= 4 and eid.startswith(iid)) or (len(eid) >= 4 and iid.startswith(eid))):
+        if not iid or item['key']:
+            continue
+        if eid == iid:
             return item['logo']
-        if ename and item['name'] and (ename == item['name'] or (len(item['name']) >= 5 and ename.startswith(item['name']))):
+        if len(iid) >= 4 and eid.startswith(iid):
+            return item['logo']
+        if len(eid) >= 4 and iid.startswith(eid):
             return item['logo']
     return ''
 
@@ -142,12 +157,11 @@ def clean_and_fill_cn(path: Path) -> tuple[int, int]:
 
 
 def validate_candidate(candidate: Entry, retries: int, timeout: int, decode_seconds: int) -> bool:
-    url, ua, ref = probe_url_and_headers(candidate)
-    if not url or ua or ref:
+    url, _, _ = probe_url_and_headers(candidate)
+    if not url:
         return False
-    probe = Entry(candidate.number, candidate.start, candidate.end, candidate.line, candidate.title, url, candidate.metadata)
-    result = validate_entry(probe, retries, timeout, decode_seconds, False)
-    print(f'[TEST] {candidate.title}: {result.status}')
+    result = validate_entry(candidate, retries, timeout, decode_seconds, False)
+    print(f'[TEST] {candidate.title}: {result.status} - {result.reason}')
     return result.status == 'healthy'
 
 
@@ -167,7 +181,7 @@ def sync_main(cn_path: Path, main_path: Path, retries: int, timeout: int, decode
     main_entries = parse_playlist(lines)
     usage: dict[str, int] = {}
     validated: dict[str, bool] = {}
-    changed = 0
+    changed_urls = 0
     selected = []
 
     for e in main_entries:
@@ -194,21 +208,24 @@ def sync_main(cn_path: Path, main_path: Path, retries: int, timeout: int, decode
         if choice is None:
             print(f'[FAIL] {e.title}: nenhum candidato passou ffprobe/ffmpeg')
             continue
+
         usage[key] = min(start + 1, max(0, len(pool) - 1))
         url, _, _ = probe_url_and_headers(choice)
         old_url, _, _ = probe_url_and_headers(e)
         if url != old_url:
             lines[e.end] = url
-            changed += 1
+            changed_urls += 1
+
+        lines[e.start] = set_attr(lines[e.start], 'x-source', source_name(choice))
         logo = attr(choice.metadata, 'tvg-logo')
         if logo and not attr(lines[e.start], 'tvg-logo'):
             lines[e.start] = set_attr(lines[e.start], 'tvg-logo', logo)
-        selected.append(f'{e.title} <- {attr(choice.metadata, "x-source") or attr(choice.metadata, "group-title")}')
+        selected.append(f'{e.title} <- {source_name(choice)} | {url}')
 
     updated = '\n'.join(lines).rstrip() + '\n'
     if updated != raw:
         main_path.write_text(updated, encoding='utf-8')
-    return changed, selected
+    return changed_urls, selected
 
 
 def structural_check(path: Path) -> None:
@@ -246,7 +263,7 @@ def main() -> int:
     structural_check(mainp)
 
     print(f'[CN] linhas BurningC4 removidas={removed_lines}; logos IPTV-org preenchidas={logos}')
-    print(f'[MAIN] URLs CCTV substituidas={changed}')
+    print(f'[MAIN] URLs CCTV substituidas={changed}; CCTV validados={len(selected)}')
     for item in selected:
         print('[SYNC]', item)
 
