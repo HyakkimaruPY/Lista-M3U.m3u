@@ -25,3 +25,4 @@ text = '\n'.join(out).rstrip() + '\n'
 if text != raw:
     PLAYLIST.write_text(text, encoding='utf-8')
 print(f'Removidos: {len(removed)}')
+# trigger workflow after workflow file exists
