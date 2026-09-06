@@ -14,7 +14,7 @@ on:
     - cron: "47 6 * * *"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   validate-main-non-pluto:
@@ -24,6 +24,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
+          fetch-depth: 0
 
       - name: Instalar FFmpeg
         run: |
@@ -34,13 +37,32 @@ jobs:
 
       - name: Validar audio e video dos canais nao-Pluto
         run: |
-          python3 scripts/validate_main_non_pluto.py \
-            --playlist srhell02iptv.m3u \
-            --workers 6 \
-            --retries 2 \
-            --timeout 25 \
-            --decode-seconds 4 \
+          ARGS=(
+            --playlist srhell02iptv.m3u
+            --workers 6
+            --retries 2
+            --timeout 25
+            --decode-seconds 4
             --report-dir reports/stream-validation/principal-non-pluto
+          )
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            ARGS+=(--apply)
+          fi
+          python3 scripts/validate_main_non_pluto.py "${ARGS[@]}"
+
+      - name: Commitar remocoes definitivas do PR
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          git add srhell02iptv.m3u
+          if git diff --cached --quiet; then
+            echo "Nenhuma falha definitiva para remover."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Remove streams nao-Pluto confirmadamente offline [skip ci]"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
 
       - name: Publicar resumo
         if: always()
