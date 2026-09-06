@@ -1,34 +1,55 @@
 #EXTM3U
 
-#EXTINF:-1 tvg-id="CGNTV" tvg-name="CGNT" tvg-logo="https://espanol-static.cgtn.com/w/images/icon/logo@3x.png" group-title="China", CGNTV
-#EXTVLCOPT:http-user-agent=Lavf53.32.100
-https://espanol-livews.cgtn.com/hls/LSveOGBaBw41Ea7ukkVAUdKQ220802LSTexu6xAuFH8VZNBLE1ZNEa220802cd/playlist.m3u8
+#EXTINF:-1 tvg-id="CGTNSpanish.cn" tvg-name="CGTN Español" tvg-logo="https://i.imgur.com/Poz3xfi.png" group-title="China • Internacional", CGTN Español
+https://livees.cgtn.com/1000e/prog_index.m3u8
 
-#EXTINF:-1 tvg-id="CCTV-15 音乐" tvg-name="CCTV-15 音乐" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5UqmnOSqHX6ClIU_7glcKxNHg3Nyc1Fvh4iOlnK9Ybg&s" group-title="China", CCTV-15 音乐
-#EXTVLCOPT:http-user-agent=Lavf53.32.100
-http://171.83.100.198:85/tsfile/live/0015_1.m3u8?key=txiptv
+#EXTINF:-1 tvg-id="CCTV15.cn" tvg-name="CCTV-15 音乐 A" tvg-logo="https://i.imgur.com/CCV0eRG.png" group-title="China • Música", CCTV-15 音乐 A
+http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226476/index.m3u8
 
-#EXTINF:-1 tvg-id="CCTV-15 音乐 2" tvg-name="CCTV-15 音乐 2" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5UqmnOSqHX6ClIU_7glcKxNHg3Nyc1Fvh4iOlnK9Ybg&s" group-title="China", CCTV-15 音乐 2
-#EXTVLCOPT:http-user-agent=Lavf53.32.100
-https://tv.iill.top/migu-1/cctv15
+#EXTINF:-1 tvg-id="CCTV15.cn@alt1" tvg-name="CCTV-15 音乐 B" tvg-logo="https://i.imgur.com/CCV0eRG.png" group-title="China • Música", CCTV-15 音乐 B
+https://xykt-fix.github.io/play/a02e/index.m3u8
 
-#EXTINF:-1 tvg-id="Tv-Series" tvg-name="Tv-Series" tvg-logo="https://supertvaovivo.io/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2021/06/TV-SERIES.jpg.webp" group-title="Series", Tv-Series
+#EXTINF:-1 tvg-id="CCTV15.cn@alt2" tvg-name="CCTV-15 音乐 C" tvg-logo="https://i.imgur.com/CCV0eRG.png" group-title="China • Música", CCTV-15 音乐 C
+http://183.196.25.171:808/hls/15/index.m3u8
+
+#EXTINF:-1 tvg-id="CCTV15.cn@alt3" tvg-name="CCTV-15 音乐 D" tvg-logo="https://i.imgur.com/CCV0eRG.png" group-title="China • Música", CCTV-15 音乐 D
+https://stream1.freetv.fun/cb3c72e7254e40411c7136bafb32bd8e1b6f4739c265c52851cff323a6a22b77.m3u8
+
+#EXTINF:-1 tvg-id="CCTV6.cn" tvg-name="CCTV-6 电影" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv6.png" group-title="China • Cinema", CCTV-6 电影
+http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226010/index.m3u8
+
+#EXTINF:-1 tvg-id="CCTV8.cn" tvg-name="CCTV-8 电视剧" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv8.png" group-title="China • Séries", CCTV-8 电视剧
+http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226008/index.m3u8
+
+#EXTINF:-1 tvg-id="CCTV11.cn" tvg-name="CCTV-11 戏曲" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv11.png" group-title="China • Cultura", CCTV-11 戏曲
+http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226565/index.m3u8
+
+#EXTINF:-1 tvg-id="CCTV14.cn" tvg-name="CCTV-14 少儿" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctvchild.png" group-title="China • Infantil", CCTV-14 少儿
+http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226591/index.m3u8
+
+#EXTINF:-1 tvg-id="HunanSatelliteTV.cn" tvg-name="湖南卫视" tvg-logo="https://iptv.burningc4.com/tvg-logo/hunan.png" group-title="China • Variedades", 湖南卫视
+http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226307/index.m3u8
+
+#EXTINF:-1 tvg-id="ZhejiangSatelliteTV.cn" tvg-name="浙江卫视" tvg-logo="https://iptv.burningc4.com/tvg-logo/zhejiang.png" group-title="China • Variedades", 浙江卫视
+http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226404/index.m3u8
+
+#EXTINF:-1 tvg-id="Tv-Series" tvg-name="Tv-Series" tvg-logo="https://supertvaovivo.io/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2021/06/TV-SERIES.jpg.webp" group-title="Séries", Tv-Series
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://stmv1.srvif.com/tvserie/tvserie/playlist.m3u8
 
-#EXTINF:-1 tvg-id="Run-Ação" tvg-name="Run-Ação" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv4Ur4EtdTzWMI61UpVQlqeukrHxp_wqtNbmKse1J0IPSfhUPVHFwvctAA&s=10" group-title="Filmes", Run-Ação
+#EXTINF:-1 tvg-id="Run-Ação" tvg-name="Run-Ação" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv4Ur4EtdTzWMI61UpVQlqeukrHxp_wqtNbmKse1J0IPSfhUPVHFwvctAA&s=10" group-title="Filmes • Ação", Run-Ação
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://stream.ads.ottera.tv/playlist.m3u8?network_id=2552
 
-#EXTINF:-1 tvg-id="Run-Ação" tvg-name="Run-Ação 4k" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv4Ur4EtdTzWMI61UpVQlqeukrHxp_wqtNbmKse1J0IPSfhUPVHFwvctAA&s=10" group-title="Filmes", Run-Ação 4k
+#EXTINF:-1 tvg-id="Run-Ação" tvg-name="Run-Ação 4k" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv4Ur4EtdTzWMI61UpVQlqeukrHxp_wqtNbmKse1J0IPSfhUPVHFwvctAA&s=10" group-title="Filmes • Ação", Run-Ação 4k
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://stream.ads.ottera.tv/playlist.m3u8?network_id=2153&avod=1&coppa=0&is_lat=0&dnt=0&td=6&us_privacy=1---&did=ffaafb626fb713d123ad63375284e408&ifa_type=sessionid&app_bundle=&app_store_url=&app_domain=runtime.tv&app_name=runtime&custom_targeting=web&custom_4=internal&player_height=2160&player_width=3840&content_channel=runtime&content_network=runtime&partner_domain=runtime.tv&content_dist_name=internal&device_make=&device_model=&device_os=web&preferred_language=EN&consent=1&gdpr=0&custom_12=0&custom_15=pt-br&custom_16=EN&custom_17=pt-br&country=br&country_region=minas%20gerais&postal_code=38600&gender=not_specified&yob=0&site_page=https%253A%252F%252Fwww.runtime.tv%252F&livestream=1&custom_param_0=&custom_param_1=handset&custom_param_2=&custom_param_3=&custom_param_4=internal&custom_param_5=web&bitrate=20000&quality=uhd&audio_bitrate=384&channels=6&codecs=avc1.640032,ac-3&hls_version=7&cc=1&subtitles_url=&drm=widevine&hdcp=2.2&keywords=genre:action&ad_unit=[]runtime_main&low_latency=1&max_buffer=60&log_level=debug&start_time=0
 
-#EXTINF:-1 tvg-id="WTV-Classicos" tvg-name="WTV-Classicos" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrI-zWuzJ0KGnPdIHlUg_xiQuhsxdCXso_lZl33pVUyw&s" group-title="Filmes", WTV-Classicos
+#EXTINF:-1 tvg-id="WTV-Classicos" tvg-name="WTV-Classicos" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrI-zWuzJ0KGnPdIHlUg_xiQuhsxdCXso_lZl33pVUyw&s" group-title="Filmes • Clássicos", WTV-Classicos
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://stmv1.srvif.com/movies1/movies1/playlist.m3u8
 
-#EXTINF:-1 tvg-id="Sony-One" tvg-name="Sony-One" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa3ZhOAXQ6hXwZt5fAEU3MbdweZQ0i7Hu9jQ&s" group-title="Filmes", Sony-One
+#EXTINF:-1 tvg-id="Sony-One" tvg-name="Sony-One" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRa3ZhOAXQ6hXwZt5fAEU3MbdweZQ0i7Hu9jQ&s" group-title="Filmes • Clássicos", Sony-One
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://spt-sonyoneclassicas-1-br.samsung.wurl.tv/playlist.m3u8
 
@@ -39,31 +60,24 @@ https://stream.ads.ottera.tv/playlist.m3u8?network_id=6178
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://stream.ads.ottera.tv/playlist.m3u8?network_id=2380
 
-#EXTINF:-1 tvg-id="Retrô-TV" tvg-name="Retrô-TV" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGqroR2ye0G8naAtCFnVB_QC0Ub7tasegjbA&usqp=CAU" group-title="Retrô-Cartoons", Retrô-TV
+#EXTINF:-1 tvg-id="Retrô-TV" tvg-name="Retrô-TV" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGqroR2ye0G8naAtCFnVB_QC0Ub7tasegjbA&usqp=CAU" group-title="Desenhos • Retrô", Retrô-TV
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://stmv1.srvif.com/retrotv/retrotv/playlist.m3u8
 
-#EXTINF:-1 tvg-id="Loading" tvg-name="Loading" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt5pxJ4E-jZJ-ovS2sFvGslbM1Ylxm5Dj6FGOYKe-M4-XTV2HuG3pI6Nmy&s=10" group-title="Animes", Loading
+#EXTINF:-1 tvg-id="Loading" tvg-name="Loading" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt5pxJ4E-jZJ-ovS2sFvGslbM1Ylxm5Dj6FGOYKe-M4-XTV2HuG3pI6Nmy&s=10" group-title="Anime", Loading
 https://stmv1.srvif.com/loadingtv/loadingtv/playlist.m3u8
 
-#EXTINF:-1 tvg-id="Telemundo" tvg-name="Telemundo" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf0NHgBbFvoz4d0XLC0uiIvCgJ5vfL1XZ2bfVrG09mSfbcsMrqwMBk5cA&s=10" group-title="Variedades", Telemundo
+#EXTINF:-1 tvg-id="Telemundo" tvg-name="Telemundo" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf0NHgBbFvoz4d0XLC0uiIvCgJ5vfL1XZ2bfVrG09mSfbcsMrqwMBk5cA&s=10" group-title="Variedades • Latino", Telemundo
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://nbcu-telemundoflorida-firetv.amagi.tv/playlist1080.m3u8
 
-#EXTINF:-1 tvg-id="Master-Chef" tvg-name="Master-Chef" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHwO8J5FX3oi_6mn2g4c38ElGF22pIzF6dzA&s" group-title="Variedades", Master-Chef
+#EXTINF:-1 tvg-id="Master-Chef" tvg-name="Master-Chef" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHwO8J5FX3oi_6mn2g4c38ElGF22pIzF6dzA&s" group-title="Variedades • Gastronomia", Master-Chef
 https://amg00627-amg00627c9-runtime-latam-2613.playouts.now.amagi.tv/playlist/amg00627-banijayfast-masterchefbrazil-runtimelatam/playlist.m3u8?ip=191.53.43.188&ua=Mozilla%2F5.0%20(Linux%3B%20Android%2013%3B%20Pixel%207)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F116.0.0.0%20Mobile%20Safari%2F537.36&dnt=0&app_bundle=com.ammo.runtime&app_name=runtime&app_store_url=https%3A%2F%2Fwww.runtime.tv%2Fdevices&content_episode=&content_season=&content_livestream=1&content_producer_name=REPLACEME&channel_name=run&network_name=&did=cc4f3f4efff6d0cdca401dd54c56ae6d&us_privacy=1YNN&gdpr_consent=1&gdpr=0&lmt=0&device_make=handset&device_model=&coppa=REPLACEME
 
-#EXTINF:-1 tvg-id="Rede-Super" tvg-name="Rede-Super" tvg-logo="https://play-lh.googleusercontent.com/anVTfVdwyewDErvXNWj3VwNbuKvywmE9YeXdykr11NFC9zsJbEPcQ2Q-lQQ2pg5Vg7k=w240-h480-rw" group-title="Extras", Rede-Super
+#EXTINF:-1 tvg-id="Rede-Super" tvg-name="Rede-Super" tvg-logo="https://play-lh.googleusercontent.com/anVTfVdwyewDErvXNWj3VwNbuKvywmE9YeXdykr11NFC9zsJbEPcQ2Q-lQQ2pg5Vg7k=w240-h480-rw" group-title="TV • Brasil", Rede-Super
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://tv02.zas.media:1936/redesuper/redesuper/playlist.m3u8
 
-#EXTINF:-1 tvg-id="Rede-Gospel" tvg-name="Rede-Gospel" tvg-logo="" group-title="Extras", Rede-Gospel
-#EXTVLCOPT:http-user-agent=Lavf53.32.100
-https://cdn.live.br1.jmvstream.com/w/LVW-8719/LVW8719_AcLVAxWy5J/playlist.m3u8
-
-
-#TestePluto
-#EXTM3U
 #EXTINF:-1 tvg-id="51c75f7bb6f26ba1cd00002f" tvg-name="Little Stars Universe" tvg-logo="https://images.pluto.tv/channels/51c75f7bb6f26ba1cd00002f/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Kids US", Little Stars Universe
 https://jmp2.uk/plu-51c75f7bb6f26ba1cd00002f.m3u8
 #EXTINF:-1 tvg-id="5417a212ff9fba68282fbf5e" tvg-name="GLORY Kickboxing" tvg-logo="https://images.pluto.tv/channels/5417a212ff9fba68282fbf5e/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Sports US", GLORY Kickboxing
@@ -108,7 +122,7 @@ https://jmp2.uk/plu-5a66795ef91fef2c7031c599.m3u8
 https://jmp2.uk/plu-5adf96e3e738977e2c31cb04.m3u8
 #EXTINF:-1 tvg-id="5aea40b35126c2157123aa64" tvg-name="The New Detectives" tvg-logo="https://images.pluto.tv/channels/5aea40b35126c2157123aa64/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="True Crime US", The New Detectives
 https://jmp2.uk/plu-5aea40b35126c2157123aa64.m3u8
-EXTINF:-1 tvg-id="5aec96ec5126c2157123c657" tvg-name="Nosey" tvg-logo="https://images.pluto.tv/channels/5aec96ec5126c2157123c657/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Daytime + Game Shows", Nosey
+#EXTINF:-1 tvg-id="5aec96ec5126c2157123c657" tvg-name="Nosey" tvg-logo="https://images.pluto.tv/channels/5aec96ec5126c2157123c657/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Daytime + Game Shows", Nosey
 https://jmp2.uk/plu-5aec96ec5126c2157123c657.m3u8
 #EXTINF:-1 tvg-id="56171fafada51f8004c4b40f" tvg-name="Forever Kids" tvg-logo="https://images.pluto.tv/channels/56171fafada51f8004c4b40f/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Kids US", Forever Kids
 https://jmp2.uk/plu-56171fafada51f8004c4b40f.m3u8
