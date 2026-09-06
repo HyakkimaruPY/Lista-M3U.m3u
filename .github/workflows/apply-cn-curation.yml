@@ -20,3 +20,4 @@ jobs:
           git add cn.m3u
           git diff --cached --quiet || git commit -m 'Atualiza cn.m3u: remove BurningC4 e reaproveita logos'
           git push
+# trigger
