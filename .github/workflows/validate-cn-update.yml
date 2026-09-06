@@ -1,0 +1,25 @@
+name: Validar atualização China
+on:
+  push:
+    branches: [fix/cn-logos-streams-final]
+    paths: ['.github/workflows/validate-cn-update.yml']
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validar estrutura M3U
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          for f in ['cn.m3u','srhell02iptv.m3u']:
+              s=Path(f).read_text(encoding='utf-8').splitlines()
+              assert s and s[0].startswith('#EXTM3U'), f
+              for i,x in enumerate(s):
+                  if x.startswith('#EXTINF:'):
+                      j=i+1
+                      while j<len(s) and (not s[j].strip() or s[j].startswith('#')): j+=1
+                      assert j<len(s) and s[j].startswith(('http://','https://')), (f,i+1)
+          assert 'China • BurningC4' not in Path('cn.m3u').read_text(encoding='utf-8')
+          print('M3U OK; BurningC4 removido como categoria de streams')
+          PY
