@@ -7,182 +7,6 @@
 # Politica: sem URLs malformadas, assinadas/temporarias ou marcadas como geobloqueadas;
 #           duplicatas exatas removidas e no maximo 3 alternativas por canal.
 
-# Fonte: BurningC4
-#EXTINF:-1 tvg-id="cctv1" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv1.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-1 综合
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226559/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv2" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv2.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-2 财经
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225588/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv3" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv3.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-3 综艺
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226021/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv4" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv4.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-4 中文国际
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226428/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv5" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv5.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-5 体育
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226019/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv5plus" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv5plus.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-5+ 体育赛事
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225603/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv6" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv6.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-6 电影
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226010/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv7" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv7.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-7 国防军事
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225733/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv8" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv8.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-8 电视剧
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226008/index.m3u8
-
-#EXTINF:-1 tvg-id="cctvjilu" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctvjilu.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-9 纪录
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225734/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv10" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv10.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-10 科教
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226473/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv11" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv11.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-11 戏曲
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226565/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv12" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv12.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-12 社会与法
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226568/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv13" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv13.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-13 新闻
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226571/index.m3u8
-
-#EXTINF:-1 tvg-id="cctvchild" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctvchild.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-14 少儿
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226591/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv15" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv15.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-15 音乐
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226476/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv16" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv16.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-16 奥林匹克
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226100/index.m3u8
-
-#EXTINF:-1 tvg-id="cctv17" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv17.png" group-title="China • BurningC4" x-source="BurningC4",CCTV-17 农业农村
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225765/index.m3u8
-
-#EXTINF:-1 tvg-id="anhui" tvg-logo="https://iptv.burningc4.com/tvg-logo/anhui.png" group-title="China • BurningC4" x-source="BurningC4",安徽卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226391/index.m3u8
-
-#EXTINF:-1 tvg-id="bingtuan" tvg-logo="https://iptv.burningc4.com/tvg-logo/bingtuan.png" group-title="China • BurningC4" x-source="BurningC4",兵团卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226439/index.m3u8
-
-#EXTINF:-1 tvg-id="btv1" tvg-logo="https://iptv.burningc4.com/tvg-logo/btv1.png" group-title="China • BurningC4" x-source="BurningC4",北京卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226450/index.m3u8
-
-#EXTINF:-1 tvg-id="btvchild" tvg-logo="https://iptv.burningc4.com/tvg-logo/btvchild.png" group-title="China • BurningC4" x-source="BurningC4",卡酷少儿
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225654/index.m3u8
-
-#EXTINF:-1 tvg-id="cetv1" tvg-logo="https://iptv.burningc4.com/tvg-logo/cetv1.png" group-title="China • BurningC4" x-source="BurningC4",CETV-1
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225652/index.m3u8
-
-#EXTINF:-1 tvg-id="cetv2" tvg-logo="https://iptv.burningc4.com/tvg-logo/cetv2.png" group-title="China • BurningC4" x-source="BurningC4",CETV-2
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226425/index.m3u8
-
-#EXTINF:-1 tvg-id="cetv3" tvg-logo="https://iptv.burningc4.com/tvg-logo/cetv3.png" group-title="China • BurningC4" x-source="BurningC4",CETV-3
-http://ott.mobaibox.com/PLTV/3/224/3221227018/index.m3u8
-
-#EXTINF:-1 tvg-id="cetv4" tvg-logo="https://iptv.burningc4.com/tvg-logo/cetv4.png" group-title="China • BurningC4" x-source="BurningC4",CETV-4
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225783/index.m3u8
-
-#EXTINF:-1 tvg-id="chongqing" tvg-logo="https://iptv.burningc4.com/tvg-logo/chongqing.png" group-title="China • BurningC4" x-source="BurningC4",重庆卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226409/index.m3u8
-
-#EXTINF:-1 tvg-id="dongfang" tvg-logo="https://iptv.burningc4.com/tvg-logo/dongfang.png" group-title="China • BurningC4" x-source="BurningC4",东方卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226345/index.m3u8
-
-#EXTINF:-1 tvg-id="dongnan" tvg-logo="https://iptv.burningc4.com/tvg-logo/dongnan.png" group-title="China • BurningC4" x-source="BurningC4",东南卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226341/index.m3u8
-
-#EXTINF:-1 tvg-id="gansu" tvg-logo="https://iptv.burningc4.com/tvg-logo/gansu.png" group-title="China • BurningC4" x-source="BurningC4",甘肃卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225633/index.m3u8
-
-#EXTINF:-1 tvg-id="guangdong" tvg-logo="https://iptv.burningc4.com/tvg-logo/guangdong.png" group-title="China • BurningC4" x-source="BurningC4",广东卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226248/index.m3u8
-
-#EXTINF:-1 tvg-id="guangxi" tvg-logo="https://iptv.burningc4.com/tvg-logo/guangxi.png" group-title="China • BurningC4" x-source="BurningC4",广西卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226549/index.m3u8
-
-#EXTINF:-1 tvg-id="guizhou" tvg-logo="https://iptv.burningc4.com/tvg-logo/guizhou.png" group-title="China • BurningC4" x-source="BurningC4",贵州卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226474/index.m3u8
-
-#EXTINF:-1 tvg-id="hebei" tvg-logo="https://iptv.burningc4.com/tvg-logo/hebei.png" group-title="China • BurningC4" x-source="BurningC4",河北卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226406/index.m3u8
-
-#EXTINF:-1 tvg-id="heilongjiang" tvg-logo="https://iptv.burningc4.com/tvg-logo/heilongjiang.png" group-title="China • BurningC4" x-source="BurningC4",黑龙江卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226327/index.m3u8
-
-#EXTINF:-1 tvg-id="henan" tvg-logo="https://iptv.burningc4.com/tvg-logo/henan.png" group-title="China • BurningC4" x-source="BurningC4",河南卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226480/index.m3u8
-
-#EXTINF:-1 tvg-id="hubei" tvg-logo="https://iptv.burningc4.com/tvg-logo/hubei.png" group-title="China • BurningC4" x-source="BurningC4",湖北卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226477/index.m3u8
-
-#EXTINF:-1 tvg-id="hunan" tvg-logo="https://iptv.burningc4.com/tvg-logo/hunan.png" group-title="China • BurningC4" x-source="BurningC4",湖南卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226307/index.m3u8
-
-#EXTINF:-1 tvg-id="jiangsu" tvg-logo="https://iptv.burningc4.com/tvg-logo/jiangsu.png" group-title="China • BurningC4" x-source="BurningC4",江苏卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226310/index.m3u8
-
-#EXTINF:-1 tvg-id="jiangxi" tvg-logo="https://iptv.burningc4.com/tvg-logo/jiangxi.png" group-title="China • BurningC4" x-source="BurningC4",江西卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226344/index.m3u8
-
-#EXTINF:-1 tvg-id="jilin" tvg-logo="https://iptv.burningc4.com/tvg-logo/jilin.png" group-title="China • BurningC4" x-source="BurningC4",吉林卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226397/index.m3u8
-
-#EXTINF:-1 tvg-id="liaoning" tvg-logo="https://iptv.burningc4.com/tvg-logo/liaoning.png" group-title="China • BurningC4" x-source="BurningC4",辽宁卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226546/index.m3u8
-
-#EXTINF:-1 tvg-id="neimenggu" tvg-logo="https://iptv.burningc4.com/tvg-logo/neimenggu.png" group-title="China • BurningC4" x-source="BurningC4",内蒙古卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225634/index.m3u8
-
-#EXTINF:-1 tvg-id="ningxia" tvg-logo="https://iptv.burningc4.com/tvg-logo/ningxia.png" group-title="China • BurningC4" x-source="BurningC4",宁夏卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225632/index.m3u8
-
-#EXTINF:-1 tvg-id="qinghai" tvg-logo="https://iptv.burningc4.com/tvg-logo/qinghai.png" group-title="China • BurningC4" x-source="BurningC4",青海卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225628/index.m3u8
-
-#EXTINF:-1 tvg-id="shandong" tvg-logo="https://iptv.burningc4.com/tvg-logo/shandong.png" group-title="China • BurningC4" x-source="BurningC4",山东卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226456/index.m3u8
-
-#EXTINF:-1 tvg-id="shan1xi" tvg-logo="https://iptv.burningc4.com/tvg-logo/shan1xi.png" group-title="China • BurningC4" x-source="BurningC4",山西卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225624/index.m3u8
-
-#EXTINF:-1 tvg-id="shan3xi" tvg-logo="https://iptv.burningc4.com/tvg-logo/shan3xi.png" group-title="China • BurningC4" x-source="BurningC4",陕西卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225625/index.m3u8
-
-#EXTINF:-1 tvg-id="shenzhen" tvg-logo="https://iptv.burningc4.com/tvg-logo/shenzhen.png" group-title="China • BurningC4" x-source="BurningC4",深圳卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226313/index.m3u8
-
-#EXTINF:-1 tvg-id="sichuan" tvg-logo="https://iptv.burningc4.com/tvg-logo/sichuan.png" group-title="China • BurningC4" x-source="BurningC4",四川卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226338/index.m3u8
-
-#EXTINF:-1 tvg-id="tianjin" tvg-logo="https://iptv.burningc4.com/tvg-logo/tianjin.png" group-title="China • BurningC4" x-source="BurningC4",天津卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226459/index.m3u8
-
-#EXTINF:-1 tvg-id="travel" tvg-logo="https://iptv.burningc4.com/tvg-logo/travel.png" group-title="China • BurningC4" x-source="BurningC4",海南卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226465/index.m3u8
-
-#EXTINF:-1 tvg-id="xiamen" tvg-logo="https://iptv.burningc4.com/tvg-logo/xiamen.png" group-title="China • BurningC4" x-source="BurningC4",厦门卫视
-http://ott.mobaibox.com/PLTV/3/224/3221226996/index.m3u8
-
-#EXTINF:-1 tvg-id="xinjiang" tvg-logo="https://iptv.burningc4.com/tvg-logo/xinjiang.png" group-title="China • BurningC4" x-source="BurningC4",新疆卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225635/index.m3u8
-
-#EXTINF:-1 tvg-id="xizang" tvg-logo="https://iptv.burningc4.com/tvg-logo/xizang.png" group-title="China • BurningC4" x-source="BurningC4",西藏卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221225638/index.m3u8
-
-#EXTINF:-1 tvg-id="yanbian" tvg-logo="https://iptv.burningc4.com/tvg-logo/yanbian.png" group-title="China • BurningC4" x-source="BurningC4",延边卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226516/index.m3u8
-
-#EXTINF:-1 tvg-id="yunnan" tvg-logo="https://iptv.burningc4.com/tvg-logo/yunnan.png" group-title="China • BurningC4" x-source="BurningC4",云南卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226444/index.m3u8
-
-#EXTINF:-1 tvg-id="zhejiang" tvg-logo="https://iptv.burningc4.com/tvg-logo/zhejiang.png" group-title="China • BurningC4" x-source="BurningC4",浙江卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226339/index.m3u8
-
-# Fonte: Free-TV
 #EXTINF:-1 tvg-name="CCTV-1 综合" tvg-logo="https://i.imgur.com/uHU6Vc0.png" tvg-id="CCTV1.cn" tvg-chno="1" tvg-country="CN" group-title="China • Free-TV" x-source="Free-TV",CCTV-1 综合
 http://74.91.26.218:82/live/cctv1hd.m3u8
 
@@ -268,16 +92,16 @@ http://go.bkpcp.top/mg/bjws
 #EXTINF:-1 tvg-id="BeijingSatelliteTV.cn@SD" group-title="China • IPTV-org" x-source="IPTV-org",BRTV 北京卫视 [Not 24/7]
 http://ivi.bupt.edu.cn/hls/btv1.m3u8
 
-#EXTINF:-1 tvg-id="CCTV1.cn@HD" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-1 (1080p)
+#EXTINF:-1 tvg-id="CCTV1.cn@HD" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv1.png" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-1 (1080p)
 http://69.30.245.50/live/cctv1.m3u8
 
 #EXTINF:-1 tvg-id="CCTV4K.cn@HD" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-4K (1080p)
 http://198.204.240.250:82/live/cctv4k.m3u8
 
-#EXTINF:-1 tvg-id="CCTV5Plus.cn@SD" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-5+
+#EXTINF:-1 tvg-id="CCTV5Plus.cn@SD" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv5plus.png" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-5+
 https://myip.pdtvhd.com/Sports/streams/CCTV5pul.m3u8
 
-#EXTINF:-1 tvg-id="CCTV6.cn@HD" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-6 (1080p)
+#EXTINF:-1 tvg-id="CCTV6.cn@HD" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv6.png" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-6 (1080p)
 http://198.204.240.250:82/live/cctv6.m3u8
 
 #EXTINF:-1 tvg-id="CCTV8K.cn@HD" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-8K (1080p)
@@ -286,29 +110,29 @@ http://192.151.150.154/live/cctv8k.m3u8
 #EXTINF:-1 tvg-id="CCTV8K.cn@HD" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-8K (1080p)
 http://198.204.240.250:82/live/cctv8k.m3u8
 
-#EXTINF:-1 tvg-id="CCTV9.cn@SD" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-9 (576i)
+#EXTINF:-1 tvg-id="CCTV9.cn@SD" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctvjilu.png" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-9 (576i)
 https://xykt-fix.github.io/Y77.m3u8
 
-#EXTINF:-1 tvg-id="CCTV10.cn@SD" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-10 (576i)
+#EXTINF:-1 tvg-id="CCTV10.cn@SD" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv10.png" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-10 (576i)
 #EXTVLCOPT:http-user-agent=#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36
 https://cdn4.skygo.mn/live/disk1/CCTV-10/HLSv3-FTA/CCTV-10.m3u8
 
-#EXTINF:-1 tvg-id="CCTV11.cn@SD" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-11
+#EXTINF:-1 tvg-id="CCTV11.cn@SD" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv11.png" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-11
 https://xykt-fix.github.io/play/a02b/index.m3u8
 
-#EXTINF:-1 tvg-id="CCTV13.cn@HD" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-13 (1080p)
+#EXTINF:-1 tvg-id="CCTV13.cn@HD" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv13.png" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-13 (1080p)
 http://go.bkpcp.top/mg/cctv13
 
-#EXTINF:-1 tvg-id="CCTV15.cn@SD" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-15 (1080p)
+#EXTINF:-1 tvg-id="CCTV15.cn@SD" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv15.png" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-15 (1080p)
 https://xykt-fix.github.io/play/a02e/index.m3u8
 
-#EXTINF:-1 tvg-id="CCTV15.cn@SD" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-15 (720p)
+#EXTINF:-1 tvg-id="CCTV15.cn@SD" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv15.png" group-title="China • IPTV-org" x-source="IPTV-org",CCTV-15 (720p)
 http://74.91.26.218:82/live/cctv15hd.m3u8
 
-#EXTINF:-1 tvg-id="CETV1.cn@SD" group-title="China • IPTV-org" x-source="IPTV-org",CETV1 (576p)
+#EXTINF:-1 tvg-id="CETV1.cn@SD" tvg-logo="https://iptv.burningc4.com/tvg-logo/cetv1.png" group-title="China • IPTV-org" x-source="IPTV-org",CETV1 (576p)
 http://117.161.133.51:81/gitv_live/G_CETV-1/G_CETV-1.m3u8?p=GITV
 
-#EXTINF:-1 tvg-id="CETV2.cn@SD" group-title="China • IPTV-org" x-source="IPTV-org",CETV2 (576p)
+#EXTINF:-1 tvg-id="CETV2.cn@SD" tvg-logo="https://iptv.burningc4.com/tvg-logo/cetv2.png" group-title="China • IPTV-org" x-source="IPTV-org",CETV2 (576p)
 http://117.161.133.51:81/gitv_live/G_CETV-2/G_CETV-2.m3u8?p=GITV
 
 #EXTINF:-1 tvg-id="CGTN.cn@SD" group-title="China • IPTV-org" x-source="IPTV-org",CGTN (1080p)
