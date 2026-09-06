@@ -20,7 +20,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: sync-china-main-${{ github.event.pull_request.number || github.ref }}
+  group: sync-china-main-${{ github.sha }}
   cancel-in-progress: false
 
 jobs:
