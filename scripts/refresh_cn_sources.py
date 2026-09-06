@@ -10,6 +10,7 @@ URLs completas nunca sao gravadas nos relatorios.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -23,7 +24,6 @@ from validate_streams import Entry, host_of, parse_playlist, probe_url_and_heade
 
 
 SOURCES = (
-    ("BurningC4", "https://raw.githubusercontent.com/BurningC4/Chinese-IPTV/master/TV-IPV4.m3u"),
     ("Free-TV", "https://raw.githubusercontent.com/Free-TV/IPTV/master/playlists/playlist_china.m3u8"),
     ("IPTV-org", "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/cn.m3u"),
 )
@@ -151,7 +151,7 @@ def write_report(report_dir: Path, mode: str, records: list[dict[str, object]]) 
         name = str(item["name"]).replace("|", "\\|")
         lines.append(
             f"| {item['line']} | {name} | {item['action']} | "
-            f"{item.get('source', '-')} | \`{item.get('new_host', '-')}\` |"
+            f"{item.get('source', '-')} | `{item.get('new_host', '-')}` |"
         )
     if not records:
         lines.append("| - | Nenhum stream definitivamente invalido | - | - | - |")
@@ -178,11 +178,19 @@ def main() -> int:
     current_entries = parse_playlist(lines)
     by_line = {entry.line: entry for entry in current_entries}
     validation = json.loads(validation_path.read_text(encoding="utf-8"))
+    if validation.get("playlist_sha256") != hashlib.sha256(playlist.read_bytes()).hexdigest():
+        raise SystemExit("Relatorio desatualizado: valide novamente esta playlist antes de aplicar reparos")
     broken_lines = {
         int(item["line"])
         for item in validation.get("results", [])
         if item.get("status") == "remove"
     }
+
+    if not broken_lines:
+        write_report(Path(args.report_dir), "aplicar" if args.apply else "dry-run", [])
+        set_outputs(False, 0, 0, 0)
+        print("Nenhuma falha definitiva; fontes externas nao consultadas")
+        return 0
 
     candidates: dict[str, list[Candidate]] = {}
     source_errors: list[str] = []
@@ -214,7 +222,7 @@ def main() -> int:
         current_norm = (current_url or "").rstrip("/")
         preferred_source = attribute(current.metadata, "x-source")
         pool = candidates.get(canonical_identity(current), [])
-        pool = sorted(pool, key=lambda item: (item.source != preferred_source, item.source))
+        pool = sorted(pool, key=lambda item: (item.source != "Free-TV", item.source))
         resolved = False
 
         for candidate in pool[: max(1, args.max_candidates)]:

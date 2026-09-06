@@ -2,107 +2,49 @@ name: Sincronizar China com principal
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - "scripts/sync_cn_to_main.py"
-      - ".github/workflows/sync-china-main.yml"
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "*.m3u"
-      - "scripts/sync_cn_to_main.py"
-      - ".github/workflows/sync-china-main.yml"
+    inputs:
+      apply_changes:
+        description: Aplicar sincronização validada na main
+        type: boolean
+        default: false
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: sync-china-main-${{ github.sha }}
+  group: playlist-maintenance-main
   cancel-in-progress: false
 
 jobs:
   sync:
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
-      - name: Checkout branch com historico
-        uses: actions/checkout@v7
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
-
-      - name: Restaurar cn.m3u limpa da main no PR
-        if: github.event_name == 'pull_request'
-        shell: bash
-        run: git show origin/main:cn.m3u > cn.m3u
-
       - name: Instalar FFmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Sincronizar candidatos validados
+        env:
+          APPLY: ${{ inputs.apply_changes }}
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
-          ffprobe -version | head -n 1
-          ffmpeg -version | head -n 1
-
-      - name: Validar sintaxe Python
+          ARGS=()
+          if [[ "$APPLY" == "true" ]]; then ARGS+=(--apply); fi
+          python3 scripts/sync_cn_to_main.py --retries 2 --timeout 25 --decode-seconds 4 "${ARGS[@]}"
+      - name: Organizar e validar estrutura
         run: |
-          python3 -m py_compile scripts/validate_streams.py scripts/sync_cn_to_main.py
-
-      - name: Recuperar logos C4 e sincronizar CCTV
-        run: |
-          python3 scripts/sync_cn_to_main.py \
-            --cn cn.m3u \
-            --main srhell02iptv.m3u \
-            --retries 2 \
-            --timeout 25 \
-            --decode-seconds 4 \
-            --apply
-
-      - name: Confirmar que BurningC4 nao permaneceu como provedor
-        shell: bash
-        run: |
-          if grep -q 'x-source="BurningC4"\|group-title="China • BurningC4"' cn.m3u; then
-            echo "BurningC4 ainda aparece como provedor de stream"
-            exit 1
-          fi
-          echo "BurningC4 removido como provedor; logos reaproveitadas apenas em correspondencias seguras."
-
-      - name: Commitar correcoes que passaram nos testes direcionados
-        shell: bash
+          python3 scripts/curate_main_playlist.py
+          python3 -m unittest discover -s tests -v
+      - name: Aplicar na main
+        if: inputs.apply_changes == true
         run: |
           git add cn.m3u srhell02iptv.m3u
-          if git diff --cached --quiet; then
-            echo "Nenhuma mudanca adicional foi necessaria."
-          else
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "Sincroniza CCTV e logos da playlist chinesa [skip ci]"
-            if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-              git push origin HEAD:${{ github.event.pull_request.head.ref }}
-            else
-              git push
-            fi
-          fi
-
-      - name: Auditar playlist chinesa completa
-        continue-on-error: true
-        run: |
-          python3 scripts/validate_streams.py \
-            --playlist cn.m3u \
-            --workers 6 \
-            --retries 2 \
-            --timeout 25 \
-            --decode-seconds 4 \
-            --limit 0 \
-            --report-dir reports/china-sync/cn
-
-      - name: Publicar relatorio da auditoria
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: china-sync-validation
-          path: reports/china-sync/
-          if-no-files-found: warn
-          retention-days: 14
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Sincroniza canais chineses validados [skip ci]'
+          git push origin HEAD:main

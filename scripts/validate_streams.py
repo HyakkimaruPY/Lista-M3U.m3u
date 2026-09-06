@@ -4,7 +4,7 @@
 O validador foi desenhado para auto-remocao conservadora e pode restringir a verificacao por host:
 - remove URLs malformadas;
 - remove 404/410 confirmados em todas as tentativas;
-- remove streams que abrem, mas repetidamente nao possuem video e audio;
+- mantem ausencia de audio/video como inconclusiva (radio, grade parcial, amostra curta);
 - mantem erros ambiguos (403/451, timeout, rate limit, bloqueio regional etc.)
   para evitar apagar canais validos por causa da localizacao do runner do GitHub.
 
@@ -14,6 +14,7 @@ Nenhuma URL completa e escrita nos relatorios/logs para evitar republicar tokens
 from __future__ import annotations
 
 import argparse
+import hashlib
 import concurrent.futures
 import json
 import os
@@ -89,7 +90,7 @@ def is_pluto_unavailable_slate(ocr_text: str) -> bool:
     words = set(text.split())
     if "pluto" not in words:
         return False
-    if "wrap" in words:
+    if {"that", "wrap"}.issubset(words) and "available" in words:
         return True
     if {"longer", "available"}.issubset(words) and ("device" in words or "tv" in words):
         return True
@@ -101,8 +102,9 @@ def is_pluto_unavailable_slate(ocr_text: str) -> bool:
 
 
 def extract_title(extinf: str, fallback: str) -> str:
-    if "," in extinf:
-        title = extinf.split(",", 1)[1].strip()
+    parts = re.split(r',(?=(?:[^"\n]*"[^"\n]*")*[^"\n]*$)', extinf, maxsplit=1)
+    if len(parts) == 2:
+        title = parts[1].strip()
         if title:
             return title
     match = re.search(r'tvg-name="([^"]+)"', extinf, re.IGNORECASE)
@@ -283,7 +285,7 @@ def ffprobe_once(entry: Entry, timeout: int) -> tuple[str, str]:
     ]
     rc, output, timed_out = run_command(cmd, timeout)
     if rc != 0:
-        if is_definite_dead(output):
+        if is_definite_dead(output) and not re.search(r"segment|\.ts|\.m4s|\.aac", output, re.I):
             return "definite", classify_error(output, timed_out)
         return "uncertain", classify_error(output, timed_out)
 
@@ -300,13 +302,39 @@ def ffprobe_once(entry: Entry, timeout: int) -> tuple[str, str]:
     has_audio = "audio" in stream_types
 
     if not has_video and not has_audio:
-        return "missing", "stream sem video e sem audio detectaveis"
+        return "uncertain", "stream sem video e sem audio detectaveis nesta amostra"
     if not has_video:
-        return "missing", "stream sem video detectavel"
+        return "uncertain", "stream sem video detectavel; pode ser radio"
     if not has_audio:
-        return "missing", "stream sem audio detectavel"
+        return "uncertain", "stream sem audio detectavel nesta amostra"
 
     return "av", "video e audio encontrados"
+
+
+def decoded_av(output: str, seconds: int) -> bool:
+    """Require decoded packets and a sufficient timeline for each output stream."""
+    timebases = {}
+    spans = {}
+    for line in output.splitlines():
+        match = re.match(r"#tb (\d+): (\d+)/(\d+)", line)
+        if match:
+            index, numerator, denominator = map(int, match.groups())
+            if denominator:
+                timebases[index] = numerator / denominator
+        if not line or line.startswith("#"):
+            continue
+        fields = [x.strip() for x in line.split(",")]
+        if len(fields) != 6:
+            continue
+        try:
+            index, _, pts, duration, size = map(int, fields[:5])
+        except ValueError:
+            continue
+        if size <= 0:
+            continue
+        first, last = spans.get(index, (pts, pts))
+        spans[index] = (min(first, pts), max(last, pts + duration))
+    return all(index in spans and (spans[index][1] - spans[index][0]) * timebases.get(index, 0) >= seconds * 0.8 for index in (0, 1))
 
 
 def decode_once(entry: Entry, timeout: int, decode_seconds: int) -> tuple[str, str]:
@@ -328,15 +356,16 @@ def decode_once(entry: Entry, timeout: int, decode_seconds: int) -> tuple[str, s
         "0:v:0",
         "-map",
         "0:a:0",
+        "-xerror",
         "-f",
-        "null",
+        "framehash",
         "-",
     ]
     rc, output, timed_out = run_command(cmd, timeout)
     if rc == 0:
-        return "healthy", f"video e audio decodificados por {decode_seconds}s"
-    if is_definite_dead(output):
-        return "definite", classify_error(output, timed_out)
+        if decoded_av(output, decode_seconds):
+            return "healthy", f"quadros de video e amostras de audio confirmados por {decode_seconds}s"
+        return "uncertain", "FFmpeg terminou sem amostra suficiente de audio e video"
     return "uncertain", classify_error(output, timed_out)
 
 
@@ -386,8 +415,7 @@ def inspect_pluto_frames(entry: Entry, timeout: int, decode_seconds: int) -> tup
         if not ocr_parts:
             return "uncertain", "OCR nao conseguiu analisar os quadros do stream"
 
-        combined = "\n".join(ocr_parts)
-        if is_pluto_unavailable_slate(combined):
+        if sum(is_pluto_unavailable_slate(part) for part in ocr_parts) >= 2:
             return "unavailable", "tela de indisponibilidade da Pluto detectada por OCR"
         return "clear", "conteudo visual sem tela de indisponibilidade conhecida"
 
@@ -397,7 +425,7 @@ def validate_entry(
     retries: int,
     timeout: int,
     decode_seconds: int,
-    detect_pluto_slate: bool,
+    detect_pluto_slate: bool = False,
 ) -> Result:
     started = time.monotonic()
     url, _, _ = probe_url_and_headers(entry)
@@ -436,9 +464,8 @@ def validate_entry(
         if attempt + 1 < retries:
             time.sleep(1.0)
 
-    if attempt_kinds and all(kind in {"definite", "missing"} for kind in attempt_kinds):
-        # Para erro HTTP definitivo, exigimos repeticao. Para ausencia de A/V,
-        # tambem exigimos que todas as tentativas tenham sido conclusivas.
+    if len(attempt_kinds) >= 2 and len(set(attempt_kinds)) == 1 and attempt_kinds[0] == "definite":
+        # Exige pelo menos duas falhas definitivas; ausencia de A/V nao autoriza exclusao.
         reason = attempt_reasons[-1]
         return Result(entry, "remove", reason, host, time.monotonic() - started)
 
@@ -464,6 +491,7 @@ def write_reports(report_dir: Path, playlist: Path, results: list[Result], apply
 
     data = {
         "playlist": str(playlist),
+        "playlist_sha256": hashlib.sha256(playlist.read_bytes()).hexdigest(),
         "mode": "apply" if apply else "dry-run",
         "entries_total": total_entries,
         "entries_tested": len([r for r in results if r.status != "skipped"]),
@@ -545,6 +573,8 @@ def main() -> int:
     )
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()
+    if min(args.workers, args.retries, args.timeout, args.decode_seconds) < 1 or args.limit < 0:
+        parser.error("workers, retries, timeout e decode-seconds devem ser positivos; limit >= 0")
 
     required_binaries = ["ffprobe", "ffmpeg"]
     if args.detect_pluto_slate:
@@ -614,6 +644,7 @@ def main() -> int:
     uncertain = [r for r in results if r.status == "uncertain"]
     healthy = [r for r in results if r.status == "healthy"]
 
+    write_reports(Path(args.report_dir), playlist, results, args.apply, len(entries))
     changed = False
     if args.apply and removable:
         new_lines = remove_ranges(lines, removable)
@@ -624,7 +655,6 @@ def main() -> int:
             playlist.write_text(new_text, encoding="utf-8")
             changed = True
 
-    write_reports(Path(args.report_dir), playlist, results, args.apply, len(entries))
     set_github_outputs(changed, len(removable), len(uncertain), len(healthy))
 
     print(

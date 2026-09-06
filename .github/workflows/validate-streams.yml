@@ -24,10 +24,10 @@ on:
     - cron: "17 6 * * *"
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: stream-maintenance-${{ github.ref }}
+  group: playlist-maintenance-${{ github.ref_name }}
   cancel-in-progress: false
 
 jobs:
@@ -64,9 +64,12 @@ jobs:
             include_host: ""
             repair_sources: false
 
+    permissions:
+      contents: read
     env:
       PLAYLIST: ${{ matrix.playlist }}
       REPORT_DIR: reports/stream-validation/${{ matrix.slug }}
+      INPUT_LIMIT: ${{ inputs.limit }}
 
     steps:
       - name: Checkout
@@ -86,7 +89,7 @@ jobs:
         run: |
           LIMIT=0
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            LIMIT="${{ inputs.limit }}"
+            LIMIT="$INPUT_LIMIT"
           fi
           if ! [[ "$LIMIT" =~ ^[0-9]+$ ]]; then
             echo "limit precisa ser um inteiro >= 0"
@@ -149,6 +152,8 @@ jobs:
         github.event_name == 'schedule' ||
         (github.event_name == 'workflow_dispatch' && inputs.apply_changes == true)
       )
+    permissions:
+      contents: write
     name: Manutencao diaria segura
     runs-on: ubuntu-latest
     timeout-minutes: 180
@@ -210,6 +215,9 @@ jobs:
           path: reports/stream-validation/
           if-no-files-found: warn
           retention-days: 14
+
+      - name: Validar estrutura antes de publicar
+        run: python3 -m unittest discover -s tests -v
 
       - name: Commitar somente manutencao autorizada
         shell: bash

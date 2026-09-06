@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import unicodedata
@@ -135,6 +136,8 @@ def main() -> int:
     by_line = {entry.line: entry for entry in entries}
 
     report = json.loads(Path(args.validation_report).read_text(encoding="utf-8"))
+    if report.get("playlist_sha256") != hashlib.sha256(playlist.read_bytes()).hexdigest():
+        raise SystemExit("Relatorio desatualizado: valide novamente esta playlist antes de aplicar reparos")
     failed_lines = {
         int(item["line"])
         for item in report.get("results", [])

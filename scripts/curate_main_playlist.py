@@ -1,146 +1,133 @@
 #!/usr/bin/env python3
-"""Curadoria estrutural da playlist principal.
-
-- mantem exatamente um cabecalho #EXTM3U;
-- corrige linhas EXTINF sem '#';
-- remove Rede-Gospel/Renascer, preservando Rede-Super;
-- normaliza categorias dos canais principais nao-Pluto;
-- substitui a secao China inicial por uma selecao curta e rastreavel.
-
-Nao altera entradas Pluto, exceto correcoes puramente sintaticas.
-"""
-
+"""Curadoria idempotente de metadados; nao inventa nem substitui streams."""
 from __future__ import annotations
-
+import argparse
 import re
 from pathlib import Path
+from validate_streams import parse_playlist, probe_url_and_headers, extract_title
+from sync_cn_to_main import attr, set_attr, cctv_key
 
-PLAYLIST = Path("srhell02iptv.m3u")
-
-CHINA_BLOCK = '''#EXTINF:-1 tvg-id="CGTNSpanish.cn" tvg-name="CGTN Español" tvg-logo="https://i.imgur.com/Poz3xfi.png" group-title="China • Internacional", CGTN Español
-https://livees.cgtn.com/1000e/prog_index.m3u8
-
-#EXTINF:-1 tvg-id="CCTV15.cn" tvg-name="CCTV-15 音乐 A" tvg-logo="https://i.imgur.com/CCV0eRG.png" group-title="China • Música", CCTV-15 音乐 A
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226476/index.m3u8
-
-#EXTINF:-1 tvg-id="CCTV15.cn@alt1" tvg-name="CCTV-15 音乐 B" tvg-logo="https://i.imgur.com/CCV0eRG.png" group-title="China • Música", CCTV-15 音乐 B
-https://xykt-fix.github.io/play/a02e/index.m3u8
-
-#EXTINF:-1 tvg-id="CCTV15.cn@alt2" tvg-name="CCTV-15 音乐 C" tvg-logo="https://i.imgur.com/CCV0eRG.png" group-title="China • Música", CCTV-15 音乐 C
-http://183.196.25.171:808/hls/15/index.m3u8
-
-#EXTINF:-1 tvg-id="CCTV15.cn@alt3" tvg-name="CCTV-15 音乐 D" tvg-logo="https://i.imgur.com/CCV0eRG.png" group-title="China • Música", CCTV-15 音乐 D
-https://stream1.freetv.fun/cb3c72e7254e40411c7136bafb32bd8e1b6f4739c265c52851cff323a6a22b77.m3u8
-
-#EXTINF:-1 tvg-id="CCTV6.cn" tvg-name="CCTV-6 电影" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv6.png" group-title="China • Cinema", CCTV-6 电影
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226010/index.m3u8
-
-#EXTINF:-1 tvg-id="CCTV8.cn" tvg-name="CCTV-8 电视剧" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv8.png" group-title="China • Séries", CCTV-8 电视剧
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226008/index.m3u8
-
-#EXTINF:-1 tvg-id="CCTV11.cn" tvg-name="CCTV-11 戏曲" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv11.png" group-title="China • Cultura", CCTV-11 戏曲
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226565/index.m3u8
-
-#EXTINF:-1 tvg-id="CCTV14.cn" tvg-name="CCTV-14 少儿" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctvchild.png" group-title="China • Infantil", CCTV-14 少儿
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226591/index.m3u8
-
-#EXTINF:-1 tvg-id="HunanSatelliteTV.cn" tvg-name="湖南卫视" tvg-logo="https://iptv.burningc4.com/tvg-logo/hunan.png" group-title="China • Variedades", 湖南卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226307/index.m3u8
-
-#EXTINF:-1 tvg-id="ZhejiangSatelliteTV.cn" tvg-name="浙江卫视" tvg-logo="https://iptv.burningc4.com/tvg-logo/zhejiang.png" group-title="China • Variedades", 浙江卫视
-http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226404/index.m3u8
-'''
-
-CATEGORY_MAP = {
-    "Tv-Series": "Séries",
-    "Run-Ação": "Filmes • Ação",
-    "Run-Ação 4k": "Filmes • Ação",
-    "WTV-Classicos": "Filmes • Clássicos",
-    "Sony-One": "Filmes • Clássicos",
-    "On-Filmes": "Filmes",
-    "Novelissima(ES)": "Novelas",
-    "Retrô-TV": "Desenhos • Retrô",
-    "Loading": "Anime",
-    "Telemundo": "Variedades • Latino",
-    "Master-Chef": "Variedades • Gastronomia",
-    "Rede-Super": "TV • Brasil",
+PLUTO_GROUPS = {
+    'Movies': 'Filmes', 'Westerns': 'Faroeste', 'Sci-Fi': 'Ficção científica',
+    'Drama': 'Séries', 'Comedy': 'Comédia', 'Classic TV': 'Séries clássicas',
+    'Kids': 'Infantil', 'Anime': 'Anime', 'Gaming + Anime': 'Anime',
+    'Reality': 'Reality e variedades', 'Competition Reality': 'Reality e variedades',
+    'Daytime + Game Shows': 'Reality e variedades', 'Entertainment': 'Entretenimento',
+    'True Crime': 'Investigação', 'History + Science': 'História e ciência',
+    'Home + Food': 'Casa e gastronomia', 'Sports': 'Esportes',
+    'En Español': 'Em espanhol', "Season's Greetings": 'Sazonais',
+    'Test Test Test': 'Experimentais',
+}
+CCTV_GROUPS = {
+    'cctv1': 'Nacionais e variedades', 'cctv2': 'Notícias e economia',
+    'cctv3': 'Nacionais e variedades', 'cctv4': 'Internacional',
+    'cctv5': 'Esportes', 'cctv5plus': 'Esportes', 'cctv6': 'Cinema e séries',
+    'cctv7': 'Documentários e cultura', 'cctv8': 'Cinema e séries',
+    'cctv9': 'Documentários e cultura', 'cctv10': 'Documentários e cultura',
+    'cctv11': 'Documentários e cultura', 'cctv12': 'Sociedade e educação',
+    'cctv13': 'Notícias e economia', 'cctv14': 'Infantil', 'cctv15': 'Música',
+    'cctv16': 'Esportes', 'cctv17': 'Sociedade e educação',
+    'cctv4k': 'Nacionais e variedades', 'cctv8k': 'Nacionais e variedades',
 }
 
+def china_group(entry):
+    key = cctv_key(entry)
+    if key in CCTV_GROUPS:
+        return 'China • ' + CCTV_GROUPS[key]
+    text = entry.title.lower() + ' ' + attr(entry.metadata, 'tvg-id').lower()
+    rules = [
+        (r'少儿|少兒|卡通|炫动|金鹰|child|cartoon|哈哈', 'Infantil'),
+        (r'音乐|音樂|music', 'Música'),
+        (r'体育|體育|篮球|足球|sport|olympic', 'Esportes'),
+        (r'电影|電影|影视|影視|影院|电视剧|cinema|movie|drama', 'Cinema e séries'),
+        (r'纪录|紀錄|纪实|紀實|文化|人文|戏曲|documentary|discovering|travel', 'Documentários e cultura'),
+        (r'购物|購物|乐购|置业|shopping', 'Compras'),
+        (r'财经|財經|理财|財經|经济|經濟|global biz|finance', 'Notícias e economia'),
+        (r'科教|教育|法治|农村|農村|乡村|鄉村|education', 'Sociedade e educação'),
+        (r'cgtn|国际|國際|international', 'Internacional'),
+        (r'卫视|衛視|satellite|星空', 'Nacionais e variedades'),
+    ]
+    for pattern, group in rules:
+        if re.search(pattern, text):
+            return 'China • ' + group
+    return 'China • Regionais e locais'
 
-def get_name(extinf: str) -> str:
-    m = re.search(r'tvg-name="([^"]+)"', extinf)
-    if m:
-        return m.group(1)
-    return extinf.split(",", 1)[-1].strip()
+
+def group_for(entry, china):
+    group = attr(entry.metadata, 'group-title')
+    if china or group.startswith('China •'):
+        return china_group(entry)
+    if 'jmp2.uk' in (entry.url or ''):
+        if group.endswith(' BR'):
+            return {'Pluto Desenhos Clássicos BR': 'Pluto • Desenhos clássicos BR',
+                    'Pluto Séries Clássicas BR': 'Pluto • Séries clássicas BR',
+                    'Pluto Cinema Clássico BR': 'Pluto • Cinema clássico BR'}.get(group, group)
+        if group.startswith('Pluto •'):
+            return group
+        base = re.sub(r' (?:US|S)$', '', group)
+        return 'Pluto • ' + PLUTO_GROUPS.get(base, base) + ' S'
+    if group == 'Wild Cards temp 01':
+        return 'Séries VOD • Wild Cards • Temporada 1'
+    return {'Filmes • Ação': 'Filmes', 'Filmes • Clássicos': 'Filmes',
+            'Variedades • Latino': 'Variedades', 'Variedades • Gastronomia': 'Variedades'}.get(group, group)
 
 
-def set_group(extinf: str, group: str) -> str:
-    if 'group-title="' in extinf:
-        return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', extinf, count=1)
-    comma = extinf.find(",")
-    if comma == -1:
-        return extinf + f' group-title="{group}"'
-    return extinf[:comma] + f' group-title="{group}"' + extinf[comma:]
-
-
-def main() -> int:
-    raw = PLAYLIST.read_text(encoding="utf-8-sig")
-    lines = raw.splitlines()
-
-    # Corrige sintaxe global e remove cabecalhos duplicados.
-    out: list[str] = []
-    header_seen = False
-    for line in lines:
-        stripped = line.strip()
-        if stripped == "#EXTM3U":
-            if header_seen:
-                continue
-            header_seen = True
-            out.append("#EXTM3U")
+def curate(raw: str, china=False):
+    lines = raw.lstrip('\ufeff').splitlines()
+    lines = ['#' + x if x.startswith('EXTINF:') else x.rstrip() for x in lines]
+    entries = parse_playlist(lines)
+    if not entries:
+        raise ValueError('Nenhuma entrada encontrada')
+    header = next((x for x in lines if x.startswith('#EXTM3U')), '#EXTM3U')
+    blocks = []
+    seen = {}
+    removed = 0
+    for e in entries:
+        if e.title.casefold() in {'rede-gospel', 'rede gospel', 'renascer', 'rede-renascer', 'rede renascer'}:
+            removed += 1
             continue
-        if line.startswith("EXTINF:"):
-            line = "#" + line
-        out.append(line)
-    lines = out
-
-    # Substitui a secao China inicial, terminando antes de Tv-Series.
-    first_entry = next((i for i, line in enumerate(lines) if line.startswith("#EXTINF")), None)
-    first_non_china = next((i for i, line in enumerate(lines) if 'tvg-id="Tv-Series"' in line), None)
-    if first_entry is not None and first_non_china is not None and first_entry < first_non_china:
-        lines = lines[:first_entry] + CHINA_BLOCK.strip().splitlines() + [""] + lines[first_non_china:]
-
-    # Percorre blocos EXTINF para remover Rede-Gospel e normalizar categorias nao-Pluto.
-    result: list[str] = []
-    i = 0
-    while i < len(lines):
-        line = lines[i]
-        if not line.startswith("#EXTINF"):
-            result.append(line)
-            i += 1
+        # Only identical playback requests are duplicates; names/EPG IDs alone are insufficient.
+        identity = probe_url_and_headers(e)
+        directives = tuple(x for x in lines[e.start+1:e.end] if x.startswith('#'))
+        identity = (*identity, directives)
+        meta = set_attr(e.metadata, 'group-title', group_for(e, china))
+        meta = set_attr(meta, 'tvg-name', e.title)
+        if identity in seen:
+            previous = blocks[seen[identity]][1]
+            for name in ('tvg-id', 'tvg-logo'):
+                if not attr(previous[0], name) and attr(meta, name):
+                    previous[0] = set_attr(previous[0], name, attr(meta, name))
+            removed += 1
             continue
-
-        start = i
-        j = i + 1
-        while j < len(lines) and not lines[j].startswith("#EXTINF"):
-            j += 1
-        block = lines[start:j]
-        name = get_name(block[0])
-        url = next((x.strip() for x in block[1:] if x.strip() and not x.lstrip().startswith("#")), "")
-
-        if name in {"Rede-Gospel", "Rede Gospel", "Renascer", "Rede-Renascer", "Rede Renascer"}:
-            i = j
-            continue
-
-        if "jmp2.uk" not in url and name in CATEGORY_MAP:
-            block[0] = set_group(block[0], CATEGORY_MAP[name])
-
-        result.extend(block)
-        i = j
-
-    text = "\n".join(result).rstrip() + "\n"
-    PLAYLIST.write_text(text, encoding="utf-8")
-    return 0
+        seen[identity] = len(blocks)
+        block = [meta] + [x for x in lines[e.start+1:e.end+1] if x.strip()]
+        blocks.append((group_for(e, china), block))
+    # Group contiguous channels without changing provider order inside each group.
+    order = list(dict.fromkeys(group for group, _ in blocks))
+    out = [header, '# Categorias por conteúdo; x-source preserva a origem dos streams.',
+           '# Links alternativos distintos são preservados; duplicatas exatas são removidas.', '']
+    for group in order:
+        for current, block in blocks:
+            if group == current:
+                out.extend(block + [''])
+    return '\n'.join(out).rstrip() + '\n', removed
 
 
-if __name__ == "__main__":
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--playlist', action='append')
+    parser.add_argument('--check', action='store_true')
+    args = parser.parse_args()
+    different = False
+    for name in args.playlist or ['cn.m3u', 'srhell02iptv.m3u']:
+        path = Path(name)
+        raw = path.read_text(encoding='utf-8-sig')
+        updated, removed = curate(raw, path.name == 'cn.m3u')
+        different |= raw != updated
+        if not args.check:
+            path.write_text(updated, encoding='utf-8')
+        print(f'{name}: removidas={removed}; alterada={raw != updated}')
+    return int(args.check and different)
+
+if __name__ == '__main__':
     raise SystemExit(main())

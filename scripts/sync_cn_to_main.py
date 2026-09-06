@@ -4,7 +4,9 @@ from __future__ import annotations
 import argparse
 import re
 import subprocess
+import tempfile
 from pathlib import Path
+from urllib.parse import urlencode
 
 from validate_streams import Entry, parse_playlist, probe_url_and_headers, validate_entry
 
@@ -33,9 +35,9 @@ def cctv_key(entry: Entry) -> str:
     if re.search(r'cctv\s*-?\s*5\s*\+', text) or 'cctv5plus' in text:
         return 'cctv5plus'
     if re.search(r'cctv\s*-?\s*4k', text):
-        return 'cctv4'
+        return 'cctv4k'
     if re.search(r'cctv\s*-?\s*8k', text):
-        return 'cctv8'
+        return 'cctv8k'
     m = re.search(r'cctv\s*-?\s*(\d{1,2})', text)
     return f'cctv{int(m.group(1))}' if m else ''
 
@@ -180,7 +182,7 @@ def sync_main(cn_path: Path, main_path: Path, retries: int, timeout: int, decode
     lines = raw.splitlines()
     main_entries = parse_playlist(lines)
     usage: dict[str, int] = {}
-    validated: dict[str, bool] = {}
+    validated: dict[tuple, bool] = {}
     changed_urls = 0
     selected = []
 
@@ -200,9 +202,10 @@ def sync_main(cn_path: Path, main_path: Path, retries: int, timeout: int, decode
             url, _, _ = probe_url_and_headers(cand)
             if not url:
                 continue
-            if url not in validated:
-                validated[url] = validate_candidate(cand, retries, timeout, decode_seconds)
-            if validated[url]:
+            request_key = probe_url_and_headers(cand)
+            if request_key not in validated:
+                validated[request_key] = validate_candidate(cand, retries, timeout, decode_seconds)
+            if validated[request_key]:
                 choice = cand
                 break
         if choice is None:
@@ -210,7 +213,13 @@ def sync_main(cn_path: Path, main_path: Path, retries: int, timeout: int, decode
             continue
 
         usage[key] = min(start + 1, max(0, len(pool) - 1))
-        url, _, _ = probe_url_and_headers(choice)
+        url, agent, referer = probe_url_and_headers(choice)
+        headers = {k: v for k, v in [('User-Agent', agent), ('Referer', referer)] if v}
+        if headers:
+            url += '|' + urlencode(headers)
+        for index in range(e.start + 1, e.end):
+            if lines[index].lower().startswith(('#extvlcopt:http-user-agent=', '#extvlcopt:http-referrer=', '#extvlcopt:http-referer=')):
+                lines[index] = ''
         old_url, _, _ = probe_url_and_headers(e)
         if url != old_url:
             lines[e.end] = url
@@ -220,7 +229,7 @@ def sync_main(cn_path: Path, main_path: Path, retries: int, timeout: int, decode
         logo = attr(choice.metadata, 'tvg-logo')
         if logo and not attr(lines[e.start], 'tvg-logo'):
             lines[e.start] = set_attr(lines[e.start], 'tvg-logo', logo)
-        selected.append(f'{e.title} <- {source_name(choice)} | {url}')
+        selected.append(f'{e.title} <- {source_name(choice)}')
 
     updated = '\n'.join(lines).rstrip() + '\n'
     if updated != raw:
@@ -254,23 +263,22 @@ def main() -> int:
 
     cn = Path(args.cn)
     mainp = Path(args.main)
-    cn_before = cn.read_text(encoding='utf-8-sig')
-    main_before = mainp.read_text(encoding='utf-8-sig')
-
-    removed_lines, logos = clean_and_fill_cn(cn)
-    changed, selected = sync_main(cn, mainp, args.retries, args.timeout, args.decode_seconds)
-    structural_check(cn)
-    structural_check(mainp)
-
-    print(f'[CN] linhas BurningC4 removidas={removed_lines}; logos IPTV-org preenchidas={logos}')
-    print(f'[MAIN] URLs CCTV substituidas={changed}; CCTV validados={len(selected)}')
-    for item in selected:
-        print('[SYNC]', item)
-
-    if not args.apply:
-        cn.write_text(cn_before, encoding='utf-8')
-        mainp.write_text(main_before, encoding='utf-8')
-        print('[DRY-RUN] arquivos restaurados')
+    with tempfile.TemporaryDirectory(prefix='iptv-sync-') as temp:
+        if not args.apply:
+            cn_copy, main_copy = Path(temp) / cn.name, Path(temp) / mainp.name
+            cn_copy.write_bytes(cn.read_bytes())
+            main_copy.write_bytes(mainp.read_bytes())
+            cn, mainp = cn_copy, main_copy
+        removed_lines, logos = clean_and_fill_cn(cn)
+        changed, selected = sync_main(cn, mainp, args.retries, args.timeout, args.decode_seconds)
+        structural_check(cn)
+        structural_check(mainp)
+        print(f'[CN] linhas BurningC4 removidas={removed_lines}; logos preenchidas={logos}')
+        print(f'[MAIN] URLs CCTV substituidas={changed}; CCTV validados={len(selected)}')
+        for item in selected:
+            print('[SYNC]', item)
+        if not args.apply:
+            print('[DRY-RUN] simulacao em copias temporarias')
     return 0
 
 

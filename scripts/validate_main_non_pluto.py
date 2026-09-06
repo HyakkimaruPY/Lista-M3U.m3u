@@ -66,6 +66,7 @@ def main() -> int:
 
     results.sort(key=lambda r: r.entry.number)
     removable = [r for r in results if r.status == "remove"]
+    write_reports(Path(args.report_dir), playlist, results, args.apply, len(entries))
     if args.apply and removable:
         new_lines = remove_ranges(lines, removable)
         updated = "\n".join(new_lines)
@@ -74,8 +75,6 @@ def main() -> int:
         if updated != raw:
             playlist.write_text(updated, encoding="utf-8")
             print(f"Aplicado: {len(removable)} entradas definitivamente inválidas removidas.")
-
-    write_reports(Path(args.report_dir), playlist, results, args.apply, len(entries))
 
     healthy = sum(r.status == "healthy" for r in results)
     uncertain = sum(r.status == "uncertain" for r in results)
