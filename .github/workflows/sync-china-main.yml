@@ -8,12 +8,19 @@ on:
     paths:
       - "scripts/sync_cn_to_main.py"
       - ".github/workflows/sync-china-main.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "*.m3u"
+      - "scripts/sync_cn_to_main.py"
+      - ".github/workflows/sync-china-main.yml"
 
 permissions:
   contents: write
 
 concurrency:
-  group: sync-china-main
+  group: sync-china-main-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -21,10 +28,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
-      - name: Checkout main com historico
+      - name: Checkout branch com historico
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
 
       - name: Instalar FFmpeg
         run: |
@@ -67,7 +75,7 @@ jobs:
             --limit 0 \
             --report-dir reports/china-sync/cn
 
-      - name: Commitar playlists corrigidas na main
+      - name: Commitar playlists corrigidas no branch atual
         shell: bash
         run: |
           git add cn.m3u srhell02iptv.m3u
@@ -78,7 +86,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Sincroniza CCTV e logos da playlist chinesa [skip ci]"
-          git push
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          else
+            git push
+          fi
 
       - name: Publicar relatorio da validacao
         if: always()
