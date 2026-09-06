@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Valida todos os canais nao-Pluto da playlist principal sem altera-la."""
+"""Valida os canais nao-Pluto da playlist principal e, opcionalmente, remove falhas definitivas."""
 
 from __future__ import annotations
 
@@ -7,7 +7,15 @@ import argparse
 import concurrent.futures
 from pathlib import Path
 
-from validate_streams import Result, host_of, parse_playlist, probe_url_and_headers, validate_entry, write_reports
+from validate_streams import (
+    Result,
+    host_of,
+    parse_playlist,
+    probe_url_and_headers,
+    remove_ranges,
+    validate_entry,
+    write_reports,
+)
 
 
 def is_pluto(entry) -> bool:
@@ -24,11 +32,14 @@ def main() -> int:
     parser.add_argument("--timeout", type=int, default=25)
     parser.add_argument("--decode-seconds", type=int, default=4)
     parser.add_argument("--report-dir", default="reports/stream-validation/principal-non-pluto")
+    parser.add_argument("--apply", action="store_true", help="Remove apenas falhas definitivas confirmadas")
     args = parser.parse_args()
 
     playlist = Path(args.playlist)
     raw = playlist.read_text(encoding="utf-8-sig")
-    entries = parse_playlist(raw.splitlines())
+    trailing_newline = raw.endswith("\n")
+    lines = raw.splitlines()
+    entries = parse_playlist(lines)
     selected = [entry for entry in entries if not is_pluto(entry)]
 
     print(f"Validando {len(selected)} canais nao-Pluto de {len(entries)} entradas totais em {playlist}...")
@@ -54,12 +65,21 @@ def main() -> int:
             )
 
     results.sort(key=lambda r: r.entry.number)
-    write_reports(Path(args.report_dir), playlist, results, False, len(entries))
+    removable = [r for r in results if r.status == "remove"]
+    if args.apply and removable:
+        new_lines = remove_ranges(lines, removable)
+        updated = "\n".join(new_lines)
+        if trailing_newline:
+            updated += "\n"
+        if updated != raw:
+            playlist.write_text(updated, encoding="utf-8")
+            print(f"Aplicado: {len(removable)} entradas definitivamente inválidas removidas.")
+
+    write_reports(Path(args.report_dir), playlist, results, args.apply, len(entries))
 
     healthy = sum(r.status == "healthy" for r in results)
-    removable = sum(r.status == "remove" for r in results)
     uncertain = sum(r.status == "uncertain" for r in results)
-    print(f"Resumo nao-Pluto: saudaveis={healthy}, remover={removable}, inconclusivos={uncertain}")
+    print(f"Resumo nao-Pluto: saudaveis={healthy}, remover={len(removable)}, inconclusivos={uncertain}")
     return 0
 
 
