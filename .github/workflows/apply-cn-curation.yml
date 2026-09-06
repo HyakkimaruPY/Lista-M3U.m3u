@@ -1,0 +1,22 @@
+name: Aplicar curadoria China
+on:
+  push:
+    branches: [fix/cn-logos-streams-final]
+    paths: ['.github/workflows/apply-cn-curation.yml']
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: python scripts/curate_cn.py
+      - run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add cn.m3u
+          git diff --cached --quiet || git commit -m 'Atualiza cn.m3u: remove BurningC4 e reaproveita logos'
+          git push
