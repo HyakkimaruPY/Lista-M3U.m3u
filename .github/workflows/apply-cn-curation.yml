@@ -14,10 +14,11 @@ jobs:
         with:
           python-version: '3.x'
       - run: python scripts/curate_cn.py
+      - run: python scripts/sync_main_china.py
       - run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add cn.m3u
-          git diff --cached --quiet || git commit -m 'Atualiza cn.m3u: remove BurningC4 e reaproveita logos'
+          git add cn.m3u srhell02iptv.m3u
+          git diff --cached --quiet || git commit -m 'Atualiza China: logos e streams Free-TV/IPTV-org'
           git push
-# trigger
+# final-trigger
