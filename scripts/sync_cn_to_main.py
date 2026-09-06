@@ -51,12 +51,6 @@ def source_rank(entry: Entry) -> int:
     return 9
 
 
-def iter_blocks(lines: list[str]):
-    entries = parse_playlist(lines)
-    for e in entries:
-        yield e, lines[e.start:e.end + 1]
-
-
 def historical_burning_text() -> str:
     try:
         revs = subprocess.check_output(['git', 'rev-list', 'HEAD', '--', 'cn.m3u'], text=True).splitlines()
@@ -152,7 +146,7 @@ def validate_candidate(candidate: Entry, retries: int, timeout: int, decode_seco
     if not url or ua or ref:
         return False
     probe = Entry(candidate.number, candidate.start, candidate.end, candidate.line, candidate.title, url, candidate.metadata)
-    result = validate_entry(probe, retries, timeout, decode_seconds)
+    result = validate_entry(probe, retries, timeout, decode_seconds, False)
     print(f'[TEST] {candidate.title}: {result.status}')
     return result.status == 'healthy'
 
