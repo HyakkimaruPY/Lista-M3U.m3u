@@ -1,0 +1,59 @@
+name: Validar canais principais nao-Pluto
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "srhell02iptv.m3u"
+      - "scripts/validate_main_non_pluto.py"
+      - "scripts/validate_streams.py"
+      - ".github/workflows/validate-main-non-pluto.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "47 6 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-main-non-pluto:
+    name: Validar principal sem Pluto
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Instalar FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+
+      - name: Validar audio e video dos canais nao-Pluto
+        run: |
+          python3 scripts/validate_main_non_pluto.py \
+            --playlist srhell02iptv.m3u \
+            --workers 6 \
+            --retries 2 \
+            --timeout 25 \
+            --decode-seconds 4 \
+            --report-dir reports/stream-validation/principal-non-pluto
+
+      - name: Publicar resumo
+        if: always()
+        run: |
+          if [[ -f reports/stream-validation/principal-non-pluto/summary.md ]]; then
+            cat reports/stream-validation/principal-non-pluto/summary.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Salvar relatorio
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: stream-validation-principal-non-pluto
+          path: reports/stream-validation/principal-non-pluto/
+          if-no-files-found: warn
+          retention-days: 14
