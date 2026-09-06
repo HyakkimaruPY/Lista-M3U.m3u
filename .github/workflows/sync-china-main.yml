@@ -1,0 +1,90 @@
+name: Sincronizar China com principal
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/sync_cn_to_main.py"
+      - ".github/workflows/sync-china-main.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-china-main
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout main com historico
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Instalar FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          ffprobe -version | head -n 1
+          ffmpeg -version | head -n 1
+
+      - name: Validar sintaxe Python
+        run: |
+          python3 -m py_compile scripts/validate_streams.py scripts/sync_cn_to_main.py
+
+      - name: Recuperar logos C4 e sincronizar CCTV
+        run: |
+          python3 scripts/sync_cn_to_main.py \
+            --cn cn.m3u \
+            --main srhell02iptv.m3u \
+            --retries 2 \
+            --timeout 25 \
+            --decode-seconds 4 \
+            --apply
+
+      - name: Confirmar que BurningC4 nao permaneceu como provedor
+        shell: bash
+        run: |
+          if grep -q 'x-source="BurningC4"\|group-title="China • BurningC4"' cn.m3u; then
+            echo "BurningC4 ainda aparece como provedor de stream"
+            exit 1
+          fi
+          echo "BurningC4 removido como provedor; logos reaproveitadas quando houve correspondencia."
+
+      - name: Validar playlist chinesa completa
+        run: |
+          python3 scripts/validate_streams.py \
+            --playlist cn.m3u \
+            --workers 6 \
+            --retries 2 \
+            --timeout 25 \
+            --decode-seconds 4 \
+            --limit 0 \
+            --report-dir reports/china-sync/cn
+
+      - name: Commitar playlists corrigidas na main
+        shell: bash
+        run: |
+          git add cn.m3u srhell02iptv.m3u
+          if git diff --cached --quiet; then
+            echo "Nenhuma mudanca adicional foi necessaria."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Sincroniza CCTV e logos da playlist chinesa [skip ci]"
+          git push
+
+      - name: Publicar relatorio da validacao
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: china-sync-validation
+          path: reports/china-sync/
+          if-no-files-found: warn
+          retention-days: 14
