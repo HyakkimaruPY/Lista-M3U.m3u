@@ -6,7 +6,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
 import validate_streams as v
 from curate_main_playlist import curate
-from refresh_pluto_sources import region_of
+from refresh_pluto_sources import base_display_name, region_of
+from sync_cn_to_main import is_chinese_main_entry
 from validate_main_non_pluto import is_pluto
 
 
@@ -65,6 +66,23 @@ https://example.org/cgtn-es.m3u8
         self.assertEqual(entry.title, "CGTN Español • [ES]")
         self.assertIn('group-title="Variedades"', entry.metadata)
         self.assertIn('x-lang="es"', entry.metadata)
+
+    def test_china_sync_survives_parent_grouping(self):
+        entry = v.Entry(
+            1,
+            0,
+            1,
+            1,
+            "CCTV-8 电视剧 • [CN]",
+            "https://example.org/cctv8.m3u8",
+            metadata='#EXTINF:-1 tvg-id="CCTV8.cn" group-title="Séries" x-lang="zh-CN",CCTV-8 电视剧 • [CN]',
+        )
+        self.assertTrue(is_chinese_main_entry(entry))
+
+    def test_pluto_repair_strips_display_decorations(self):
+        self.assertEqual(base_display_name("P • Classic Movies • [S]"), "Classic Movies")
+        self.assertEqual(base_display_name("P • Cine en español • [ES]"), "Cine en español")
+        self.assertEqual(base_display_name("R • Lassie • [S]"), "Lassie")
 
     def test_roku_jmp_is_not_pluto(self):
         roku = v.Entry(1, 0, 1, 1, "Roku", "https://jmp2.uk/rok-1234.m3u8")
