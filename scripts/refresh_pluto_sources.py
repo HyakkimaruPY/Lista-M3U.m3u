@@ -34,8 +34,17 @@ def attribute(metadata: str, name: str) -> str:
 
 
 def region_of(entry: Entry) -> str:
+    """Usa x-region após a taxonomia-pai; mantém fallback para playlists antigas."""
+    region = attribute(entry.metadata, "x-region").upper()
+    if region in {"BR", "US"}:
+        return region
     group = attribute(entry.metadata, "group-title").upper()
-    return "BR" if group.endswith(" BR") else "US"
+    title = entry.title.upper()
+    if group.endswith(" BR"):
+        return "BR"
+    if group.endswith(" S") or " • [S]" in title or " • [ES]" in title:
+        return "US"
+    return "BR"
 
 
 def current_id(entry: Entry) -> str:
