@@ -64,11 +64,11 @@ https://amg00627-amg00627c9-runtime-latam-2613.playouts.now.amagi.tv/playlist/am
 https://tv02.zas.media:1936/redesuper/redesuper/playlist.m3u8
 
 # --- Roku FAST BEGIN ---
-#EXTINF:-1 tvg-id="roku-pantera-cor-de-rosa" tvg-name="Pantera Cor-de-Rosa" tvg-logo="https://imgur.com/3wizSOk.png" group-title="Roku • Animações" x-source="Roku FAST", Pantera Cor-de-Rosa
-https://jmp2.uk/rok-65f83bbbf7a2eb952b798c96300bb329.m3u8
+#EXTINF:-1 tvg-id="9bd570b8bf145f73bba7532221e12666" tvg-name="Transformers" group-title="Roku • Animações" x-source="Roku FAST direto", Transformers
+https://aka-live491.delivery.roku.com/73ee2a1b-b841-4143-b9f9-8b00b8f41bb8/t2-origin/out/v1/live.m3u8
 
-#EXTINF:-1 tvg-id="roku-retrocrush" tvg-name="RetroCrush" tvg-logo="https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/CABC2300012FY_20250318T021309SQUARE.png" group-title="Roku • Animações" x-source="Roku FAST", RetroCrush
-https://jmp2.uk/rok-72a54a3c7a3d5381a1baa223a5dc8d23.m3u8
+#EXTINF:-1 tvg-id="roku-retrocrush" tvg-name="RetroCrush" tvg-logo="https://i.imgur.com/M40b4YI.png" group-title="Roku • Animações" x-source="Roku FAST via Amagi/LG", RetroCrush
+https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01201-cinedigmenterta-retrocrush-lgus/playlist.m3u8
 
 #EXTINF:-1 tvg-id="e2e10d08139b56aba73a448f5555b6fd" tvg-name="FilmRise Classic TV" group-title="Roku • Filmes" x-source="Roku FAST", FilmRise Classic TV
 https://jmp2.uk/rok-e2e10d08139b56aba73a448f5555b6fd.m3u8
