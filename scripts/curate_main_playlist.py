@@ -70,6 +70,23 @@ def platform_for(entry) -> str:
 
 
 def language_for(entry) -> str:
+    name = base_title(entry.title)
+    folded = name.casefold()
+    group = attr(entry.metadata, "group-title")
+    group_folded = group.casefold()
+    tvg_id = attr(entry.metadata, "tvg-id").casefold()
+
+    # Pistas explícitas do nome vencem metadados herdados. Isso evita, por
+    # exemplo, classificar CGTN Español como chinês só porque o tvg-id termina em .cn.
+    if (
+        "em espanhol" in group_folded
+        or "español" in folded
+        or "espanol" in folded
+        or folded in SPANISH_TITLES
+        or folded == "telemundo"
+    ):
+        return "es"
+
     tagged = attr(entry.metadata, "x-lang").lower()
     if tagged:
         if tagged.startswith("pt"):
@@ -84,22 +101,6 @@ def language_for(entry) -> str:
     decorated = title_language(entry.title)
     if decorated:
         return decorated
-
-    name = base_title(entry.title)
-    folded = name.casefold()
-    group = attr(entry.metadata, "group-title")
-    group_folded = group.casefold()
-    tvg_id = attr(entry.metadata, "tvg-id").casefold()
-
-    # Espanhol precisa ser detectado antes dos marcadores genéricos de China/US.
-    if (
-        "em espanhol" in group_folded
-        or "en español" in folded
-        or "en espanol" in folded
-        or folded in SPANISH_TITLES
-        or folded == "telemundo"
-    ):
-        return "es"
 
     if group.endswith(" BR") or attr(entry.metadata, "x-region").upper() == "BR":
         return "pt"
@@ -172,51 +173,59 @@ def spanish_parent(name: str) -> str:
     return "Variedades"
 
 
+def content_group_name(group: str) -> str:
+    """Remove plataforma/sufixo regional da taxonomia antiga antes de mapear."""
+    value = group.casefold().strip()
+    value = re.sub(r"^(?:roku|pluto)\s*•\s*", "", value)
+    value = re.sub(r"\s+(?:s|br)$", "", value)
+    return value.strip()
+
+
 def parent_group(entry, china: bool = False) -> str:
     group = attr(entry.metadata, "group-title")
     folded = group.casefold()
+    content = content_group_name(group)
     name = base_title(entry.title)
 
     if group == "Wild Cards temp 01" or folded.startswith("séries vod") or folded.startswith("series vod"):
         return "Séries VOD"
 
     if china or group.startswith("China •") or attr(entry.metadata, "tvg-id").casefold().endswith(".cn"):
-        # CGTN Español é um canal internacional em espanhol, não em mandarim.
         if language_for(entry) == "es":
             return "Variedades"
         return china_parent(entry)
 
-    if "desenho" in folded or "infantil" in folded or "anime" in folded or folded == "anime":
-        return "Animações"
-
-    if "cinema clássico" in folded or "cinema classico" in folded or "filme" in folded:
-        return "Filmes"
-
-    if "séries clássicas" in folded or "series classicas" in folded or folded == "séries" or folded == "series":
-        return "Séries"
-
-    if "ficção científica" in folded or "ficcao cientifica" in folded:
-        return "Séries"
-
-    if "comédia" in folded or "comedia" in folded:
-        return "Séries"
-
-    if "esporte" in folded:
-        return "Esportes"
-
-    if "faroeste" in folded or "western" in folded:
-        return "Filmes" if "movie" in name.casefold() else "Séries"
-
-    if "em espanhol" in folded:
+    if "em espanhol" in content:
         return spanish_parent(name)
 
-    if folded in {"filmes", "filmes • ação", "filmes • clássicos"}:
-        return "Filmes"
-    if folded in {"anime", "animações", "animacoes"}:
+    if "desenho" in content or "infantil" in content or "anime" in content or "anima" in content:
         return "Animações"
-    if folded in {"séries", "series"}:
+
+    if "cinema clássico" in content or "cinema classico" in content or "filme" in content:
+        return "Filmes"
+
+    if "séries clássicas" in content or "series classicas" in content or content in {"séries", "series"}:
         return "Séries"
-    if folded in {"esportes", "sport", "sports"}:
+
+    if "ficção científica" in content or "ficcao cientifica" in content:
+        return "Séries"
+
+    if "comédia" in content or "comedia" in content:
+        return "Séries"
+
+    if "esporte" in content or content in {"sport", "sports"}:
+        return "Esportes"
+
+    if "faroeste" in content or "western" in content:
+        return "Filmes" if "movie" in name.casefold() else "Séries"
+
+    if content in {"filmes", "filmes • ação", "filmes • clássicos"}:
+        return "Filmes"
+    if content in {"anime", "animações", "animacoes"}:
+        return "Animações"
+    if content in {"séries", "series"}:
+        return "Séries"
+    if content in {"esportes", "sport", "sports"}:
         return "Esportes"
 
     # Reality, música, TV geral, casa/gastronomia, história/ciência,
@@ -279,7 +288,6 @@ def curate(raw: str, china=False):
         if platform_for(entry) == "P":
             meta = set_attr(meta, "x-region", pluto_region(entry, language))
 
-        # Troca somente o título visível após a vírgula do EXTINF.
         comma = meta.rfind(",")
         if comma >= 0:
             meta = meta[: comma + 1] + final_title
