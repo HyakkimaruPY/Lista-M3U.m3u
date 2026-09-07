@@ -139,6 +139,12 @@ https://jmp2.uk/plu-61f33318210549000806a530.m3u8
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://stmv1.srvif.com/tvserie/tvserie/playlist.m3u8
 
+#EXTINF:-1 tvg-id="roku-mr-bean" tvg-name="R • Mr. Bean" group-title="Séries" x-source="Roku FAST via TCL/Amagi" x-lang="pt-BR",R • Mr. Bean
+https://amg00627-banijay-amg00627c35-tcl-us-4282.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanbr-tclus/playlist.m3u8
+
+#EXTINF:-1 tvg-id="roku-malhacao-fast" tvg-name="R • Malhação Fast" group-title="Séries" x-source="Roku FAST via TCL/Leiniao" x-lang="pt-BR",R • Malhação Fast
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/f46d6f4717bc41758662e8c6700c1d68/playlist.m3u8
+
 #EXTINF:-1 tvg-id="631fa8dd7f25240007099a40" tvg-name="P • A Feiticeira" tvg-logo="https://images.pluto.tv/channels/631fa8dd7f25240007099a40/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="pt-BR" x-region="BR",P • A Feiticeira
 https://jmp2.uk/plu-631fa8dd7f25240007099a40.m3u8
 
@@ -168,6 +174,15 @@ https://jmp2.uk/plu-632b606e12a67b0007c9e371.m3u8
 
 #EXTINF:-1 tvg-id="668c566d08d5490008075948" tvg-name="P • La Familia del Barrio • [ES]" tvg-logo="https://images.pluto.tv/channels/668c566d08d5490008075948/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="es" x-region="US",P • La Familia del Barrio • [ES]
 https://jmp2.uk/plu-668c566d08d5490008075948.m3u8
+
+#EXTINF:-1 tvg-id="8c36c765b4415db78a85078c37df4a5f" tvg-name="R • Lassie • [S]" group-title="Séries" x-source="Roku FAST" x-lang="en",R • Lassie • [S]
+https://jmp2.uk/rok-8c36c765b4415db78a85078c37df4a5f.m3u8
+
+#EXTINF:-1 tvg-id="dcecb48012b5c99824cb0b1667f4499c" tvg-name="R • Highway To Heaven • [S]" group-title="Séries" x-source="Roku FAST" x-lang="en",R • Highway To Heaven • [S]
+https://jmp2.uk/rok-dcecb48012b5c99824cb0b1667f4499c.m3u8
+
+#EXTINF:-1 tvg-id="roku-andromeda" tvg-name="R • Andromeda • [S]" tvg-logo="https://d3bd0tgyk368z1.cloudfront.net/feeds/images/andromeda/Andromeda_LGChannel_ChannelLogo_400x200.png" group-title="Séries" x-source="Roku FAST via TCL" x-lang="en",R • Andromeda • [S]
+https://dotjw4onyd4re.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-tcl/master.m3u8?ads.xumo_channelId=88884607
 
 #EXTINF:-1 tvg-id="545943f1c9f133a519bbac92" tvg-name="P • MST3K • [S]" tvg-logo="https://images.pluto.tv/channels/545943f1c9f133a519bbac92/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • MST3K • [S]
 https://jmp2.uk/plu-545943f1c9f133a519bbac92.m3u8
@@ -231,6 +246,48 @@ https://jmp2.uk/plu-66c638726838ee00085ac20d.m3u8
 
 #EXTINF:-1 tvg-id="67352ed93a61d4000881f9fa" tvg-name="P • The Twilight Zone • [S]" tvg-logo="https://images.pluto.tv/channels/67352ed93a61d4000881f9fa/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • The Twilight Zone • [S]
 https://jmp2.uk/plu-67352ed93a61d4000881f9fa.m3u8
+
+#EXTINF:-1 tvg-id="5c6eeb85c05dfc257e5a50c4" tvg-name="P • Degrassi • [S]" tvg-logo="https://images.pluto.tv/channels/5c6eeb85c05dfc257e5a50c4/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • Degrassi • [S]
+https://jmp2.uk/plu-5c6eeb85c05dfc257e5a50c4.m3u8
+
+#EXTINF:-1 tvg-id="5cbf6a868a1bce4a3d52a5e9" tvg-name="P • Midsomer Murders • [S]" tvg-logo="https://images.pluto.tv/channels/5cbf6a868a1bce4a3d52a5e9/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • Midsomer Murders • [S]
+https://jmp2.uk/plu-5cbf6a868a1bce4a3d52a5e9.m3u8
+
+#EXTINF:-1 tvg-id="5d40bebc5e3d2750a2239d7e" tvg-name="P • TV Land Drama • [S]" tvg-logo="https://images.pluto.tv/channels/5d40bebc5e3d2750a2239d7e/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • TV Land Drama • [S]
+https://jmp2.uk/plu-5d40bebc5e3d2750a2239d7e.m3u8
+
+#EXTINF:-1 tvg-id="5efbd29e4aa26700076c0d06" tvg-name="P • CSI • [S]" tvg-logo="https://images.pluto.tv/channels/5efbd29e4aa26700076c0d06/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • CSI • [S]
+https://jmp2.uk/plu-5efbd29e4aa26700076c0d06.m3u8
+
+#EXTINF:-1 tvg-id="5f31fd1b4c510e00071c3103" tvg-name="P • Pluto TV Crime Drama • [S]" tvg-logo="https://images.pluto.tv/channels/5f31fd1b4c510e00071c3103/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • Pluto TV Crime Drama • [S]
+https://jmp2.uk/plu-5f31fd1b4c510e00071c3103.m3u8
+
+#EXTINF:-1 tvg-id="5f24662bebe0f0000767de32" tvg-name="P • Supernatural Drama • [S]" tvg-logo="https://images.pluto.tv/channels/5f24662bebe0f0000767de32/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • Supernatural Drama • [S]
+https://jmp2.uk/plu-5f24662bebe0f0000767de32.m3u8
+
+#EXTINF:-1 tvg-id="5f4d83e0a382c00007bc02e7" tvg-name="P • Beverly Hills 90210 • [S]" tvg-logo="https://images.pluto.tv/channels/5f4d83e0a382c00007bc02e7/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • Beverly Hills 90210 • [S]
+https://jmp2.uk/plu-5f4d83e0a382c00007bc02e7.m3u8
+
+#EXTINF:-1 tvg-id="613260e4bdb71c00070d63fa" tvg-name="P • More TV Drama • [S]" tvg-logo="https://images.pluto.tv/channels/613260e4bdb71c00070d63fa/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • More TV Drama • [S]
+https://jmp2.uk/plu-613260e4bdb71c00070d63fa.m3u8
+
+#EXTINF:-1 tvg-id="61b3b8c645b45d0007a9bb8d" tvg-name="P • Blue Bloods • [S]" tvg-logo="https://images.pluto.tv/channels/61b3b8c645b45d0007a9bb8d/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • Blue Bloods • [S]
+https://jmp2.uk/plu-61b3b8c645b45d0007a9bb8d.m3u8
+
+#EXTINF:-1 tvg-id="61f07513227feb00073ee6bc" tvg-name="P • Heartland • [S]" tvg-logo="https://images.pluto.tv/channels/61f07513227feb00073ee6bc/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • Heartland • [S]
+https://jmp2.uk/plu-61f07513227feb00073ee6bc.m3u8
+
+#EXTINF:-1 tvg-id="62f54c11b3af68000702c304" tvg-name="P • CSI: Miami • [S]" tvg-logo="https://images.pluto.tv/channels/62f54c11b3af68000702c304/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • CSI: Miami • [S]
+https://jmp2.uk/plu-62f54c11b3af68000702c304.m3u8
+
+#EXTINF:-1 tvg-id="62f54c6439183b000769fb8f" tvg-name="P • CSI: NY • [S]" tvg-logo="https://images.pluto.tv/channels/62f54c6439183b000769fb8f/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • CSI: NY • [S]
+https://jmp2.uk/plu-62f54c6439183b000769fb8f.m3u8
+
+#EXTINF:-1 tvg-id="65653817c917a5000844bc30" tvg-name="P • Criminal Minds • [S]" tvg-logo="https://images.pluto.tv/channels/65653817c917a5000844bc30/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • Criminal Minds • [S]
+https://jmp2.uk/plu-65653817c917a5000844bc30.m3u8
+
+#EXTINF:-1 tvg-id="65775af3b3801200084a3aa4" tvg-name="P • Feel Good Drama • [S]" tvg-logo="https://images.pluto.tv/channels/65775af3b3801200084a3aa4/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • Feel Good Drama • [S]
+https://jmp2.uk/plu-65775af3b3801200084a3aa4.m3u8
 
 #EXTINF:-1 tvg-id="5d81607ab737153ea3c1c80e" tvg-name="P • The Addams Family • [S]" tvg-logo="https://images.pluto.tv/channels/5d81607ab737153ea3c1c80e/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Séries" x-lang="en" x-region="US",P • The Addams Family • [S]
 https://jmp2.uk/plu-5d81607ab737153ea3c1c80e.m3u8
@@ -328,6 +385,12 @@ https://jmp2.uk/plu-5d8d08395f39465da6fb3ec4.m3u8
 #EXTINF:-1 tvg-id="66fedd65d7de140008dccd66" tvg-name="P • El Reino Infantil • [ES]" tvg-logo="https://images.pluto.tv/channels/66fedd65d7de140008dccd66/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Animações" x-lang="es" x-region="US",P • El Reino Infantil • [ES]
 https://jmp2.uk/plu-66fedd65d7de140008dccd66.m3u8
 
+#EXTINF:-1 tvg-id="9bd570b8bf145f73bba7532221e12666" tvg-name="R • Transformers • [S]" group-title="Animações" x-source="Roku FAST via Fire TV/Amagi" x-lang="en",R • Transformers • [S]
+https://amg00461-eone-amg00461c1-firetv-us-5209.playouts.now.amagi.tv/playlist.m3u8
+
+#EXTINF:-1 tvg-id="RetroCrush.us@SD" tvg-name="R • RetroCrush • [S]" tvg-logo="https://i.imgur.com/M40b4YI.png" group-title="Animações" x-source="Roku FAST via Cineverse" x-lang="en",R • RetroCrush • [S]
+https://linear-899.frequency.stream/dist/cineverse/899/hls/master/playlist.m3u8
+
 #EXTINF:-1 tvg-id="51c75f7bb6f26ba1cd00002f" tvg-name="P • Little Stars Universe • [S]" tvg-logo="https://images.pluto.tv/channels/51c75f7bb6f26ba1cd00002f/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Animações" x-lang="en" x-region="US",P • Little Stars Universe • [S]
 https://jmp2.uk/plu-51c75f7bb6f26ba1cd00002f.m3u8
 
@@ -398,12 +461,6 @@ https://amg00627-amg00627c9-runtime-latam-2613.playouts.now.amagi.tv/playlist/am
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://tv02.zas.media:1936/redesuper/redesuper/playlist.m3u8
 
-#EXTINF:-1 tvg-id="roku-mr-bean" tvg-name="R • Mr. Bean" group-title="Variedades" x-source="Roku FAST via TCL/Amagi" x-lang="pt-BR",R • Mr. Bean
-https://amg00627-banijay-amg00627c35-tcl-us-4282.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanbr-tclus/playlist.m3u8
-
-#EXTINF:-1 tvg-id="roku-malhacao-fast" tvg-name="R • Malhação Fast" group-title="Variedades" x-source="Roku FAST via TCL/Leiniao" x-lang="pt-BR",R • Malhação Fast
-https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/f46d6f4717bc41758662e8c6700c1d68/playlist.m3u8
-
 #EXTINF:-1 tvg-id="roku-novelissima" tvg-name="R • Novelíssima" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRicsDxtDGrzInNAZnCnZJuGcWCiaAZ9yBOkEnaHaFkytr0FAdNRIpCHcJY&s=10" group-title="Variedades" x-source="Roku FAST via TCL/Leiniao" x-lang="pt-BR",R • Novelíssima
 https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/12d72d1a2d184982808da4e7dc859aed/playlist.m3u8
 
@@ -455,21 +512,6 @@ https://jmp2.uk/plu-668c5cb4f01dbe0008dd4082.m3u8
 
 #EXTINF:-1 tvg-id="66ba53cda4ee2700083fac09" tvg-name="P • Sala de Emergencias: Historias Inéditas • [ES]" tvg-logo="https://images.pluto.tv/channels/66ba53cda4ee2700083fac09/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="es" x-region="US",P • Sala de Emergencias: Historias Inéditas • [ES]
 https://jmp2.uk/plu-66ba53cda4ee2700083fac09.m3u8
-
-#EXTINF:-1 tvg-id="9bd570b8bf145f73bba7532221e12666" tvg-name="R • Transformers • [S]" group-title="Variedades" x-source="Roku FAST via Fire TV/Amagi" x-lang="en",R • Transformers • [S]
-https://amg00461-eone-amg00461c1-firetv-us-5209.playouts.now.amagi.tv/playlist.m3u8
-
-#EXTINF:-1 tvg-id="RetroCrush.us@SD" tvg-name="R • RetroCrush • [S]" tvg-logo="https://i.imgur.com/M40b4YI.png" group-title="Variedades" x-source="Roku FAST via Cineverse" x-lang="en",R • RetroCrush • [S]
-https://linear-899.frequency.stream/dist/cineverse/899/hls/master/playlist.m3u8
-
-#EXTINF:-1 tvg-id="8c36c765b4415db78a85078c37df4a5f" tvg-name="R • Lassie • [S]" group-title="Variedades" x-source="Roku FAST" x-lang="en",R • Lassie • [S]
-https://jmp2.uk/rok-8c36c765b4415db78a85078c37df4a5f.m3u8
-
-#EXTINF:-1 tvg-id="dcecb48012b5c99824cb0b1667f4499c" tvg-name="R • Highway To Heaven • [S]" group-title="Variedades" x-source="Roku FAST" x-lang="en",R • Highway To Heaven • [S]
-https://jmp2.uk/rok-dcecb48012b5c99824cb0b1667f4499c.m3u8
-
-#EXTINF:-1 tvg-id="roku-andromeda" tvg-name="R • Andromeda • [S]" tvg-logo="https://d3bd0tgyk368z1.cloudfront.net/feeds/images/andromeda/Andromeda_LGChannel_ChannelLogo_400x200.png" group-title="Variedades" x-source="Roku FAST via TCL" x-lang="en",R • Andromeda • [S]
-https://dotjw4onyd4re.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-tcl/master.m3u8?ads.xumo_channelId=88884607
 
 #EXTINF:-1 tvg-id="563a970aa1a1f7fe7c9daad7" tvg-name="P • Pluto TV Science • [S]" tvg-logo="https://images.pluto.tv/channels/563a970aa1a1f7fe7c9daad7/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • Pluto TV Science • [S]
 https://jmp2.uk/plu-563a970aa1a1f7fe7c9daad7.m3u8
@@ -641,48 +683,6 @@ https://jmp2.uk/plu-6176f39e709f160007ec61c3.m3u8
 
 #EXTINF:-1 tvg-id="6532e6a9bdf3cf000887ab29" tvg-name="P • More True Crime • [S]" tvg-logo="https://images.pluto.tv/channels/6532e6a9bdf3cf000887ab29/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • More True Crime • [S]
 https://jmp2.uk/plu-6532e6a9bdf3cf000887ab29.m3u8
-
-#EXTINF:-1 tvg-id="5c6eeb85c05dfc257e5a50c4" tvg-name="P • Degrassi • [S]" tvg-logo="https://images.pluto.tv/channels/5c6eeb85c05dfc257e5a50c4/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • Degrassi • [S]
-https://jmp2.uk/plu-5c6eeb85c05dfc257e5a50c4.m3u8
-
-#EXTINF:-1 tvg-id="5cbf6a868a1bce4a3d52a5e9" tvg-name="P • Midsomer Murders • [S]" tvg-logo="https://images.pluto.tv/channels/5cbf6a868a1bce4a3d52a5e9/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • Midsomer Murders • [S]
-https://jmp2.uk/plu-5cbf6a868a1bce4a3d52a5e9.m3u8
-
-#EXTINF:-1 tvg-id="5d40bebc5e3d2750a2239d7e" tvg-name="P • TV Land Drama • [S]" tvg-logo="https://images.pluto.tv/channels/5d40bebc5e3d2750a2239d7e/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • TV Land Drama • [S]
-https://jmp2.uk/plu-5d40bebc5e3d2750a2239d7e.m3u8
-
-#EXTINF:-1 tvg-id="5efbd29e4aa26700076c0d06" tvg-name="P • CSI • [S]" tvg-logo="https://images.pluto.tv/channels/5efbd29e4aa26700076c0d06/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • CSI • [S]
-https://jmp2.uk/plu-5efbd29e4aa26700076c0d06.m3u8
-
-#EXTINF:-1 tvg-id="5f31fd1b4c510e00071c3103" tvg-name="P • Pluto TV Crime Drama • [S]" tvg-logo="https://images.pluto.tv/channels/5f31fd1b4c510e00071c3103/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • Pluto TV Crime Drama • [S]
-https://jmp2.uk/plu-5f31fd1b4c510e00071c3103.m3u8
-
-#EXTINF:-1 tvg-id="5f24662bebe0f0000767de32" tvg-name="P • Supernatural Drama • [S]" tvg-logo="https://images.pluto.tv/channels/5f24662bebe0f0000767de32/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • Supernatural Drama • [S]
-https://jmp2.uk/plu-5f24662bebe0f0000767de32.m3u8
-
-#EXTINF:-1 tvg-id="5f4d83e0a382c00007bc02e7" tvg-name="P • Beverly Hills 90210 • [S]" tvg-logo="https://images.pluto.tv/channels/5f4d83e0a382c00007bc02e7/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • Beverly Hills 90210 • [S]
-https://jmp2.uk/plu-5f4d83e0a382c00007bc02e7.m3u8
-
-#EXTINF:-1 tvg-id="613260e4bdb71c00070d63fa" tvg-name="P • More TV Drama • [S]" tvg-logo="https://images.pluto.tv/channels/613260e4bdb71c00070d63fa/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • More TV Drama • [S]
-https://jmp2.uk/plu-613260e4bdb71c00070d63fa.m3u8
-
-#EXTINF:-1 tvg-id="61b3b8c645b45d0007a9bb8d" tvg-name="P • Blue Bloods • [S]" tvg-logo="https://images.pluto.tv/channels/61b3b8c645b45d0007a9bb8d/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • Blue Bloods • [S]
-https://jmp2.uk/plu-61b3b8c645b45d0007a9bb8d.m3u8
-
-#EXTINF:-1 tvg-id="61f07513227feb00073ee6bc" tvg-name="P • Heartland • [S]" tvg-logo="https://images.pluto.tv/channels/61f07513227feb00073ee6bc/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • Heartland • [S]
-https://jmp2.uk/plu-61f07513227feb00073ee6bc.m3u8
-
-#EXTINF:-1 tvg-id="62f54c11b3af68000702c304" tvg-name="P • CSI: Miami • [S]" tvg-logo="https://images.pluto.tv/channels/62f54c11b3af68000702c304/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • CSI: Miami • [S]
-https://jmp2.uk/plu-62f54c11b3af68000702c304.m3u8
-
-#EXTINF:-1 tvg-id="62f54c6439183b000769fb8f" tvg-name="P • CSI: NY • [S]" tvg-logo="https://images.pluto.tv/channels/62f54c6439183b000769fb8f/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • CSI: NY • [S]
-https://jmp2.uk/plu-62f54c6439183b000769fb8f.m3u8
-
-#EXTINF:-1 tvg-id="65653817c917a5000844bc30" tvg-name="P • Criminal Minds • [S]" tvg-logo="https://images.pluto.tv/channels/65653817c917a5000844bc30/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • Criminal Minds • [S]
-https://jmp2.uk/plu-65653817c917a5000844bc30.m3u8
-
-#EXTINF:-1 tvg-id="65775af3b3801200084a3aa4" tvg-name="P • Feel Good Drama • [S]" tvg-logo="https://images.pluto.tv/channels/65775af3b3801200084a3aa4/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • Feel Good Drama • [S]
-https://jmp2.uk/plu-65775af3b3801200084a3aa4.m3u8
 
 #EXTINF:-1 tvg-id="5d51e791b7dba3b2ae990ab2" tvg-name="P • This Old House • [S]" tvg-logo="https://images.pluto.tv/channels/5d51e791b7dba3b2ae990ab2/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Variedades" x-lang="en" x-region="US",P • This Old House • [S]
 https://jmp2.uk/plu-5d51e791b7dba3b2ae990ab2.m3u8
