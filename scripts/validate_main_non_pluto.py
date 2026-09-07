@@ -9,7 +9,6 @@ from pathlib import Path
 
 from validate_streams import (
     Result,
-    host_of,
     parse_playlist,
     probe_url_and_headers,
     remove_ranges,
@@ -19,9 +18,9 @@ from validate_streams import (
 
 
 def is_pluto(entry) -> bool:
+    """Identifica apenas endpoints Pluto; Roku em jmp2.uk/rok-* continua nao-Pluto."""
     url, _, _ = probe_url_and_headers(entry)
-    host = host_of(url).lower()
-    return host == "jmp2.uk" or host.endswith(".jmp2.uk")
+    return "/plu-" in (url or "").lower()
 
 
 def main() -> int:
