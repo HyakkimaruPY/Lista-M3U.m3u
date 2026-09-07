@@ -21,11 +21,20 @@ DEFAULT_SOURCES = {
     "US": "https://raw.githubusercontent.com/matthuisman/i.mjh.nz/refs/heads/master/PlutoTV/us.xml",
 }
 PLUTO_ID_RE = re.compile(r"jmp2\.uk/plu-([0-9a-f]+)\.m3u8", re.IGNORECASE)
+DISPLAY_DECORATION_RE = re.compile(
+    r"^(?:[RP]\s*•\s*)?(.*?)(?:\s*•\s*\[(?:S|ES|CN)\])?$",
+    re.IGNORECASE,
+)
 
 
 def normalize(value: str) -> str:
     value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode("ascii")
     return re.sub(r"[^a-z0-9]+", " ", value.lower()).strip()
+
+
+def base_display_name(value: str) -> str:
+    match = DISPLAY_DECORATION_RE.match((value or "").strip())
+    return (match.group(1) if match else value).strip()
 
 
 def attribute(metadata: str, name: str) -> str:
@@ -48,7 +57,6 @@ def region_of(entry: Entry) -> str:
 
 
 def current_id(entry: Entry) -> str:
-    _, _, _ = probe_url_and_headers(entry)
     match = PLUTO_ID_RE.search(entry.url or "")
     return match.group(1).lower() if match else ""
 
@@ -82,7 +90,8 @@ def candidate_for(entry: Entry, channel_map: dict[str, list[tuple[str, str]]]) -
     names = [attribute(entry.metadata, "tvg-name"), entry.title]
     old_id = current_id(entry)
     for name in names:
-        for channel_id, display in channel_map.get(normalize(name), []):
+        key = normalize(base_display_name(name))
+        for channel_id, display in channel_map.get(key, []):
             if channel_id != old_id:
                 return channel_id, display
     return None
@@ -152,7 +161,12 @@ def main() -> int:
         for item in report.get("results", [])
         if item.get("status") == "remove" and item.get("host") == "jmp2.uk"
     }
-    failed = [by_line[line] for line in sorted(failed_lines) if line in by_line]
+    # Mesmo host, namespaces diferentes: /plu-* é Pluto; /rok-* é Roku.
+    failed = [
+        by_line[line]
+        for line in sorted(failed_lines)
+        if line in by_line and current_id(by_line[line])
+    ]
     needed_regions = {region_of(entry) for entry in failed}
 
     source_urls = {"BR": args.source_br, "US": args.source_us}
