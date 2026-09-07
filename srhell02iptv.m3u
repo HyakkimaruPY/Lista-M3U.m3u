@@ -48,9 +48,6 @@ https://spt-sonyoneclassicas-1-br.samsung.wurl.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="On-Filmes" tvg-name="On-Filmes" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHGtvJaxetxkwVoDWqlnYMyxxoQcCTPcp_3JkS2Dnk4WJKxIyk7I11v8A&s=10" group-title="Filmes", On-Filmes
 https://stream.ads.ottera.tv/playlist.m3u8?network_id=6178
 
-#EXTINF:-1 tvg-id="Novelissima(ES)" tvg-name="Novelissima(ES)" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRicsDxtDGrzInNAZnCnZJuGcWCiaAZ9yBOkEnaHaFkytr0FAdNRIpCHcJY&s=10" group-title="Novelas", Novelissima(ES)
-#EXTVLCOPT:http-user-agent=Lavf53.32.100
-https://stream.ads.ottera.tv/playlist.m3u8?network_id=2380
 
 #EXTINF:-1 tvg-id="Loading" tvg-name="Loading" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt5pxJ4E-jZJ-ovS2sFvGslbM1Ylxm5Dj6FGOYKe-M4-XTV2HuG3pI6Nmy&s=10" group-title="Anime", Loading
 https://stmv1.srvif.com/loadingtv/loadingtv/playlist.m3u8
@@ -65,6 +62,47 @@ https://amg00627-amg00627c9-runtime-latam-2613.playouts.now.amagi.tv/playlist/am
 #EXTINF:-1 tvg-id="Rede-Super" tvg-name="Rede-Super" tvg-logo="https://play-lh.googleusercontent.com/anVTfVdwyewDErvXNWj3VwNbuKvywmE9YeXdykr11NFC9zsJbEPcQ2Q-lQQ2pg5Vg7k=w240-h480-rw" group-title="TV • Brasil", Rede-Super
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://tv02.zas.media:1936/redesuper/redesuper/playlist.m3u8
+
+# --- Roku FAST BEGIN ---
+#EXTINF:-1 tvg-id="roku-turma-da-monica" tvg-name="Turma da Mônica" tvg-logo="https://images.pluto.tv/channels/5f997e44949bc70007a6941e/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Roku • Animações" x-source="Roku FAST via TCL/Leiniao", Turma da Mônica
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/6e5fce0478454ffca133472e1c359f55/playlist.m3u8
+
+#EXTINF:-1 tvg-id="roku-moranguinho" tvg-name="Moranguinho" tvg-logo="https://i.imgur.com/9Vt0vrZ.png" group-title="Roku • Animações" x-source="Roku FAST via TCL/Leiniao", Moranguinho
+https://ssai-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/15d2d4a8f740492cb0f81cbb1feb5123/playlist.m3u8
+
+#EXTINF:-1 tvg-id="roku-toon-goggles-brasil" tvg-name="Toon Goggles Brasil" group-title="Roku • Animações" x-source="Roku FAST via TCL/Leiniao", Toon Goggles Brasil
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/pipAd/f0b823ee756a475d96c661596195e21e/playlist.m3u8
+
+#EXTINF:-1 tvg-id="roku-western-bound-pt" tvg-name="Western Bound em Português" group-title="Roku • Filmes" x-source="Roku FAST via TCL/Leiniao", Western Bound em Português
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/f5db557dc5ea4552bb723690a52f5aee/playlist.m3u8
+
+#EXTINF:-1 tvg-id="roku-filmelier-esperanca" tvg-name="Filmelier TV Esperança" tvg-logo="https://d3bd0tgyk368z1.cloudfront.net/feeds/epg/sofa/espca/lgartwork/esperanca_Logo700x200.png" group-title="Roku • Filmes" x-source="Roku FAST via TCL/Leiniao", Filmelier TV Esperança
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/d8c82ef3962a4866bbff81317936d8cf/playlist.m3u8
+
+#EXTINF:-1 tvg-id="roku-filmelier-vida-real" tvg-name="Filmelier TV Vida Real" tvg-logo="https://d3bd0tgyk368z1.cloudfront.net/feeds/epg/sofa/fmvirl/vidareal_Logo700x200.png" group-title="Roku • Filmes" x-source="Roku FAST via TCL/Leiniao", Filmelier TV Vida Real
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/565cfbea4dd84fe9af37cf67e9036de7/playlist.m3u8
+
+#EXTINF:-1 tvg-id="roku-adrenalina-pura-halloween" tvg-name="Adrenalina Pura TV Halloween" tvg-logo="https://d3bd0tgyk368z1.cloudfront.net/feeds/epg/sofa/tvapt/tvapt_logo700x200.png" group-title="Roku • Filmes" x-source="Roku FAST via TCL/Leiniao", Adrenalina Pura TV Halloween
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/61d31f5ea0524ab392ddf5c3ea37d678/playlist.m3u8
+
+#EXTINF:-1 tvg-id="roku-malhacao-fast" tvg-name="Malhação Fast" group-title="Roku • Séries" x-source="Roku FAST via TCL/Leiniao", Malhação Fast
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/f46d6f4717bc41758662e8c6700c1d68/playlist.m3u8
+
+#EXTINF:-1 tvg-id="roku-filmrise-series" tvg-name="FilmRise Séries Gratuitas" group-title="Roku • Séries" x-source="Roku FAST via TCL", FilmRise Séries Gratuitas
+https://dotjw4onyd4re.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-tcl/master.m3u8?ads.xumo_channelId=88884541
+
+#EXTINF:-1 tvg-id="roku-highway-to-heaven" tvg-name="Highway To Heaven" group-title="Roku • Séries" x-source="Roku FAST via TCL", Highway To Heaven
+https://dotjw4onyd4re.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-tcl/master.m3u8?ads.xumo_channelId=88884542
+
+#EXTINF:-1 tvg-id="roku-rookie-blue" tvg-name="Rookie Blue" group-title="Roku • Séries" x-source="Roku FAST via TCL/Amagi", Rookie Blue
+https://amg00353-amg00353c44-tcl-us-7113.playouts.now.amagi.tv/playlist/amg00353-lionsgatetvfast-rookieblueportuguese-tclus/playlist.m3u8
+
+#EXTINF:-1 tvg-id="roku-mr-bean" tvg-name="Mr. Bean" group-title="Roku • Séries" x-source="Roku FAST via TCL/Amagi", Mr. Bean
+https://amg00627-banijay-amg00627c35-tcl-us-4282.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanbr-tclus/playlist.m3u8
+
+#EXTINF:-1 tvg-id="roku-novelissima" tvg-name="Novelíssima" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRicsDxtDGrzInNAZnCnZJuGcWCiaAZ9yBOkEnaHaFkytr0FAdNRIpCHcJY&s=10" group-title="Roku • Variedades" x-source="Roku FAST via TCL/Leiniao", Novelíssima
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/12d72d1a2d184982808da4e7dc859aed/playlist.m3u8
+# --- Roku FAST END ---
 
 #EXTINF:-1 tvg-id="51c75f7bb6f26ba1cd00002f" tvg-name="Little Stars Universe" tvg-logo="https://images.pluto.tv/channels/51c75f7bb6f26ba1cd00002f/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Pluto • Infantil S", Little Stars Universe
 https://jmp2.uk/plu-51c75f7bb6f26ba1cd00002f.m3u8
