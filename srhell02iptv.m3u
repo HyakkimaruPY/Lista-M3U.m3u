@@ -48,9 +48,6 @@ https://spt-sonyoneclassicas-1-br.samsung.wurl.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="On-Filmes" tvg-name="On-Filmes" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHGtvJaxetxkwVoDWqlnYMyxxoQcCTPcp_3JkS2Dnk4WJKxIyk7I11v8A&s=10" group-title="Filmes", On-Filmes
 https://stream.ads.ottera.tv/playlist.m3u8?network_id=6178
 
-#EXTINF:-1 tvg-id="Novelissima(ES)" tvg-name="Novelissima(ES)" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRicsDxtDGrzInNAZnCnZJuGcWCiaAZ9yBOkEnaHaFkytr0FAdNRIpCHcJY&s=10" group-title="Novelas", Novelissima(ES)
-#EXTVLCOPT:http-user-agent=Lavf53.32.100
-https://stream.ads.ottera.tv/playlist.m3u8?network_id=2380
 
 #EXTINF:-1 tvg-id="Loading" tvg-name="Loading" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt5pxJ4E-jZJ-ovS2sFvGslbM1Ylxm5Dj6FGOYKe-M4-XTV2HuG3pI6Nmy&s=10" group-title="Anime", Loading
 https://stmv1.srvif.com/loadingtv/loadingtv/playlist.m3u8
@@ -65,6 +62,38 @@ https://amg00627-amg00627c9-runtime-latam-2613.playouts.now.amagi.tv/playlist/am
 #EXTINF:-1 tvg-id="Rede-Super" tvg-name="Rede-Super" tvg-logo="https://play-lh.googleusercontent.com/anVTfVdwyewDErvXNWj3VwNbuKvywmE9YeXdykr11NFC9zsJbEPcQ2Q-lQQ2pg5Vg7k=w240-h480-rw" group-title="TV • Brasil", Rede-Super
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
 https://tv02.zas.media:1936/redesuper/redesuper/playlist.m3u8
+
+# --- Roku FAST BEGIN ---
+#EXTINF:-1 tvg-id="9bd570b8bf145f73bba7532221e12666" tvg-name="Transformers" group-title="Roku • Animações" x-source="Roku FAST via Fire TV/Amagi", Transformers
+https://amg00461-eone-amg00461c1-firetv-us-5209.playouts.now.amagi.tv/playlist.m3u8
+
+#EXTINF:-1 tvg-id="RetroCrush.us@SD" tvg-name="RetroCrush" tvg-logo="https://i.imgur.com/M40b4YI.png" group-title="Roku • Animações" x-source="Roku FAST via Cineverse", RetroCrush
+https://linear-899.frequency.stream/dist/cineverse/899/hls/master/playlist.m3u8
+
+#EXTINF:-1 tvg-id="e2e10d08139b56aba73a448f5555b6fd" tvg-name="FilmRise Classic TV" group-title="Roku • Filmes" x-source="Roku FAST", FilmRise Classic TV
+https://jmp2.uk/rok-e2e10d08139b56aba73a448f5555b6fd.m3u8
+
+#EXTINF:-1 tvg-id="roku-western-bound-pt" tvg-name="Western Bound em Português" group-title="Roku • Filmes" x-source="Roku FAST via TCL/Leiniao", Western Bound em Português
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/f5db557dc5ea4552bb723690a52f5aee/playlist.m3u8
+
+#EXTINF:-1 tvg-id="8c36c765b4415db78a85078c37df4a5f" tvg-name="Lassie" group-title="Roku • Séries" x-source="Roku FAST", Lassie
+https://jmp2.uk/rok-8c36c765b4415db78a85078c37df4a5f.m3u8
+
+#EXTINF:-1 tvg-id="dcecb48012b5c99824cb0b1667f4499c" tvg-name="Highway To Heaven" group-title="Roku • Séries" x-source="Roku FAST", Highway To Heaven
+https://jmp2.uk/rok-dcecb48012b5c99824cb0b1667f4499c.m3u8
+
+#EXTINF:-1 tvg-id="roku-mr-bean" tvg-name="Mr. Bean" group-title="Roku • Séries" x-source="Roku FAST via TCL/Amagi", Mr. Bean
+https://amg00627-banijay-amg00627c35-tcl-us-4282.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanbr-tclus/playlist.m3u8
+
+#EXTINF:-1 tvg-id="roku-andromeda" tvg-name="Andromeda" tvg-logo="https://d3bd0tgyk368z1.cloudfront.net/feeds/images/andromeda/Andromeda_LGChannel_ChannelLogo_400x200.png" group-title="Roku • Séries" x-source="Roku FAST via TCL", Andromeda
+https://dotjw4onyd4re.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-tcl/master.m3u8?ads.xumo_channelId=88884607
+
+#EXTINF:-1 tvg-id="roku-malhacao-fast" tvg-name="Malhação Fast" group-title="Roku • Séries" x-source="Roku FAST via TCL/Leiniao", Malhação Fast
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/f46d6f4717bc41758662e8c6700c1d68/playlist.m3u8
+
+#EXTINF:-1 tvg-id="roku-novelissima" tvg-name="Novelíssima" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRicsDxtDGrzInNAZnCnZJuGcWCiaAZ9yBOkEnaHaFkytr0FAdNRIpCHcJY&s=10" group-title="Roku • Variedades" x-source="Roku FAST via TCL/Leiniao", Novelíssima
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/12d72d1a2d184982808da4e7dc859aed/playlist.m3u8
+# --- Roku FAST END ---
 
 #EXTINF:-1 tvg-id="51c75f7bb6f26ba1cd00002f" tvg-name="Little Stars Universe" tvg-logo="https://images.pluto.tv/channels/51c75f7bb6f26ba1cd00002f/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080" group-title="Pluto • Infantil S", Little Stars Universe
 https://jmp2.uk/plu-51c75f7bb6f26ba1cd00002f.m3u8
