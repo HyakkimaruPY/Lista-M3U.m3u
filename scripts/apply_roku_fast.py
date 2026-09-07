@@ -8,34 +8,36 @@ PLAYLIST = Path("srhell02iptv.m3u")
 START = "# --- Roku FAST BEGIN ---"
 END = "# --- Roku FAST END ---"
 
+# Curadoria intencionalmente restrita: nostalgia, séries antigas, animações clássicas
+# e filmes. Não preencher a categoria com conteúdo infantil moderno/genérico.
 ENTRIES = [
-    # Roku • Animações
+    # Roku • Animações — somente conteúdo antigo/clássico
     {
-        "id": "roku-turma-da-monica",
-        "name": "Turma da Mônica",
-        "logo": "https://images.pluto.tv/channels/5f997e44949bc70007a6941e/thumbnail.jpg?fill=blur&fit=fill&fm=jpg&h=2080&q=75&w=2080",
+        "id": "roku-pantera-cor-de-rosa",
+        "name": "Pantera Cor-de-Rosa",
+        "logo": "https://imgur.com/3wizSOk.png",
         "group": "Roku • Animações",
-        "url": "https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/6e5fce0478454ffca133472e1c359f55/playlist.m3u8",
-        "source": "Roku FAST via TCL/Leiniao",
+        "url": "https://jmp2.uk/rok-65f83bbbf7a2eb952b798c96300bb329.m3u8",
+        "source": "Roku FAST",
     },
     {
-        "id": "roku-moranguinho",
-        "name": "Moranguinho",
-        "logo": "https://i.imgur.com/9Vt0vrZ.png",
+        "id": "roku-retrocrush",
+        "name": "RetroCrush",
+        "logo": "https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/CABC2300012FY_20250318T021309SQUARE.png",
         "group": "Roku • Animações",
-        "url": "https://ssai-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/15d2d4a8f740492cb0f81cbb1feb5123/playlist.m3u8",
-        "source": "Roku FAST via TCL/Leiniao",
-    },
-    {
-        "id": "roku-toon-goggles-brasil",
-        "name": "Toon Goggles Brasil",
-        "logo": "",
-        "group": "Roku • Animações",
-        "url": "https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/pipAd/f0b823ee756a475d96c661596195e21e/playlist.m3u8",
-        "source": "Roku FAST via TCL/Leiniao",
+        "url": "https://jmp2.uk/rok-72a54a3c7a3d5381a1baa223a5dc8d23.m3u8",
+        "source": "Roku FAST",
     },
 
-    # Roku • Filmes
+    # Roku • Filmes — preferência por catálogo clássico/nostálgico
+    {
+        "id": "e2e10d08139b56aba73a448f5555b6fd",
+        "name": "FilmRise Classic TV",
+        "logo": "",
+        "group": "Roku • Filmes",
+        "url": "https://jmp2.uk/rok-e2e10d08139b56aba73a448f5555b6fd.m3u8",
+        "source": "Roku FAST",
+    },
     {
         "id": "roku-western-bound-pt",
         "name": "Western Bound em Português",
@@ -44,63 +46,23 @@ ENTRIES = [
         "url": "https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/f5db557dc5ea4552bb723690a52f5aee/playlist.m3u8",
         "source": "Roku FAST via TCL/Leiniao",
     },
-    {
-        "id": "roku-filmelier-esperanca",
-        "name": "Filmelier TV Esperança",
-        "logo": "https://d3bd0tgyk368z1.cloudfront.net/feeds/epg/sofa/espca/lgartwork/esperanca_Logo700x200.png",
-        "group": "Roku • Filmes",
-        "url": "https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/d8c82ef3962a4866bbff81317936d8cf/playlist.m3u8",
-        "source": "Roku FAST via TCL/Leiniao",
-    },
-    {
-        "id": "roku-filmelier-vida-real",
-        "name": "Filmelier TV Vida Real",
-        "logo": "https://d3bd0tgyk368z1.cloudfront.net/feeds/epg/sofa/fmvirl/vidareal_Logo700x200.png",
-        "group": "Roku • Filmes",
-        "url": "https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/565cfbea4dd84fe9af37cf67e9036de7/playlist.m3u8",
-        "source": "Roku FAST via TCL/Leiniao",
-    },
-    {
-        "id": "roku-adrenalina-pura-halloween",
-        "name": "Adrenalina Pura TV Halloween",
-        "logo": "https://d3bd0tgyk368z1.cloudfront.net/feeds/epg/sofa/tvapt/tvapt_logo700x200.png",
-        "group": "Roku • Filmes",
-        "url": "https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/61d31f5ea0524ab392ddf5c3ea37d678/playlist.m3u8",
-        "source": "Roku FAST via TCL/Leiniao",
-    },
 
-    # Roku • Séries
+    # Roku • Séries — foco em séries antigas e nostalgia
     {
-        "id": "roku-malhacao-fast",
-        "name": "Malhação Fast",
+        "id": "8c36c765b4415db78a85078c37df4a5f",
+        "name": "Lassie",
         "logo": "",
         "group": "Roku • Séries",
-        "url": "https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/f46d6f4717bc41758662e8c6700c1d68/playlist.m3u8",
-        "source": "Roku FAST via TCL/Leiniao",
+        "url": "https://jmp2.uk/rok-8c36c765b4415db78a85078c37df4a5f.m3u8",
+        "source": "Roku FAST",
     },
     {
-        "id": "roku-filmrise-series",
-        "name": "FilmRise Séries Gratuitas",
-        "logo": "",
-        "group": "Roku • Séries",
-        "url": "https://dotjw4onyd4re.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-tcl/master.m3u8?ads.xumo_channelId=88884541",
-        "source": "Roku FAST via TCL",
-    },
-    {
-        "id": "roku-highway-to-heaven",
+        "id": "dcecb48012b5c99824cb0b1667f4499c",
         "name": "Highway To Heaven",
         "logo": "",
         "group": "Roku • Séries",
-        "url": "https://dotjw4onyd4re.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-tcl/master.m3u8?ads.xumo_channelId=88884542",
-        "source": "Roku FAST via TCL",
-    },
-    {
-        "id": "roku-rookie-blue",
-        "name": "Rookie Blue",
-        "logo": "",
-        "group": "Roku • Séries",
-        "url": "https://amg00353-amg00353c44-tcl-us-7113.playouts.now.amagi.tv/playlist/amg00353-lionsgatetvfast-rookieblueportuguese-tclus/playlist.m3u8",
-        "source": "Roku FAST via TCL/Amagi",
+        "url": "https://jmp2.uk/rok-dcecb48012b5c99824cb0b1667f4499c.m3u8",
+        "source": "Roku FAST",
     },
     {
         "id": "roku-mr-bean",
@@ -110,8 +72,24 @@ ENTRIES = [
         "url": "https://amg00627-banijay-amg00627c35-tcl-us-4282.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanbr-tclus/playlist.m3u8",
         "source": "Roku FAST via TCL/Amagi",
     },
+    {
+        "id": "roku-andromeda",
+        "name": "Andromeda",
+        "logo": "https://d3bd0tgyk368z1.cloudfront.net/feeds/images/andromeda/Andromeda_LGChannel_ChannelLogo_400x200.png",
+        "group": "Roku • Séries",
+        "url": "https://dotjw4onyd4re.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-tcl/master.m3u8?ads.xumo_channelId=88884607",
+        "source": "Roku FAST via TCL",
+    },
+    {
+        "id": "roku-malhacao-fast",
+        "name": "Malhação Fast",
+        "logo": "",
+        "group": "Roku • Séries",
+        "url": "https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/f46d6f4717bc41758662e8c6700c1d68/playlist.m3u8",
+        "source": "Roku FAST via TCL/Leiniao",
+    },
 
-    # Roku • Variedades
+    # Roku • Variedades — exceção pedida explicitamente: novelas
     {
         "id": "roku-novelissima",
         "name": "Novelíssima",
@@ -172,7 +150,7 @@ def main() -> int:
     if trailing or not text.endswith("\n"):
         text = text.rstrip() + "\n"
     PLAYLIST.write_text(text, encoding="utf-8")
-    print(f"Roku FAST: {len(ENTRIES)} canais aplicados em {PLAYLIST}")
+    print(f"Roku FAST: {len(ENTRIES)} canais nostálgicos aplicados em {PLAYLIST}")
     return 0
 
 
