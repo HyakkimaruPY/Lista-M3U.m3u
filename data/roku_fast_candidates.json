@@ -1,0 +1,14 @@
+[
+ {"name":"Novelíssima","group":"Variedades","url":"https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/12d72d1a2d184982808da4e7dc859aed/playlist.m3u8"},
+ {"name":"Adrenalina Pura TV","group":"Filmes","url":"https://ssai-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/d53d83b32f1c44c88d5bb1ba466089d9/playlist.m3u8"},
+ {"name":"Adrenalina Pura TV Halloween","group":"Filmes","url":"https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/61d31f5ea0524ab392ddf5c3ea37d678/playlist.m3u8"},
+ {"name":"Filmelier TV","group":"Filmes","url":"https://ssai-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/59df292b969c470fb6201c8c99dc02de/playlist.m3u8"},
+ {"name":"Sony One Cinema","group":"Filmes","url":"https://3d51ba4c6dea4941b5e1ca10a471504c.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/TCL-br_SonyOneCinema/playlist.m3u8"},
+ {"name":"FilmRise Séries Gratuitas","group":"Séries","url":"https://dotjw4onyd4re.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-tcl/master.m3u8?ads.xumo_channelId=88884541"},
+ {"name":"Sony One Emoções","group":"Séries","url":"https://1bc1c9c406cd46579d83a6c41b2036ed.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/TCL-br_SonyOneEmocoes/playlist.m3u8"},
+ {"name":"Andromeda","group":"Séries","url":"https://dotjw4onyd4re.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-tcl/master.m3u8?ads.xumo_channelId=88884607"},
+ {"name":"O Homem que Veio do Céu","group":"Séries","url":"https://dotjw4onyd4re.cloudfront.net/v1/master/3fec3e5cac39a52b2132f9c66c83dae043dc17d4/prod-tcl/master.m3u8?ads.xumo_channelId=88884542"},
+ {"name":"Turma da Mônica","group":"Animações","url":"https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/6e5fce0478454ffca133472e1c359f55/playlist.m3u8"},
+ {"name":"Moranguinho","group":"Animações","url":"https://ssai-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/15d2d4a8f740492cb0f81cbb1feb5123/playlist.m3u8"},
+ {"name":"Toon Goggles Brasil","group":"Animações","url":"https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/pipAd/f0b823ee756a475d96c661596195e21e/playlist.m3u8"}
+]

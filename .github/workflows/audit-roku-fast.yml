@@ -1,0 +1,24 @@
+name: Auditar CCTV e candidatos Roku H264
+on:
+  push:
+    branches: [feat/roku-fast-h264-audit]
+    paths: ['data/roku_fast_candidates.json', 'scripts/audit_roku_fast.py', '.github/workflows/audit-roku-fast.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+      - name: Instalar FFmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Testar sem modificar playlists
+        run: python3 scripts/audit_roku_fast.py
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: roku-fast-audit
+          path: reports/roku-fast/
+          retention-days: 14
