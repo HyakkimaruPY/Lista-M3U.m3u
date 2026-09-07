@@ -169,18 +169,18 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg tesseract-ocr tesseract-ocr-eng
 
-      - name: Validar canais Pluto da playlist principal
+      - name: Validar somente canais Pluto da playlist principal
         id: pluto
         run: |
-          python3 scripts/validate_streams.py             --playlist srhell02iptv.m3u             --include-host jmp2.uk             --detect-pluto-slate             --workers 6             --retries 2             --timeout 25             --decode-seconds 4             --report-dir reports/stream-validation/principal-pluto
+          python3 scripts/validate_main_pluto.py             --playlist srhell02iptv.m3u             --workers 6             --retries 2             --timeout 25             --decode-seconds 4             --report-dir reports/stream-validation/principal-pluto
 
       - name: Corrigir IDs Pluto alterados na fonte regional
         run: |
           python3 scripts/refresh_pluto_sources.py             --playlist srhell02iptv.m3u             --validation-report reports/stream-validation/principal-pluto/results.json             --report-dir reports/stream-validation/principal-pluto/source-refresh             --apply
 
-      - name: Confirmar e remover Pluto ainda invalido
+      - name: Confirmar e remover somente Pluto ainda invalido
         run: |
-          python3 scripts/validate_streams.py             --playlist srhell02iptv.m3u             --include-host jmp2.uk             --detect-pluto-slate             --workers 6             --retries 2             --timeout 25             --decode-seconds 4             --report-dir reports/stream-validation/principal-pluto/final             --apply
+          python3 scripts/validate_main_pluto.py             --playlist srhell02iptv.m3u             --workers 6             --retries 2             --timeout 25             --decode-seconds 4             --report-dir reports/stream-validation/principal-pluto/final             --apply
 
       - name: Validar canais chineses
         run: |
