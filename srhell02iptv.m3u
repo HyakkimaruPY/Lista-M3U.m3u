@@ -407,9 +407,6 @@ https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/f46d6f4717b
 #EXTINF:-1 tvg-id="roku-novelissima" tvg-name="R • Novelíssima" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRicsDxtDGrzInNAZnCnZJuGcWCiaAZ9yBOkEnaHaFkytr0FAdNRIpCHcJY&s=10" group-title="Variedades" x-source="Roku FAST via TCL/Leiniao" x-lang="pt-BR",R • Novelíssima
 https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/12d72d1a2d184982808da4e7dc859aed/playlist.m3u8
 
-#EXTINF:-1 tvg-id="CGTNSpanish.cn" tvg-name="CGTN Español • [CN]" tvg-logo="https://i.imgur.com/Poz3xfi.png" group-title="Variedades" x-lang="zh-CN",CGTN Español • [CN]
-https://livees.cgtn.com/1000e/prog_index.m3u8
-
 #EXTINF:-1 tvg-id="CCTV15.cn" tvg-name="CCTV-15 音乐 1 • [CN]" tvg-logo="https://i.imgur.com/CCV0eRG.png" group-title="Variedades" x-source="IPTV-org" x-lang="zh-CN",CCTV-15 音乐 1 • [CN]
 https://xykt-fix.github.io/play/a02e/index.m3u8
 
@@ -424,6 +421,9 @@ http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226307/index.m3u8
 
 #EXTINF:-1 tvg-id="ZhejiangSatelliteTV.cn" tvg-name="浙江卫视 • [CN]" tvg-logo="https://iptv.burningc4.com/tvg-logo/zhejiang.png" group-title="Variedades" x-lang="zh-CN",浙江卫视 • [CN]
 http://ottrrs.hl.chinamobile.com/PLTV/88888888/224/3221226404/index.m3u8
+
+#EXTINF:-1 tvg-id="CGTNSpanish.cn" tvg-name="CGTN Español • [ES]" tvg-logo="https://i.imgur.com/Poz3xfi.png" group-title="Variedades" x-lang="es",CGTN Español • [ES]
+https://livees.cgtn.com/1000e/prog_index.m3u8
 
 #EXTINF:-1 tvg-id="Telemundo" tvg-name="Telemundo • [ES]" tvg-logo="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf0NHgBbFvoz4d0XLC0uiIvCgJ5vfL1XZ2bfVrG09mSfbcsMrqwMBk5cA&s=10" group-title="Variedades" x-lang="es",Telemundo • [ES]
 #EXTVLCOPT:http-user-agent=Lavf53.32.100
