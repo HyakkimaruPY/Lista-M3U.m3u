@@ -39,6 +39,33 @@ https://example.org/run.m3u8
         self.assertIn('x-lang="zh-CN"', entries[2].metadata)
         self.assertEqual(curate(out)[0], out)
 
+    def test_legacy_platform_groups_keep_content_type(self):
+        raw = """#EXTM3U
+#EXTINF:-1 tvg-id="roku-series" group-title="Roku • Séries" x-source="Roku FAST",Lassie
+https://example.org/lassie.m3u8
+#EXTINF:-1 tvg-id="roku-animation" group-title="Roku • Animações" x-source="Roku FAST",Transformers
+https://example.org/transformers.m3u8
+#EXTINF:-1 tvg-id="pluto-series" group-title="Pluto • Séries S",Degrassi
+https://jmp2.uk/plu-cccccccc.m3u8
+"""
+        out, _ = curate(raw)
+        entries = v.parse_playlist(out.splitlines())
+        groups = {e.title: e.metadata for e in entries}
+        self.assertIn('group-title="Séries"', groups["R • Lassie • [S]"])
+        self.assertIn('group-title="Séries"', groups["P • Degrassi • [S]"])
+        self.assertIn('group-title="Animações"', groups["R • Transformers • [S]"])
+
+    def test_cgtn_espanol_is_spanish_even_with_cn_id(self):
+        raw = """#EXTM3U
+#EXTINF:-1 tvg-id="CGTNSpanish.cn" group-title="China • Internacional",CGTN Español
+https://example.org/cgtn-es.m3u8
+"""
+        out, _ = curate(raw)
+        entry = v.parse_playlist(out.splitlines())[0]
+        self.assertEqual(entry.title, "CGTN Español • [ES]")
+        self.assertIn('group-title="Variedades"', entry.metadata)
+        self.assertIn('x-lang="es"', entry.metadata)
+
     def test_roku_jmp_is_not_pluto(self):
         roku = v.Entry(1, 0, 1, 1, "Roku", "https://jmp2.uk/rok-1234.m3u8")
         pluto = v.Entry(1, 0, 1, 1, "Pluto", "https://jmp2.uk/plu-1234.m3u8")
