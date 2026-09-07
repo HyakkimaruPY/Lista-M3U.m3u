@@ -26,6 +26,8 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - name: Reconstruir a partir da playlist da main
+        run: git show origin/main:srhell02iptv.m3u > srhell02iptv.m3u
       - name: Aplicar categorias-pai
         run: python3 scripts/curate_main_playlist.py --playlist srhell02iptv.m3u
       - name: Validar estrutura e regressões
@@ -41,6 +43,8 @@ jobs:
           extra = set(groups) - allowed
           if extra:
               raise SystemExit(f'Categorias fora da taxonomia-pai: {sorted(extra)}')
+          if set(groups) != allowed:
+              raise SystemExit(f'Categorias-pai esperadas ausentes: {sorted(allowed - set(groups))}')
           print(f'Categorias finais ({len(groups)}): {groups}')
           PY
       - name: Commitar playlist reorganizada na branch
