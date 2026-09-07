@@ -17,16 +17,16 @@ ENTRIES = [
         "name": "Transformers",
         "logo": "",
         "group": "Roku • Animações",
-        "url": "https://aka-live491.delivery.roku.com/73ee2a1b-b841-4143-b9f9-8b00b8f41bb8/t2-origin/out/v1/live.m3u8",
-        "source": "Roku FAST direto",
+        "url": "https://amg00461-eone-amg00461c1-firetv-us-5209.playouts.now.amagi.tv/playlist.m3u8",
+        "source": "Roku FAST via Fire TV/Amagi",
     },
     {
-        "id": "roku-retrocrush",
+        "id": "RetroCrush.us@SD",
         "name": "RetroCrush",
         "logo": "https://i.imgur.com/M40b4YI.png",
         "group": "Roku • Animações",
-        "url": "https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01201-cinedigmenterta-retrocrush-lgus/playlist.m3u8",
-        "source": "Roku FAST via Amagi/LG",
+        "url": "https://linear-899.frequency.stream/dist/cineverse/899/hls/master/playlist.m3u8",
+        "source": "Roku FAST via Cineverse",
     },
 
     # Roku • Filmes — preferência por catálogo clássico/nostálgico
