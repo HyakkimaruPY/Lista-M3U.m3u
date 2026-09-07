@@ -13,20 +13,20 @@ END = "# --- Roku FAST END ---"
 ENTRIES = [
     # Roku • Animações — somente conteúdo antigo/clássico
     {
-        "id": "roku-pantera-cor-de-rosa",
-        "name": "Pantera Cor-de-Rosa",
-        "logo": "https://imgur.com/3wizSOk.png",
+        "id": "9bd570b8bf145f73bba7532221e12666",
+        "name": "Transformers",
+        "logo": "",
         "group": "Roku • Animações",
-        "url": "https://jmp2.uk/rok-65f83bbbf7a2eb952b798c96300bb329.m3u8",
-        "source": "Roku FAST",
+        "url": "https://aka-live491.delivery.roku.com/73ee2a1b-b841-4143-b9f9-8b00b8f41bb8/t2-origin/out/v1/live.m3u8",
+        "source": "Roku FAST direto",
     },
     {
         "id": "roku-retrocrush",
         "name": "RetroCrush",
-        "logo": "https://tvpnlogopus.samsungcloud.tv/platform/image/sourcelogo/vc/00/02/34/CABC2300012FY_20250318T021309SQUARE.png",
+        "logo": "https://i.imgur.com/M40b4YI.png",
         "group": "Roku • Animações",
-        "url": "https://jmp2.uk/rok-72a54a3c7a3d5381a1baa223a5dc8d23.m3u8",
-        "source": "Roku FAST",
+        "url": "https://cdn-uw2-prod.tsv2.amagi.tv/linear/amg01201-cinedigmenterta-retrocrush-lgus/playlist.m3u8",
+        "source": "Roku FAST via Amagi/LG",
     },
 
     # Roku • Filmes — preferência por catálogo clássico/nostálgico
