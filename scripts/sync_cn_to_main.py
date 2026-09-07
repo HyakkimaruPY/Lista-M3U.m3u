@@ -42,6 +42,20 @@ def cctv_key(entry: Entry) -> str:
     return f'cctv{int(m.group(1))}' if m else ''
 
 
+def is_chinese_main_entry(entry: Entry) -> bool:
+    """Reconhece canais chineses mesmo depois de remover 'China •' do group-title."""
+    group = attr(entry.metadata, 'group-title').casefold()
+    lang = attr(entry.metadata, 'x-lang').casefold()
+    tvg_id = attr(entry.metadata, 'tvg-id').casefold()
+    title = entry.title
+    return (
+        group.startswith('china •')
+        or lang.startswith(('zh', 'cn'))
+        or tvg_id.endswith('.cn')
+        or bool(re.search(r'[\u3400-\u9fff]', title))
+    )
+
+
 def source_rank(entry: Entry) -> int:
     source = attr(entry.metadata, 'x-source').lower()
     group = attr(entry.metadata, 'group-title').lower()
@@ -187,9 +201,8 @@ def sync_main(cn_path: Path, main_path: Path, retries: int, timeout: int, decode
     selected = []
 
     for e in main_entries:
-        group = attr(e.metadata, 'group-title').lower()
         key = cctv_key(e)
-        if not key or 'china' not in group:
+        if not key or not is_chinese_main_entry(e):
             continue
         pool = candidates.get(key, [])
         if not pool:

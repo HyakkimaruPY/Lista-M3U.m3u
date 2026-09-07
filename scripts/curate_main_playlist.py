@@ -1,133 +1,358 @@
 #!/usr/bin/env python3
-"""Curadoria idempotente de metadados; nao inventa nem substitui streams."""
+"""Curadoria idempotente da playlist principal por categorias-pai de conteúdo."""
 from __future__ import annotations
+
 import argparse
 import re
 from pathlib import Path
-from validate_streams import parse_playlist, probe_url_and_headers, extract_title
+
+from validate_streams import parse_playlist, probe_url_and_headers
 from sync_cn_to_main import attr, set_attr, cctv_key
 
-PLUTO_GROUPS = {
-    'Movies': 'Filmes', 'Westerns': 'Faroeste', 'Sci-Fi': 'Ficção científica',
-    'Drama': 'Séries', 'Comedy': 'Comédia', 'Classic TV': 'Séries clássicas',
-    'Kids': 'Infantil', 'Anime': 'Anime', 'Gaming + Anime': 'Anime',
-    'Reality': 'Reality e variedades', 'Competition Reality': 'Reality e variedades',
-    'Daytime + Game Shows': 'Reality e variedades', 'Entertainment': 'Entretenimento',
-    'True Crime': 'Investigação', 'History + Science': 'História e ciência',
-    'Home + Food': 'Casa e gastronomia', 'Sports': 'Esportes',
-    'En Español': 'Em espanhol', "Season's Greetings": 'Sazonais',
-    'Test Test Test': 'Experimentais',
+PARENT_ORDER = ["Filmes", "Séries", "Animações", "Variedades", "Esportes", "Séries VOD"]
+
+LANG_MARKERS = {
+    "pt": "",
+    "cn": " • [CN]",
+    "es": " • [ES]",
+    "en": " • [S]",
 }
-CCTV_GROUPS = {
-    'cctv1': 'Nacionais e variedades', 'cctv2': 'Notícias e economia',
-    'cctv3': 'Nacionais e variedades', 'cctv4': 'Internacional',
-    'cctv5': 'Esportes', 'cctv5plus': 'Esportes', 'cctv6': 'Cinema e séries',
-    'cctv7': 'Documentários e cultura', 'cctv8': 'Cinema e séries',
-    'cctv9': 'Documentários e cultura', 'cctv10': 'Documentários e cultura',
-    'cctv11': 'Documentários e cultura', 'cctv12': 'Sociedade e educação',
-    'cctv13': 'Notícias e economia', 'cctv14': 'Infantil', 'cctv15': 'Música',
-    'cctv16': 'Esportes', 'cctv17': 'Sociedade e educação',
-    'cctv4k': 'Nacionais e variedades', 'cctv8k': 'Nacionais e variedades',
+LANG_RANK = {"pt": 0, "cn": 1, "es": 2, "other": 2, "en": 3}
+
+ROKU_PT = {
+    "western bound em português",
+    "western bound em portugues",
+    "mr. bean",
+    "malhação fast",
+    "malhacao fast",
+    "novelíssima",
+    "novelissima",
 }
 
-def china_group(entry):
+SPANISH_TITLES = {
+    "el reino infantil",
+}
+
+TITLE_DECORATION_RE = re.compile(
+    r"^(?:(?P<platform>[RP])\s*•\s*)?(?P<name>.*?)(?:\s*•\s*\[(?P<lang>S|ES|CN)\])?$",
+    re.IGNORECASE,
+)
+
+
+def base_title(title: str) -> str:
+    match = TITLE_DECORATION_RE.match(title.strip())
+    return (match.group("name") if match else title).strip()
+
+
+def title_platform(title: str) -> str:
+    match = TITLE_DECORATION_RE.match(title.strip())
+    return (match.group("platform") or "").upper() if match else ""
+
+
+def title_language(title: str) -> str:
+    match = TITLE_DECORATION_RE.match(title.strip())
+    marker = (match.group("lang") or "").upper() if match else ""
+    return {"S": "en", "ES": "es", "CN": "cn"}.get(marker, "")
+
+
+def platform_for(entry) -> str:
+    titled = title_platform(entry.title)
+    if titled:
+        return titled
+    group = attr(entry.metadata, "group-title").lower()
+    source = attr(entry.metadata, "x-source").lower()
+    url = entry.url or ""
+    if group.startswith("roku •") or "roku fast" in source or "/rok-" in url:
+        return "R"
+    if group.startswith("pluto •") or "/plu-" in url:
+        return "P"
+    return ""
+
+
+def language_for(entry) -> str:
+    name = base_title(entry.title)
+    folded = name.casefold()
+    group = attr(entry.metadata, "group-title")
+    group_folded = group.casefold()
+    tvg_id = attr(entry.metadata, "tvg-id").casefold()
+
+    # Pistas explícitas do nome vencem metadados herdados. Isso evita, por
+    # exemplo, classificar CGTN Español como chinês só porque o tvg-id termina em .cn.
+    if (
+        "em espanhol" in group_folded
+        or "español" in folded
+        or "espanol" in folded
+        or folded in SPANISH_TITLES
+        or folded == "telemundo"
+    ):
+        return "es"
+
+    tagged = attr(entry.metadata, "x-lang").lower()
+    if tagged:
+        if tagged.startswith("pt"):
+            return "pt"
+        if tagged.startswith("zh") or tagged.startswith("cn"):
+            return "cn"
+        if tagged.startswith("es"):
+            return "es"
+        if tagged.startswith("en"):
+            return "en"
+
+    decorated = title_language(entry.title)
+    if decorated:
+        return decorated
+
+    if group.endswith(" BR") or attr(entry.metadata, "x-region").upper() == "BR":
+        return "pt"
+
+    if group.startswith("China •") or tvg_id.endswith(".cn") or re.search(r"[\u3400-\u9fff]", name):
+        return "cn"
+
+    if platform_for(entry) == "R":
+        return "pt" if folded in ROKU_PT else "en"
+
+    if group.endswith(" S") or " US" in group:
+        return "en"
+
+    return "pt"
+
+
+def language_attr(language: str) -> str:
+    return {
+        "pt": "pt-BR",
+        "cn": "zh-CN",
+        "es": "es",
+        "en": "en",
+    }.get(language, language or "und")
+
+
+def display_title(entry, language: str) -> str:
+    name = base_title(entry.title)
+    platform = platform_for(entry)
+    prefix = f"{platform} • " if platform else ""
+    return f"{prefix}{name}{LANG_MARKERS.get(language, '')}"
+
+
+def china_parent(entry) -> str:
     key = cctv_key(entry)
-    if key in CCTV_GROUPS:
-        return 'China • ' + CCTV_GROUPS[key]
-    text = entry.title.lower() + ' ' + attr(entry.metadata, 'tvg-id').lower()
-    rules = [
-        (r'少儿|少兒|卡通|炫动|金鹰|child|cartoon|哈哈', 'Infantil'),
-        (r'音乐|音樂|music', 'Música'),
-        (r'体育|體育|篮球|足球|sport|olympic', 'Esportes'),
-        (r'电影|電影|影视|影視|影院|电视剧|cinema|movie|drama', 'Cinema e séries'),
-        (r'纪录|紀錄|纪实|紀實|文化|人文|戏曲|documentary|discovering|travel', 'Documentários e cultura'),
-        (r'购物|購物|乐购|置业|shopping', 'Compras'),
-        (r'财经|財經|理财|財經|经济|經濟|global biz|finance', 'Notícias e economia'),
-        (r'科教|教育|法治|农村|農村|乡村|鄉村|education', 'Sociedade e educação'),
-        (r'cgtn|国际|國際|international', 'Internacional'),
-        (r'卫视|衛視|satellite|星空', 'Nacionais e variedades'),
-    ]
-    for pattern, group in rules:
-        if re.search(pattern, text):
-            return 'China • ' + group
-    return 'China • Regionais e locais'
+    if key == "cctv6":
+        return "Filmes"
+    if key == "cctv8":
+        return "Séries"
+    if key == "cctv14":
+        return "Animações"
+    if key in {"cctv5", "cctv5plus", "cctv16"}:
+        return "Esportes"
+
+    text = " ".join(
+        [
+            base_title(entry.title),
+            attr(entry.metadata, "tvg-id"),
+            attr(entry.metadata, "tvg-name"),
+        ]
+    ).casefold()
+    if re.search(r"少儿|少兒|卡通|动漫|動畫|动画|child|cartoon|anime", text):
+        return "Animações"
+    if re.search(r"体育|體育|篮球|足球|sport|olympic", text):
+        return "Esportes"
+    if re.search(r"电影|電影|影院|cinema|movie|film", text):
+        return "Filmes"
+    if re.search(r"电视剧|電視劇|drama|series", text):
+        return "Séries"
+    return "Variedades"
 
 
-def group_for(entry, china):
-    group = attr(entry.metadata, 'group-title')
-    if china or group.startswith('China •'):
-        return china_group(entry)
-    if 'jmp2.uk' in (entry.url or ''):
-        if group.endswith(' BR'):
-            return {'Pluto Desenhos Clássicos BR': 'Pluto • Desenhos clássicos BR',
-                    'Pluto Séries Clássicas BR': 'Pluto • Séries clássicas BR',
-                    'Pluto Cinema Clássico BR': 'Pluto • Cinema clássico BR'}.get(group, group)
-        if group.startswith('Pluto •'):
-            return group
-        base = re.sub(r' (?:US|S)$', '', group)
-        return 'Pluto • ' + PLUTO_GROUPS.get(base, base) + ' S'
-    if group == 'Wild Cards temp 01':
-        return 'Séries VOD • Wild Cards • Temporada 1'
-    return {'Filmes • Ação': 'Filmes', 'Filmes • Clássicos': 'Filmes',
-            'Variedades • Latino': 'Variedades', 'Variedades • Gastronomia': 'Variedades'}.get(group, group)
+def spanish_parent(name: str) -> str:
+    text = name.casefold()
+    if re.search(r"\bcine\b|pel[ií]cul|movie|m[aá]s adrenalina", text):
+        return "Filmes"
+    if re.search(r"novela|telenovela|\bcsi\b|familia del barrio", text):
+        return "Séries"
+    if re.search(r"nickelodeon|infantil|cartoon|anime", text):
+        return "Animações"
+    return "Variedades"
+
+
+def content_group_name(group: str) -> str:
+    """Remove plataforma/sufixo regional da taxonomia antiga antes de mapear."""
+    value = group.casefold().strip()
+    value = re.sub(r"^(?:roku|pluto)\s*•\s*", "", value)
+    value = re.sub(r"\s+(?:s|br)$", "", value)
+    return value.strip()
+
+
+def parent_group(entry, china: bool = False) -> str:
+    group = attr(entry.metadata, "group-title")
+    folded = group.casefold()
+    content = content_group_name(group)
+    name = base_title(entry.title)
+
+    if group == "Wild Cards temp 01" or folded.startswith("séries vod") or folded.startswith("series vod"):
+        return "Séries VOD"
+
+    if china or group.startswith("China •") or attr(entry.metadata, "tvg-id").casefold().endswith(".cn"):
+        if language_for(entry) == "es":
+            return "Variedades"
+        return china_parent(entry)
+
+    if "em espanhol" in content:
+        return spanish_parent(name)
+
+    if "desenho" in content or "infantil" in content or "anime" in content or "anima" in content:
+        return "Animações"
+
+    if "cinema clássico" in content or "cinema classico" in content or "filme" in content:
+        return "Filmes"
+
+    if "séries clássicas" in content or "series classicas" in content or content in {"séries", "series"}:
+        return "Séries"
+
+    if "ficção científica" in content or "ficcao cientifica" in content:
+        return "Séries"
+
+    if "comédia" in content or "comedia" in content:
+        return "Séries"
+
+    if "esporte" in content or content in {"sport", "sports"}:
+        return "Esportes"
+
+    if "faroeste" in content or "western" in content:
+        return "Filmes" if "movie" in name.casefold() else "Séries"
+
+    if content in {"filmes", "filmes • ação", "filmes • clássicos"}:
+        return "Filmes"
+    if content in {"anime", "animações", "animacoes"}:
+        return "Animações"
+    if content in {"séries", "series"}:
+        return "Séries"
+    if content in {"esportes", "sport", "sports"}:
+        return "Esportes"
+
+    # Reality, música, TV geral, casa/gastronomia, história/ciência,
+    # investigação, entretenimento, notícias e demais grades generalistas.
+    return "Variedades"
+
+
+# Compatibilidade com os testes/imports existentes.
+def group_for(entry, china=False):
+    return parent_group(entry, china)
+
+
+def pluto_region(entry, language: str) -> str:
+    current = attr(entry.metadata, "x-region").upper()
+    if current in {"BR", "US"}:
+        return current
+    group = attr(entry.metadata, "group-title")
+    if group.endswith(" BR"):
+        return "BR"
+    # Os antigos grupos com " S" (inclusive "Em espanhol S") vieram da grade US.
+    if group.endswith(" S"):
+        return "US"
+    return "BR" if language == "pt" else "US"
 
 
 def curate(raw: str, china=False):
-    lines = raw.lstrip('\ufeff').splitlines()
-    lines = ['#' + x if x.startswith('EXTINF:') else x.rstrip() for x in lines]
+    lines = raw.lstrip("\ufeff").splitlines()
+    lines = ["#" + x if x.startswith("EXTINF:") else x.rstrip() for x in lines]
     entries = parse_playlist(lines)
     if not entries:
-        raise ValueError('Nenhuma entrada encontrada')
-    header = next((x for x in lines if x.startswith('#EXTM3U')), '#EXTM3U')
+        raise ValueError("Nenhuma entrada encontrada")
+
+    header = next((x for x in lines if x.startswith("#EXTM3U")), "#EXTM3U")
     blocks = []
     seen = {}
     removed = 0
-    for e in entries:
-        if e.title.casefold() in {'rede-gospel', 'rede gospel', 'renascer', 'rede-renascer', 'rede renascer'}:
+
+    for position, entry in enumerate(entries):
+        if base_title(entry.title).casefold() in {
+            "rede-gospel",
+            "rede gospel",
+            "renascer",
+            "rede-renascer",
+            "rede renascer",
+        }:
             removed += 1
             continue
-        # Only identical playback requests are duplicates; names/EPG IDs alone are insufficient.
-        identity = probe_url_and_headers(e)
-        directives = tuple(x for x in lines[e.start+1:e.end] if x.startswith('#'))
+
+        identity = probe_url_and_headers(entry)
+        directives = tuple(x for x in lines[entry.start + 1 : entry.end] if x.startswith("#"))
         identity = (*identity, directives)
-        meta = set_attr(e.metadata, 'group-title', group_for(e, china))
-        meta = set_attr(meta, 'tvg-name', e.title)
+
+        language = language_for(entry)
+        group = parent_group(entry, china)
+        final_title = display_title(entry, language)
+
+        meta = set_attr(entry.metadata, "group-title", group)
+        meta = set_attr(meta, "tvg-name", final_title)
+        meta = set_attr(meta, "x-lang", language_attr(language))
+        if platform_for(entry) == "P":
+            meta = set_attr(meta, "x-region", pluto_region(entry, language))
+
+        comma = meta.rfind(",")
+        if comma >= 0:
+            meta = meta[: comma + 1] + final_title
+
         if identity in seen:
-            previous = blocks[seen[identity]][1]
-            for name in ('tvg-id', 'tvg-logo'):
-                if not attr(previous[0], name) and attr(meta, name):
-                    previous[0] = set_attr(previous[0], name, attr(meta, name))
+            previous = blocks[seen[identity]]["block"]
+            for attr_name in ("tvg-id", "tvg-logo"):
+                if not attr(previous[0], attr_name) and attr(meta, attr_name):
+                    previous[0] = set_attr(previous[0], attr_name, attr(meta, attr_name))
             removed += 1
             continue
+
+        block = [meta] + [x for x in lines[entry.start + 1 : entry.end + 1] if x.strip()]
         seen[identity] = len(blocks)
-        block = [meta] + [x for x in lines[e.start+1:e.end+1] if x.strip()]
-        blocks.append((group_for(e, china), block))
-    # Group contiguous channels without changing provider order inside each group.
-    order = list(dict.fromkeys(group for group, _ in blocks))
-    out = [header, '# Categorias por conteúdo; x-source preserva a origem dos streams.',
-           '# Links alternativos distintos são preservados; duplicatas exatas são removidas.', '']
-    for group in order:
-        for current, block in blocks:
-            if group == current:
-                out.extend(block + [''])
-    return '\n'.join(out).rstrip() + '\n', removed
+        blocks.append(
+            {
+                "group": group,
+                "language": language,
+                "position": position,
+                "block": block,
+            }
+        )
+
+    order_index = {name: index for index, name in enumerate(PARENT_ORDER)}
+    blocks.sort(
+        key=lambda item: (
+            order_index.get(item["group"], len(PARENT_ORDER)),
+            LANG_RANK.get(item["language"], LANG_RANK["other"]),
+            item["position"],
+        )
+    )
+
+    out = [
+        header,
+        "# Categorias-pai por conteúdo; a plataforma fica no nome (R = Roku, P = Pluto).",
+        "# Ordem por idioma dentro de cada categoria: PT-BR, chinês, outros idiomas; inglês por último.",
+        "# x-source preserva a origem do stream; x-lang e x-region sustentam a manutenção automática.",
+        "",
+    ]
+    last_group = None
+    for item in blocks:
+        if last_group is not None and item["group"] != last_group and out[-1] != "":
+            out.append("")
+        out.extend(item["block"] + [""])
+        last_group = item["group"]
+
+    return "\n".join(out).rstrip() + "\n", removed
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--playlist', action='append')
-    parser.add_argument('--check', action='store_true')
+    parser.add_argument("--playlist", action="append")
+    parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     different = False
-    for name in args.playlist or ['cn.m3u', 'srhell02iptv.m3u']:
+    for name in args.playlist or ["srhell02iptv.m3u"]:
         path = Path(name)
-        raw = path.read_text(encoding='utf-8-sig')
-        updated, removed = curate(raw, path.name == 'cn.m3u')
+        raw = path.read_text(encoding="utf-8-sig")
+        updated, removed = curate(raw, False)
         different |= raw != updated
         if not args.check:
-            path.write_text(updated, encoding='utf-8')
-        print(f'{name}: removidas={removed}; alterada={raw != updated}')
+            path.write_text(updated, encoding="utf-8")
+        print(f"{name}: removidas={removed}; alterada={raw != updated}")
     return int(args.check and different)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     raise SystemExit(main())
