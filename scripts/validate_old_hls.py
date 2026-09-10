@@ -112,7 +112,7 @@ def inspect_entry(entry:base.Entry,timeout:int)->LegacyResult:
     except (HTTPError,URLError,TimeoutError,OSError) as e: return LegacyResult(entry.title,host,'uncertain',f'rede/HTTP inconclusivo: {e}')
     except ValueError as e: return LegacyResult(entry.title,host,'incompatible',str(e))
     if not text.lstrip().startswith('#EXTM3U'): return LegacyResult(entry.title,host,'incompatible','resposta nao e manifesto HLS',redirects,base.host_of(final))
-    max_redirects=8 if bridge_profile(entry) else 1
+    max_redirects=8 if bridge_profile(entry) else (3 if entry_group(entry)=='CCTV' else 1)
     if redirects>max_redirects: return LegacyResult(entry.title,host,'incompatible',f'cadeia de redirect longa ({redirects})',redirects,base.host_of(final))
     media_url=final
     if '#EXT-X-STREAM-INF' in text.upper():
