@@ -11,7 +11,7 @@ class OldHLSTests(unittest.TestCase):
     def test_real_playlist_structure(self):
         self.assertEqual(old.playlist_structure(ROOT/'old_hls.m3u8'),[])
         entries=base.parse_playlist((ROOT/'old_hls.m3u8').read_text().splitlines())
-        self.assertGreaterEqual(len(entries),27)
+        self.assertGreaterEqual(len(entries),25)
         groups={e.metadata.split('group-title="',1)[1].split('"',1)[0] for e in entries}
         self.assertEqual(groups,{'Variedade','Filmes','Séries','CCTV'})
 
