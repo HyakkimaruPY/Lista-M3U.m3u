@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - old_hls.m3u8
+      - scripts/hls_compat.py
       - scripts/validate_old_hls.py
       - scripts/validate_streams.py
       - scripts/probe_legacy_media.py
@@ -13,6 +14,7 @@ on:
   pull_request:
     paths:
       - old_hls.m3u8
+      - scripts/hls_compat.py
       - scripts/validate_old_hls.py
       - scripts/validate_streams.py
       - scripts/probe_legacy_media.py
@@ -28,21 +30,21 @@ permissions:
 jobs:
   old-hls:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-      - name: Instalar FFmpeg
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
-      - name: Testes estruturais
+      - name: Instalar FFmpeg e OpenSSL
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg openssl
+      - name: Testes AUTOHLS sem rede
         run: python -m unittest discover -s tests -p 'test_old_hls.py' -v
-      - name: Perfil legado HLS
+      - name: Gate AUTOHLS do player
         run: python scripts/validate_old_hls.py --playlist old_hls.m3u8 --timeout 12 --strict --report-dir reports/old-hls
-      - name: Audio e video
+      - name: Audio e video apos o gate
         run: python scripts/validate_streams.py --playlist old_hls.m3u8 --workers 4 --retries 2 --timeout 25 --decode-seconds 4 --report-dir reports/old-hls/av
-      - name: Perfil profundo dos canais problemáticos
+      - name: Diagnostico profundo dos canais complexos
         if: always()
         run: python scripts/probe_legacy_media.py --playlist old_hls.m3u8 --out reports/old-hls/deep-profile.json || true
       - name: Resumo
