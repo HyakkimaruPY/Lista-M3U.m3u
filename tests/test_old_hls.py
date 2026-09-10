@@ -11,9 +11,9 @@ class OldHLSTests(unittest.TestCase):
     def test_real_playlist_structure(self):
         self.assertEqual(old.playlist_structure(ROOT/'old_hls.m3u8'),[])
         entries=base.parse_playlist((ROOT/'old_hls.m3u8').read_text().splitlines())
-        self.assertGreaterEqual(len(entries),25)
+        self.assertGreaterEqual(len(entries),28)
         groups={e.metadata.split('group-title="',1)[1].split('"',1)[0] for e in entries}
-        self.assertEqual(groups,{'Variedade','Filmes','Séries','CCTV'})
+        self.assertEqual(groups,{'Variedade','Filmes','Séries','CCTV','Beta'})
 
     def test_plain_query_is_rejected(self):
         e=base.Entry(1,0,1,1,'X','https://example.org/a.m3u8?token=x')
@@ -21,6 +21,11 @@ class OldHLSTests(unittest.TestCase):
 
     def test_bridge_profile_allows_known_complex_url(self):
         e=base.Entry(1,0,1,1,'X','https://example.org/a.m3u8?token=x',metadata='#EXTINF:-1 group-title="Variedade" x-profile="bridge",X')
+        self.assertIsNone(old.simple_source_policy(e))
+
+    def test_beta_group_is_allowed(self):
+        e=base.Entry(1,0,1,1,'X','https://example.org/a.m3u8',metadata='#EXTINF:-1 group-title="Beta" x-profile="bridge",X')
+        self.assertTrue(old.beta_profile(e))
         self.assertIsNone(old.simple_source_policy(e))
 
     def test_headers_are_rejected(self):
