@@ -20,8 +20,10 @@ class OldHLSTests(unittest.TestCase):
         self.assertIn('query',old.simple_source_policy(e))
 
     def test_bridge_profile_allows_known_complex_url(self):
-        e=base.Entry(1,0,1,1,'X','https://example.org/a.m3u8?token=x',metadata='#EXTINF:-1 group-title="Variedade" x-profile="bridge",X')
-        self.assertIsNone(old.simple_source_policy(e))
+        for profile in ('bridge','bridge-normalize','bridge-aes'):
+            e=base.Entry(1,0,1,1,'X','https://example.org/a.m3u8?token=x',metadata=f'#EXTINF:-1 group-title="Beta" x-profile="{profile}",X')
+            self.assertTrue(old.bridge_profile(e))
+            self.assertIsNone(old.simple_source_policy(e))
 
     def test_beta_group_is_allowed(self):
         e=base.Entry(1,0,1,1,'X','https://example.org/a.m3u8',metadata='#EXTINF:-1 group-title="Beta" x-profile="bridge",X')
@@ -35,8 +37,14 @@ class OldHLSTests(unittest.TestCase):
     def test_cmaf_is_rejected(self):
         self.assertIn('CMAF',old.media_policy('#EXTM3U\n#EXT-X-MAP:URI="init.mp4"\n#EXTINF:6,\na.m4s\n','https://example.org/a.m3u8'))
 
-    def test_aes_is_rejected(self):
-        self.assertIn('criptografado',old.media_policy('#EXTM3U\n#EXT-X-KEY:METHOD=AES-128,URI="key.bin"\n#EXTINF:6,\na.ts\n','https://example.org/a.m3u8'))
+    def test_aes_is_rejected_without_bridge_aes(self):
+        text='#EXTM3U\n#EXT-X-KEY:METHOD=AES-128,URI="key.bin"\n#EXTINF:6,\na.ts\n'
+        self.assertIn('criptografado',old.media_policy(text,'https://example.org/a.m3u8'))
+        self.assertIsNone(old.media_policy(text,'https://example.org/a.m3u8','bridge-aes'))
+
+    def test_non_identity_aes_is_still_rejected(self):
+        text='#EXTM3U\n#EXT-X-KEY:METHOD=AES-128,KEYFORMAT="com.example.drm",URI="key.bin"\n#EXTINF:6,\na.ts\n'
+        self.assertIn('criptografado',old.media_policy(text,'https://example.org/a.m3u8','bridge-aes'))
 
     def test_ts_media_is_accepted(self):
         self.assertIsNone(old.media_policy('#EXTM3U\n#EXT-X-TARGETDURATION:6\n#EXTINF:6,\na.ts\n','https://example.org/a.m3u8'))
