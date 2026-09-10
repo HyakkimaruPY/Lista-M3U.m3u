@@ -1,6 +1,7 @@
 #EXTM3U
 # Old HLS - grade remota do player legado Philco
-# Categorias: Variedade, Filmes, Séries, CCTV e Beta.
+# Categorias sao dinamicas; group-title define a navegacao na TV.
+# Compatibilidade HLS e detectada pelo AUTOHLS a partir do manifesto/segmentos.
 
 # === VARIEDADE ===
 #EXTINF:-1 tvg-name="Tela Brasil TV" group-title="Variedade",Tela Brasil TV
@@ -12,8 +13,8 @@ https://stmv.webtvninjas.com.br/webtvni1/webtvni1/playlist.m3u8
 #EXTINF:-1 tvg-name="Fora Tédio TV" group-title="Variedade",Fora Tédio TV
 https://stmv2.srvif.com/foratedio/foratedio/playlist.m3u8
 
-# MasterChef e uma excecao conhecida: URL com parametros, ja suportada pela bridge moderna.
-#EXTINF:-1 tvg-name="MasterChef Brasil" group-title="Variedade" x-profile="bridge",MasterChef Brasil
+# URL com parametros e aceita quando o proprio endpoint passa o gate AUTOHLS.
+#EXTINF:-1 tvg-name="MasterChef Brasil" group-title="Variedade",MasterChef Brasil
 https://amg00627-amg00627c9-runtime-latam-2613.playouts.now.amagi.tv/playlist/amg00627-banijayfast-masterchefbrazil-runtimelatam/playlist.m3u8?ip=191.53.43.188&ua=Mozilla%2F5.0%20(Linux%3B%20Android%2013%3B%20Pixel%207)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F116.0.0.0%20Mobile%20Safari%2F537.36&dnt=0&app_bundle=com.ammo.runtime&app_name=runtime&app_store_url=https%3A%2F%2Fwww.runtime.tv%2Fdevices&content_episode=&content_season=&content_livestream=1&content_producer_name=REPLACEME&channel_name=run&network_name=&did=cc4f3f4efff6d0cdca401dd54c56ae6d&us_privacy=1YNN&gdpr_consent=1&gdpr=0&lmt=0&device_make=handset&device_model=&coppa=REPLACEME
 
 # === FILMES ===
@@ -34,7 +35,7 @@ http://200.194.238.229:8383/live/oldseries/playlist.m3u8
 http://200.194.238.229:8383/live/urbanseries/playlist.m3u8
 
 # === CCTV ===
-# Fontes CCTV gratuitas/diretas que passaram o gate legado.
+# Fontes CCTV gratuitas/diretas que passaram o gate legado/AUTOHLS.
 #EXTINF:-1 tvg-name="CCTV-1 综合" group-title="CCTV",CCTV-1 综合
 http://74.91.26.218:82/live/cctv1hd.m3u8
 
@@ -77,20 +78,20 @@ http://74.91.26.218:82/live/cctv13hd.m3u8
 #EXTINF:-1 tvg-name="CCTV-14 少儿" group-title="CCTV",CCTV-14 少儿
 http://74.91.26.218:82/live/cctv14hd.m3u8
 
-# CCTV-15 faz redirects conhecidos, já comprovados na bridge/TV.
-#EXTINF:-1 tvg-name="CCTV-15 音乐" group-title="CCTV" x-profile="bridge",CCTV-15 音乐
+#EXTINF:-1 tvg-name="CCTV-15 音乐" group-title="CCTV",CCTV-15 音乐
 http://74.91.26.218:82/live/cctv15hd.m3u8
 
 #EXTINF:-1 tvg-name="CCTV-17 农业农村" group-title="CCTV",CCTV-17 农业农村
 http://74.91.26.218:82/live/cctv17hd.m3u8
 
 # === BETA ===
-# Endpoints problemáticos isolados. A V7.3.4 adapta o manifesto/AES na bridge.
-#EXTINF:-1 tvg-name="Novelíssima" group-title="Beta" x-profile="bridge-normalize",Novelíssima
+# Os canais abaixo continuam isolados editorialmente, mas nao dependem de tag tecnica.
+# O player e o validador detectam automaticamente normalizacao/AES pelo HLS real.
+#EXTINF:-1 tvg-name="Novelíssima" group-title="Beta",Novelíssima
 https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/12d72d1a2d184982808da4e7dc859aed/playlist.m3u8
 
-#EXTINF:-1 tvg-name="Pluto Desenhos Clássicos" group-title="Beta" x-profile="bridge-aes",Pluto · Desenhos Clássicos
+#EXTINF:-1 tvg-name="Pluto Desenhos Clássicos" group-title="Beta",Pluto · Desenhos Clássicos
 https://jmp2.uk/plu-655e5c4d2c46f3000877a54b.m3u8
 
-#EXTINF:-1 tvg-name="Pluto Cine Clássicos" group-title="Beta" x-profile="bridge-aes",Pluto · Cine Clássicos
+#EXTINF:-1 tvg-name="Pluto Cine Clássicos" group-title="Beta",Pluto · Cine Clássicos
 https://jmp2.uk/plu-5fa1612a669ba0000702017b.m3u8
