@@ -27,7 +27,9 @@ A interface da TV mostra primeiro essas quatro categorias. Ao entrar em uma dela
 
 ## CCTV
 
-A categoria CCTV foi preenchida a partir dos canais `x-source="Free-TV"` da `cn.m3u` quando havia URL HLS direta, mais o CCTV-15 que ja era controle conhecido do firmware. Isso inclui CCTV-1, 2, 3, as tres variantes do CCTV-4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 e 17. CCTV-5+ nao foi incluido porque a entrada atual da playlist chinesa nao pertence ao mesmo conjunto Free-TV direto.
+A categoria CCTV foi preenchida a partir dos canais `x-source="Free-TV"` da `cn.m3u` quando havia URL HLS direta, mais o CCTV-15 que ja era controle conhecido do firmware. A bateria inicial aprovou CCTV-1, 2, 3, CCTV-4 Asia e Europa, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 e 17.
+
+Duas entradas foram deliberadamente deixadas fora da grade remota depois do teste real do workflow: CCTV-16 respondeu conteudo que nao era manifesto HLS; CCTV-4 America apresentou certificado TLS expirado no endpoint atual. Elas podem voltar se aparecer uma fonte direta que passe o mesmo gate. CCTV-5+ tambem nao foi incluido porque a entrada atual da playlist chinesa nao pertence ao mesmo conjunto Free-TV direto.
 
 ## URL consumida pela V7.3
 
