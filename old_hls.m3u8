@@ -34,7 +34,7 @@ http://200.194.238.229:8383/live/oldseries/playlist.m3u8
 http://200.194.238.229:8383/live/urbanseries/playlist.m3u8
 
 # === CCTV ===
-# Fontes CCTV gratuitas/diretas trazidas da playlist chinesa, mais CCTV-15 ja validado no firmware.
+# Fontes CCTV gratuitas/diretas que passaram o gate legado, mais CCTV-15 ja validado no firmware.
 #EXTINF:-1 tvg-name="CCTV-1 综合" group-title="CCTV",CCTV-1 综合
 http://74.91.26.218:82/live/cctv1hd.m3u8
 
@@ -49,9 +49,6 @@ http://74.91.26.218:82/live/cctv4hd.m3u8
 
 #EXTINF:-1 tvg-name="CCTV-4 中文国际（欧）" group-title="CCTV",CCTV-4 中文国际（欧）
 https://dash2.antik.sk/live/test_cctv_tizen/playlist.m3u8
-
-#EXTINF:-1 tvg-name="CCTV-4 中文国际（美）" group-title="CCTV",CCTV-4 中文国际（美）
-https://global.cgtn.cicc.media.caton.cloud/master/cgtn-america.m3u8
 
 #EXTINF:-1 tvg-name="CCTV-6 电影" group-title="CCTV",CCTV-6 电影
 http://69.30.245.50/live/cctv6.m3u8
@@ -82,9 +79,6 @@ http://74.91.26.218:82/live/cctv14hd.m3u8
 
 #EXTINF:-1 tvg-name="CCTV-15 音乐" group-title="CCTV",CCTV-15 音乐
 http://74.91.26.218:82/live/cctv15hd.m3u8
-
-#EXTINF:-1 tvg-name="CCTV-16 奥林匹克" group-title="CCTV",CCTV-16 奥林匹克
-http://74.91.26.218:82/live/cctv16hd.m3u8
 
 #EXTINF:-1 tvg-name="CCTV-17 农业农村" group-title="CCTV",CCTV-17 农业农村
 http://74.91.26.218:82/live/cctv17hd.m3u8
