@@ -23,8 +23,12 @@ class RedirectCounter(HTTPRedirectHandler):
         if self.count>8: raise HTTPError(req.full_url,code,'redirect limit',headers,fp)
         return super().redirect_request(req,fp,code,msg,headers,newurl)
 
+def entry_profile(entry:base.Entry)->str:
+    m=re.search(r'x-profile="([^"]+)"',entry.metadata or '',re.I)
+    return m.group(1).lower() if m else ''
+
 def bridge_profile(entry:base.Entry)->bool:
-    return 'x-profile="bridge"' in (entry.metadata or '').lower()
+    return entry_profile(entry).startswith('bridge')
 
 def entry_group(entry:base.Entry)->str:
     m=re.search(r'group-title="([^"]+)"',entry.metadata or '',re.I)
@@ -39,13 +43,13 @@ def simple_source_policy(entry:base.Entry)->str|None:
     assert url is not None
     p=urlsplit(url)
     if (p.query or p.fragment) and not bridge_profile(entry):
-        return 'URL possui query/fragmento; use x-profile="bridge" apenas para excecao comprovada'
+        return 'URL possui query/fragmento; use x-profile="bridge*" apenas para excecao comprovada'
     if '|' in (entry.url or '') or ua or ref: return 'URL depende de headers/opcoes especiais'
     return None
 
 def fetch_text(url:str,timeout:int):
     c=RedirectCounter(); op=build_opener(c,HTTPSHandler(context=ssl.create_default_context()))
-    req=Request(url,headers={'User-Agent':'Mozilla/5.0 (Linux; SmartTV) OldHLSValidator/1.2','Accept':'application/vnd.apple.mpegurl,application/x-mpegURL,*/*','Accept-Encoding':'identity'})
+    req=Request(url,headers={'User-Agent':'Mozilla/5.0 (Linux; SmartTV) OldHLSValidator/1.3','Accept':'application/vnd.apple.mpegurl,application/x-mpegURL,*/*','Accept-Encoding':'identity'})
     with op.open(req,timeout=timeout) as r:
         raw=r.read(MAX_MANIFEST+1)
         if len(raw)>MAX_MANIFEST: raise ValueError('manifesto maior que 2 MiB')
@@ -84,12 +88,16 @@ def select_variant(text:str,base_url:str):
     if not variants: return None,'master sem variante AVC/AAC <=1080p/60fps identificavel'
     variants.sort(reverse=True); return variants[0][2],None
 
-def media_policy(text:str,final_url:str)->str|None:
+def media_policy(text:str,final_url:str,profile:str='')->str|None:
     up=text.upper()
     if '#EXT-X-MAP' in up: return 'HLS fMP4/CMAF (#EXT-X-MAP) nao aceito'
     for line in text.splitlines():
-        if line.strip().upper().startswith('#EXT-X-KEY:') and parse_attrs(line).get('METHOD','NONE').upper()!='NONE':
-            return 'stream criptografado (#EXT-X-KEY) nao aceito no perfil simples'
+        if not line.strip().upper().startswith('#EXT-X-KEY:'): continue
+        a=parse_attrs(line); method=a.get('METHOD','NONE').upper(); keyformat=a.get('KEYFORMAT','identity') or 'identity'
+        if method=='NONE': continue
+        if profile=='bridge-aes' and method=='AES-128' and keyformat.lower()=='identity' and a.get('URI'):
+            continue
+        return 'stream criptografado (#EXT-X-KEY) fora do perfil bridge-aes suportado'
     media=[urljoin(final_url,s.strip()) for s in text.splitlines() if s.strip() and not s.strip().startswith('#')]
     if not media: return 'playlist de midia sem segmentos'
     sample=media[0].lower().split('?',1)[0]
@@ -97,7 +105,7 @@ def media_policy(text:str,final_url:str)->str|None:
     return None
 
 def inspect_entry(entry:base.Entry,timeout:int)->LegacyResult:
-    url,_,_=base.probe_url_and_headers(entry); host=base.host_of(url); bad=simple_source_policy(entry)
+    url,_,_=base.probe_url_and_headers(entry); host=base.host_of(url); bad=simple_source_policy(entry); profile=entry_profile(entry)
     if bad: return LegacyResult(entry.title,host,'incompatible',bad)
     assert url is not None
     try: text,final,redirects,_=fetch_text(url,timeout)
@@ -113,9 +121,12 @@ def inspect_entry(entry:base.Entry,timeout:int)->LegacyResult:
         try: text,media_final,r2,_=fetch_text(media_url,timeout); redirects+=r2; media_url=media_final
         except (HTTPError,URLError,TimeoutError,OSError) as e: return LegacyResult(entry.title,host,'uncertain',f'variante inconclusiva: {e}',redirects,base.host_of(final),media_url)
         if redirects>max_redirects: return LegacyResult(entry.title,host,'incompatible',f'cadeia de redirect longa ({redirects})',redirects,base.host_of(media_url),media_url)
-    bad=media_policy(text,media_url)
+    bad=media_policy(text,media_url,profile)
     if bad: return LegacyResult(entry.title,host,'incompatible',bad,redirects,base.host_of(media_url),media_url)
-    return LegacyResult(entry.title,host,'compatible','HLS compativel com o perfil legado',redirects,base.host_of(media_url),media_url)
+    detail='HLS compativel com o perfil legado'
+    if profile=='bridge-normalize': detail+=' via normalizacao HLS v3 na bridge'
+    if profile=='bridge-aes': detail+=' via AES-128 descriptografado na bridge'
+    return LegacyResult(entry.title,host,'compatible',detail,redirects,base.host_of(media_url),media_url)
 
 def playlist_structure(path:Path)->list[str]:
     lines=path.read_text(encoding='utf-8-sig').splitlines(); errors=[]
@@ -139,8 +150,7 @@ def main()->int:
     if not structure:
         for e in entries:
             r=inspect_entry(e,max(2,a.timeout))
-            if beta_profile(e) and r.status=='incompatible':
-                r.status='uncertain'; r.reason='BETA experimental: '+r.reason
+            if beta_profile(e) and r.status=='incompatible': r.status='uncertain'; r.reason='BETA experimental: '+r.reason
             results.append(r); print(f'[{r.status.upper():12}] {r.name}: {r.reason}')
     report={'playlist':str(p),'checked_at_unix':int(time.time()),'structure_errors':structure,'counts':{k:sum(r.status==k for r in results) for k in ('compatible','incompatible','uncertain')},'results':[asdict(r) for r in results]}
     out=Path(a.report_dir); out.mkdir(parents=True,exist_ok=True); (out/'legacy-profile.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
