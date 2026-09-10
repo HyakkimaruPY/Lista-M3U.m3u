@@ -1,6 +1,6 @@
 #EXTM3U
 # Old HLS - grade remota do player legado Philco
-# Categorias reconhecidas pelo player: Variedade, Filmes, Séries, CCTV.
+# Categorias: Variedade, Filmes, Séries, CCTV e Beta.
 
 # === VARIEDADE ===
 #EXTINF:-1 tvg-name="Tela Brasil TV" group-title="Variedade",Tela Brasil TV
@@ -34,7 +34,7 @@ http://200.194.238.229:8383/live/oldseries/playlist.m3u8
 http://200.194.238.229:8383/live/urbanseries/playlist.m3u8
 
 # === CCTV ===
-# Fontes CCTV gratuitas/diretas que passaram o gate legado, mais CCTV-15 ja validado no firmware.
+# Fontes CCTV gratuitas/diretas que passaram o gate legado.
 #EXTINF:-1 tvg-name="CCTV-1 综合" group-title="CCTV",CCTV-1 综合
 http://74.91.26.218:82/live/cctv1hd.m3u8
 
@@ -82,3 +82,14 @@ http://74.91.26.218:82/live/cctv15hd.m3u8
 
 #EXTINF:-1 tvg-name="CCTV-17 农业农村" group-title="CCTV",CCTV-17 农业农村
 http://74.91.26.218:82/live/cctv17hd.m3u8
+
+# === BETA ===
+# Endpoints originais que falhavam antes do DNSFIX. Mantidos isolados para teste físico.
+#EXTINF:-1 tvg-name="Novelíssima" group-title="Beta" x-profile="bridge",Novelíssima
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/12d72d1a2d184982808da4e7dc859aed/playlist.m3u8
+
+#EXTINF:-1 tvg-name="Pluto Desenhos Clássicos" group-title="Beta" x-profile="bridge",Pluto · Desenhos Clássicos
+https://jmp2.uk/plu-655e5c4d2c46f3000877a54b.m3u8
+
+#EXTINF:-1 tvg-name="Pluto Cine Clássicos" group-title="Beta" x-profile="bridge",Pluto · Cine Clássicos
+https://jmp2.uk/plu-5fa1612a669ba0000702017b.m3u8
