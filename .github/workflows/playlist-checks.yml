@@ -2,9 +2,9 @@ name: Estrutura e regressões IPTV
 on:
   push:
     branches: [main]
-    paths: ['*.m3u', 'scripts/**', 'tests/**', '.github/workflows/**']
+    paths: ['*.m3u', '*.m3u8', 'scripts/**', 'tests/**', '.github/workflows/**']
   pull_request:
-    paths: ['*.m3u', 'scripts/**', 'tests/**', '.github/workflows/**']
+    paths: ['*.m3u', '*.m3u8', 'scripts/**', 'tests/**', '.github/workflows/**']
   workflow_dispatch:
 permissions:
   contents: read
