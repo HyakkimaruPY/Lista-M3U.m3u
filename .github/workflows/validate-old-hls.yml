@@ -1,0 +1,55 @@
+name: Validar Old HLS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - old_hls.m3u8
+      - scripts/validate_old_hls.py
+      - scripts/validate_streams.py
+      - tests/test_old_hls.py
+      - .github/workflows/validate-old-hls.yml
+  pull_request:
+    paths:
+      - old_hls.m3u8
+      - scripts/validate_old_hls.py
+      - scripts/validate_streams.py
+      - tests/test_old_hls.py
+      - .github/workflows/validate-old-hls.yml
+  schedule:
+    - cron: "23 10 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  old-hls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Instalar FFmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Testes estruturais
+        run: python -m unittest tests.test_old_hls -v
+      - name: Perfil legado HLS
+        run: python scripts/validate_old_hls.py --playlist old_hls.m3u8 --timeout 12 --strict --report-dir reports/old-hls
+      - name: Audio e video
+        run: python scripts/validate_streams.py --playlist old_hls.m3u8 --workers 4 --retries 2 --timeout 25 --decode-seconds 4 --report-dir reports/old-hls/av
+      - name: Resumo
+        if: always()
+        run: |
+          test -f reports/old-hls/legacy-summary.md && cat reports/old-hls/legacy-summary.md >> "$GITHUB_STEP_SUMMARY" || true
+          test -f reports/old-hls/av/summary.md && cat reports/old-hls/av/summary.md >> "$GITHUB_STEP_SUMMARY" || true
+      - name: Artefato
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: old-hls-validation
+          path: reports/old-hls/
+          if-no-files-found: warn
+          retention-days: 14
