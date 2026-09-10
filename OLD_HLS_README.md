@@ -12,7 +12,7 @@ Grupos atuais:
 - `Filmes`: canais cuja grade e essencialmente filmes.
 - `Séries`: canais de series, sitcoms e programacao seriada.
 - `CCTV`: canais CCTV gratuitos/diretos mantidos separadamente, independentemente do genero do conteudo.
-- `Beta`: endpoints experimentais que ainda precisam de validacao fisica na TV. Falhas desta categoria sao reportadas pelo gate, mas nao derrubam a lista estavel.
+- `Beta`: endpoints experimentais usados para validar adaptacoes novas da bridge sem misturar o teste com a grade principal.
 
 A interface mostra primeiro as categorias encontradas na playlist. Ao entrar em uma delas, mostra apenas seus canais; `Voltar` retorna primeiro para as categorias e depois para o menu Smart.
 
@@ -23,10 +23,18 @@ A interface mostra primeiro as categorias encontradas na playlist. Ao entrar em 
 - `group-title` e obrigatorio.
 - Preferir HLS H.264/AVC + AAC em MPEG-TS, ate 1080p/60 fps.
 - URLs simples, sem token/query, continuam sendo o padrao.
-- Uma fonte complexa suportada pela bridge pode ser marcada explicitamente com `x-profile="bridge"`.
 - Headers externos especiais continuam proibidos na lista remota.
-- Na grade estavel, nao usar DRM, Widevine, PlayReady, FairPlay, DASH-only, HEVC/H.265, AV1, VP9, AC-3/E-AC-3 ou HLS fMP4/CMAF (`#EXT-X-MAP`).
-- A categoria Beta pode conter temporariamente fontes mais complexas para teste; o validador as classifica como experimentais/inconclusivas em vez de comprometer o gate da grade estavel.
+- Na grade estavel, nao usar Widevine, PlayReady, FairPlay, DASH-only, HEVC/H.265, AV1, VP9, AC-3/E-AC-3 ou HLS fMP4/CMAF (`#EXT-X-MAP`).
+
+### Perfis da bridge
+
+O atributo `x-profile` descreve uma excecao comprovada e serve para os validadores/documentacao; o parser remoto continua entregando nome, grupo e URL ao player.
+
+- `bridge`: a bridge moderna e necessaria por redirects, query, TLS ou outra complexidade de transporte ja comprovada. MasterChef e CCTV-15 usam este perfil.
+- `bridge-normalize`: a V7.3.4 reescreve o media playlist para um HLS v3 minimo, preservando temporizacao e `EXTINF`/segmentos e retirando bookkeeping proprietario que confunde o parser legado. Novelissima usa este perfil.
+- `bridge-aes`: HLS AES-128 CBC com `KEYFORMAT=identity`. A V7.3.4 busca a chave/IV, descriptografa o segmento na bridge e entrega MPEG-TS em claro ao GStreamer antigo, que nao recebe `EXT-X-KEY`. Os dois Pluto Beta usam este perfil.
+
+`bridge-aes` nao significa suporte a DRM moderno. Qualquer KEYFORMAT diferente de `identity`, ou Widevine/PlayReady/FairPlay, continua rejeitado.
 
 ## CCTV
 
@@ -43,7 +51,8 @@ O navegador antigo nao acessa essa URL diretamente. A bridge Go faz o HTTPS, int
 ## Bateria de testes
 
 1. `scripts/validate_streams.py`: confirma audio e video com `ffprobe`/`ffmpeg`.
-2. `scripts/validate_old_hls.py`: valida estrutura, grupos e perfil de compatibilidade legado.
-3. `tests/test_old_hls.py`: impede regressao da grade e das regras de URLs.
+2. `scripts/validate_old_hls.py`: valida estrutura, grupos e os perfis de compatibilidade da bridge.
+3. `scripts/probe_legacy_media.py`: inspeciona profundamente manifests/codecs/tags/chaves dos canais problemáticos.
+4. `tests/test_old_hls.py`: impede regressao da grade, URLs e perfis.
 
-Timeout, DNS, bloqueio regional ou indisponibilidade momentanea continuam sendo `uncertain`. Incompatibilidades da grade estavel falham o gate; entradas `Beta` sao mantidas como experimentais para teste fisico sem quebrar o conjunto estavel.
+Timeout, DNS, bloqueio regional ou indisponibilidade momentanea continuam sendo `uncertain`. Incompatibilidades reais da grade estavel falham o gate; a categoria Beta permanece isolada para validacao fisica das adaptacoes em desenvolvimento.
