@@ -1,27 +1,90 @@
 #EXTM3U
-# Old HLS - canais simples para o player legado Philco
-# Regras: HLS HTTP/HTTPS direto, sem token/query obrigatorio, sem DRM, preferencia H.264 + AAC + MPEG-TS.
+# Old HLS - grade remota do player legado Philco
+# Categorias reconhecidas pelo player: Variedade, Filmes, Séries, CCTV.
 
-#EXTINF:-1 tvg-name="Tela Brasil TV" group-title="Novelas",Tela Brasil TV
+# === VARIEDADE ===
+#EXTINF:-1 tvg-name="Tela Brasil TV" group-title="Variedade",Tela Brasil TV
 https://stmv.webtvninjas.com.br/mailson6054/mailson6054/playlist.m3u8
 
-#EXTINF:-1 tvg-name="Reviva TV" group-title="Novelas",Reviva TV
+#EXTINF:-1 tvg-name="Reviva TV" group-title="Variedade",Reviva TV
 https://stmv.webtvninjas.com.br/webtvni1/webtvni1/playlist.m3u8
 
-#EXTINF:-1 tvg-name="Old School TV" group-title="Series",Old School TV
-https://stmv1.samcast.com.br/ricardo2194/ricardo2194/playlist.m3u8
+#EXTINF:-1 tvg-name="Fora Tédio TV" group-title="Variedade",Fora Tédio TV
+https://stmv2.srvif.com/foratedio/foratedio/playlist.m3u8
 
-#EXTINF:-1 tvg-name="Old Series" group-title="Series",Old Series
-http://200.194.238.229:8383/live/oldseries/playlist.m3u8
+# MasterChef e uma excecao conhecida: URL com parametros, ja suportada pela bridge moderna.
+#EXTINF:-1 tvg-name="MasterChef Brasil" group-title="Variedade" x-profile="bridge",MasterChef Brasil
+https://amg00627-amg00627c9-runtime-latam-2613.playouts.now.amagi.tv/playlist/amg00627-banijayfast-masterchefbrazil-runtimelatam/playlist.m3u8?ip=191.53.43.188&ua=Mozilla%2F5.0%20(Linux%3B%20Android%2013%3B%20Pixel%207)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F116.0.0.0%20Mobile%20Safari%2F537.36&dnt=0&app_bundle=com.ammo.runtime&app_name=runtime&app_store_url=https%3A%2F%2Fwww.runtime.tv%2Fdevices&content_episode=&content_season=&content_livestream=1&content_producer_name=REPLACEME&channel_name=run&network_name=&did=cc4f3f4efff6d0cdca401dd54c56ae6d&us_privacy=1YNN&gdpr_consent=1&gdpr=0&lmt=0&device_make=handset&device_model=&coppa=REPLACEME
 
-#EXTINF:-1 tvg-name="Urban Series" group-title="Series",Urban Series
-http://200.194.238.229:8383/live/urbanseries/playlist.m3u8
-
+# === FILMES ===
 #EXTINF:-1 tvg-name="Classique TV" group-title="Filmes",Classique TV
 https://stmv1.srvif.com/classique/classique/playlist.m3u8
 
 #EXTINF:-1 tvg-name="Urban Movies" group-title="Filmes",Urban Movies
 http://200.194.238.229:8383/live/urbanmovies/playlist.m3u8
 
-#EXTINF:-1 tvg-name="Fora Tedio TV" group-title="Humor",Fora Tedio TV
-https://stmv2.srvif.com/foratedio/foratedio/playlist.m3u8
+# === SÉRIES ===
+#EXTINF:-1 tvg-name="Old School TV" group-title="Séries",Old School TV
+https://stmv1.samcast.com.br/ricardo2194/ricardo2194/playlist.m3u8
+
+#EXTINF:-1 tvg-name="Old Series" group-title="Séries",Old Series
+http://200.194.238.229:8383/live/oldseries/playlist.m3u8
+
+#EXTINF:-1 tvg-name="Urban Series" group-title="Séries",Urban Series
+http://200.194.238.229:8383/live/urbanseries/playlist.m3u8
+
+# === CCTV ===
+# Fontes CCTV gratuitas/diretas trazidas da playlist chinesa, mais CCTV-15 ja validado no firmware.
+#EXTINF:-1 tvg-name="CCTV-1 综合" group-title="CCTV",CCTV-1 综合
+http://74.91.26.218:82/live/cctv1hd.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-2 财经" group-title="CCTV",CCTV-2 财经
+http://74.91.26.218:82/live/cctv2hd.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-3 综艺" group-title="CCTV",CCTV-3 综艺
+http://74.91.26.218:82/live/cctv3hd.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-4 中文国际（亚）" group-title="CCTV",CCTV-4 中文国际（亚）
+http://74.91.26.218:82/live/cctv4hd.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-4 中文国际（欧）" group-title="CCTV",CCTV-4 中文国际（欧）
+https://dash2.antik.sk/live/test_cctv_tizen/playlist.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-4 中文国际（美）" group-title="CCTV",CCTV-4 中文国际（美）
+https://global.cgtn.cicc.media.caton.cloud/master/cgtn-america.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-6 电影" group-title="CCTV",CCTV-6 电影
+http://69.30.245.50/live/cctv6.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-7 国防军事" group-title="CCTV",CCTV-7 国防军事
+http://74.91.26.218:82/live/cctv7hd.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-8 电视剧" group-title="CCTV",CCTV-8 电视剧
+http://74.91.26.218:82/live/cctv8hd.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-9 纪录" group-title="CCTV",CCTV-9 纪录
+http://74.91.26.218:82/live/cctv9hd.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-10 科教" group-title="CCTV",CCTV-10 科教
+http://74.91.26.218:82/live/cctv10hd.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-11 戏曲" group-title="CCTV",CCTV-11 戏曲
+http://74.91.26.218:82/live/cctv11hd.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-12 社会与法" group-title="CCTV",CCTV-12 社会与法
+http://74.91.26.218:82/live/cctv12hd.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-13 新闻" group-title="CCTV",CCTV-13 新闻
+http://74.91.26.218:82/live/cctv13hd.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-14 少儿" group-title="CCTV",CCTV-14 少儿
+http://74.91.26.218:82/live/cctv14hd.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-15 音乐" group-title="CCTV",CCTV-15 音乐
+http://74.91.26.218:82/live/cctv15hd.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-16 奥林匹克" group-title="CCTV",CCTV-16 奥林匹克
+http://74.91.26.218:82/live/cctv16hd.m3u8
+
+#EXTINF:-1 tvg-name="CCTV-17 农业农村" group-title="CCTV",CCTV-17 农业农村
+http://74.91.26.218:82/live/cctv17hd.m3u8
