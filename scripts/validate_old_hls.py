@@ -10,7 +10,7 @@ import validate_streams as base
 
 MAX_MANIFEST=2*1024*1024
 BAD_CODEC=re.compile(r'(?:hvc1|hev1|hevc|h265|av01|av1|vp09|vp9|ac-3|ec-3|eac3)',re.I)
-ALLOWED_GROUPS={'Variedade','Filmes','Séries','CCTV'}
+ALLOWED_GROUPS={'Variedade','Filmes','Séries','CCTV','Beta'}
 
 @dataclass
 class LegacyResult:
@@ -26,6 +26,13 @@ class RedirectCounter(HTTPRedirectHandler):
 def bridge_profile(entry:base.Entry)->bool:
     return 'x-profile="bridge"' in (entry.metadata or '').lower()
 
+def entry_group(entry:base.Entry)->str:
+    m=re.search(r'group-title="([^"]+)"',entry.metadata or '',re.I)
+    return m.group(1) if m else ''
+
+def beta_profile(entry:base.Entry)->bool:
+    return entry_group(entry)=='Beta'
+
 def simple_source_policy(entry:base.Entry)->str|None:
     url,ua,ref=base.probe_url_and_headers(entry)
     if not base.valid_network_url(url): return 'URL ausente ou malformada'
@@ -38,7 +45,7 @@ def simple_source_policy(entry:base.Entry)->str|None:
 
 def fetch_text(url:str,timeout:int):
     c=RedirectCounter(); op=build_opener(c,HTTPSHandler(context=ssl.create_default_context()))
-    req=Request(url,headers={'User-Agent':'Mozilla/5.0 (Linux; SmartTV) OldHLSValidator/1.1','Accept':'application/vnd.apple.mpegurl,application/x-mpegURL,*/*','Accept-Encoding':'identity'})
+    req=Request(url,headers={'User-Agent':'Mozilla/5.0 (Linux; SmartTV) OldHLSValidator/1.2','Accept':'application/vnd.apple.mpegurl,application/x-mpegURL,*/*','Accept-Encoding':'identity'})
     with op.open(req,timeout=timeout) as r:
         raw=r.read(MAX_MANIFEST+1)
         if len(raw)>MAX_MANIFEST: raise ValueError('manifesto maior que 2 MiB')
@@ -131,10 +138,13 @@ def main()->int:
     structure=playlist_structure(p); entries=base.parse_playlist(p.read_text(encoding='utf-8-sig').splitlines()); results=[]
     if not structure:
         for e in entries:
-            r=inspect_entry(e,max(2,a.timeout)); results.append(r); print(f'[{r.status.upper():12}] {r.name}: {r.reason}')
+            r=inspect_entry(e,max(2,a.timeout))
+            if beta_profile(e) and r.status=='incompatible':
+                r.status='uncertain'; r.reason='BETA experimental: '+r.reason
+            results.append(r); print(f'[{r.status.upper():12}] {r.name}: {r.reason}')
     report={'playlist':str(p),'checked_at_unix':int(time.time()),'structure_errors':structure,'counts':{k:sum(r.status==k for r in results) for k in ('compatible','incompatible','uncertain')},'results':[asdict(r) for r in results]}
     out=Path(a.report_dir); out.mkdir(parents=True,exist_ok=True); (out/'legacy-profile.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    s=['# Old HLS - perfil legado','',f"- Estrutura: **{'PASS' if not structure else 'FAIL'}**",'',f"- Compativeis: **{report['counts']['compatible']}**",f"- Incompativeis: **{report['counts']['incompatible']}**",f"- Inconclusivos: **{report['counts']['uncertain']}**"]
+    s=['# Old HLS - perfil legado','',f"- Estrutura: **{'PASS' if not structure else 'FAIL'}**",'',f"- Compativeis: **{report['counts']['compatible']}**",f"- Incompativeis: **{report['counts']['incompatible']}**",f"- Inconclusivos/Beta: **{report['counts']['uncertain']}**"]
     if structure: s+=['','## Erros estruturais']+[f'- {x}' for x in structure]
     (out/'legacy-summary.md').write_text('\n'.join(s)+'\n',encoding='utf-8')
     return 1 if structure or (a.strict and report['counts']['incompatible']) else 0
