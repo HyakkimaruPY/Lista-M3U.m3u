@@ -35,7 +35,7 @@ jobs:
       - name: Instalar FFmpeg
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
       - name: Testes estruturais
-        run: python -m unittest tests.test_old_hls -v
+        run: python -m unittest discover -s tests -p 'test_old_hls.py' -v
       - name: Perfil legado HLS
         run: python scripts/validate_old_hls.py --playlist old_hls.m3u8 --timeout 12 --strict --report-dir reports/old-hls
       - name: Audio e video
