@@ -1,0 +1,27 @@
+#EXTM3U
+# Old HLS - canais simples para o player legado Philco
+# Regras: HLS HTTP/HTTPS direto, sem token/query obrigatorio, sem DRM, preferencia H.264 + AAC + MPEG-TS.
+
+#EXTINF:-1 tvg-name="Tela Brasil TV" group-title="Novelas",Tela Brasil TV
+https://stmv.webtvninjas.com.br/mailson6054/mailson6054/playlist.m3u8
+
+#EXTINF:-1 tvg-name="Reviva TV" group-title="Novelas",Reviva TV
+https://stmv.webtvninjas.com.br/webtvni1/webtvni1/playlist.m3u8
+
+#EXTINF:-1 tvg-name="Old School TV" group-title="Series",Old School TV
+https://stmv1.samcast.com.br/ricardo2194/ricardo2194/playlist.m3u8
+
+#EXTINF:-1 tvg-name="Old Series" group-title="Series",Old Series
+http://200.194.238.229:8383/live/oldseries/playlist.m3u8
+
+#EXTINF:-1 tvg-name="Urban Series" group-title="Series",Urban Series
+http://200.194.238.229:8383/live/urbanseries/playlist.m3u8
+
+#EXTINF:-1 tvg-name="Classique TV" group-title="Filmes",Classique TV
+https://stmv1.srvif.com/classique/classique/playlist.m3u8
+
+#EXTINF:-1 tvg-name="Urban Movies" group-title="Filmes",Urban Movies
+http://200.194.238.229:8383/live/urbanmovies/playlist.m3u8
+
+#EXTINF:-1 tvg-name="Fora Tedio TV" group-title="Humor",Fora Tedio TV
+https://stmv2.srvif.com/foratedio/foratedio/playlist.m3u8
