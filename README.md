@@ -2,6 +2,7 @@
 
 - `cn.m3u`: canais chineses organizados por conteúdo. A origem permanece em `x-source`; Free-TV tem prioridade nas substituições, seguida de IPTV-org. BurningC4 pode fornecer logos históricas, mas não streams.
 - `srhell02iptv.m3u`: seleção principal. Pluto usa categorias em português com sufixo `S` para os EUA e `BR` para o Brasil. Episódios VOD ficam separados dos canais ao vivo.
+- `old_hls.m3u8`: lista remota do player legado Philco. Mantém somente HLS simples e estáveis, com foco em H.264/AAC/MPEG-TS e sem tokens, DRM ou dependências de sessão. Regras completas em `OLD_HLS_README.md`.
 
 URLs alternativas distintas são preservadas, mesmo quando o nome ou ID EPG coincide. A curadoria remove apenas solicitações de reprodução exatamente repetidas, considerando URL, cabeçalhos e diretivas. Não troca URLs por listas fixas antigas. Rede-Super permanece; Rede-Gospel/Renascer não são reinseridas.
 
@@ -12,6 +13,7 @@ python3 scripts/curate_main_playlist.py
 python3 scripts/curate_main_playlist.py --check
 python3 -m unittest discover -s tests -v
 python3 scripts/validate_streams.py --playlist cn.m3u --workers 6 --retries 2 --timeout 25 --decode-seconds 4
+python3 scripts/validate_old_hls.py --playlist old_hls.m3u8 --strict
 ```
 
 FFmpeg e ffprobe são necessários para testar streams; a inspeção visual Pluto também exige Tesseract com inglês. Os testes de regressão não precisam de acesso à internet.
@@ -29,7 +31,8 @@ Os relatórios não incluem URLs completas. Reparos por número de linha exigem 
 
 ## Workflows
 
-- **Estrutura e regressões IPTV**: valida sintaxe e invariantes em pushes e PRs, sem rede de streaming.
+- **Estrutura e regressões IPTV**: valida sintaxe e invariantes em pushes e PRs, incluindo `.m3u8`, sem rede de streaming.
+- **Validar Old HLS**: testa `old_hls.m3u8` diariamente e em mudanças da lista. Combina `ffprobe`/`ffmpeg` com um gate específico para a pilha legada, recusando CMAF/fMP4, DRM/AES, codecs incompatíveis, URLs com token e redirects excessivos.
 - **Validar e manter streams IPTV**: audita PRs sem escrever neles. A manutenção diária pode reparar/remover Pluto da principal e reparar a lista chinesa. Demais canais da principal não são modificados automaticamente. As outras listas são auditadas sem alterações.
 - **Validar canais principais não-Pluto**: auditoria apenas; não remove canais nem faz commits em PRs.
 - **Sincronizar China com principal**: execução manual na main, simulação por padrão. Para aplicar, marque `apply_changes`. Só usa candidatos que passam na validação; preserva cabeçalhos necessários e distingue CCTV-4K/8K de CCTV-4/8.
