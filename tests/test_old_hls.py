@@ -12,9 +12,21 @@ class OldHLSTests(unittest.TestCase):
     def test_real_playlist_structure(self):
         self.assertEqual(old.playlist_structure(ROOT/'old_hls.m3u8'),[])
         entries=base.parse_playlist((ROOT/'old_hls.m3u8').read_text(encoding='utf-8-sig').splitlines())
-        self.assertGreaterEqual(len(entries),28)
+        self.assertGreaterEqual(len(entries),35)
         groups={old.entry_group(e) for e in entries}
-        self.assertTrue({'Variedade','Filmes','Séries','CCTV','Beta'}.issubset(groups))
+        required={'Variedade','Filmes','Séries','CCTV','B • Filmes','B • Séries','B • Animações'}
+        self.assertTrue(required.issubset(groups))
+        self.assertNotIn('Beta',groups)
+
+    def test_pluto_br_promoted_groups(self):
+        entries=base.parse_playlist((ROOT/'old_hls.m3u8').read_text(encoding='utf-8-sig').splitlines())
+        by_name={e.title:old.entry_group(e) for e in entries}
+        self.assertEqual(by_name.get('P • Pluto TV Cine Clássicos'),'B • Filmes')
+        self.assertEqual(by_name.get('P • A Feiticeira'),'B • Séries')
+        self.assertEqual(by_name.get('P • MacGyver'),'B • Séries')
+        self.assertEqual(by_name.get('P • Pluto TV Desenhos Clássicos'),'B • Animações')
+        self.assertEqual(by_name.get('P • Popeye'),'B • Animações')
+        self.assertEqual(by_name.get('Novelíssima'),'Variedade')
 
     def test_categories_are_dynamic_not_whitelisted(self):
         e=base.Entry(1,0,1,1,'X','https://example.org/a.m3u8',metadata='#EXTINF:-1 group-title="Documentários",X')
