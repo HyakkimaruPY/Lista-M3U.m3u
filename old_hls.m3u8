@@ -38,6 +38,37 @@ http://200.194.238.229:8383/live/oldseries/playlist.m3u8
 #EXTINF:-1 tvg-name="Urban Series" group-title="Séries",Urban Series
 http://200.194.238.229:8383/live/urbanseries/playlist.m3u8
 
+# === B • FILMES / PLUTO BR ===
+# Canais Pluto brasileiros promovidos apos validacao fisica do caminho AUTOHLS AES-128.
+#EXTINF:-1 tvg-name="P • Pluto TV Cine Clássicos" group-title="B • Filmes",P • Pluto TV Cine Clássicos
+https://jmp2.uk/plu-5fa1612a669ba0000702017b.m3u8
+
+# === B • SÉRIES / PLUTO BR ===
+#EXTINF:-1 tvg-name="P • A Feiticeira" group-title="B • Séries",P • A Feiticeira
+https://jmp2.uk/plu-631fa8dd7f25240007099a40.m3u8
+
+#EXTINF:-1 tvg-name="P • Diff’rent Strokes Arnold" group-title="B • Séries",P • Diff’rent Strokes Arnold
+https://jmp2.uk/plu-61f1d27a189ed10007b7393e.m3u8
+
+#EXTINF:-1 tvg-name="P • MacGyver" group-title="B • Séries",P • MacGyver
+https://jmp2.uk/plu-63eb9dc84e83e70008abea92.m3u8
+
+# === B • ANIMAÇÕES / PLUTO BR ===
+#EXTINF:-1 tvg-name="P • Nickelodeon Clássico" group-title="B • Animações",P • Nickelodeon Clássico
+https://jmp2.uk/plu-6824ce10c5d53e1351ceb8d1.m3u8
+
+#EXTINF:-1 tvg-name="P • Pluto TV Desenhos Clássicos" group-title="B • Animações",P • Pluto TV Desenhos Clássicos
+https://jmp2.uk/plu-655e5c4d2c46f3000877a54b.m3u8
+
+#EXTINF:-1 tvg-name="P • Os Smurfs" group-title="B • Animações",P • Os Smurfs
+https://jmp2.uk/plu-68b88ae1943f6fb1fb2ad749.m3u8
+
+#EXTINF:-1 tvg-name="P • Inspetor Bugiganga" group-title="B • Animações",P • Inspetor Bugiganga
+https://jmp2.uk/plu-69162648d03565d6c8c8df97.m3u8
+
+#EXTINF:-1 tvg-name="P • Popeye" group-title="B • Animações",P • Popeye
+https://jmp2.uk/plu-677d93f37bffa600080795e7.m3u8
+
 # === CCTV ===
 # Fontes CCTV gratuitas/diretas que passaram o gate legado/AUTOHLS.
 #EXTINF:-1 tvg-name="CCTV-1 综合" group-title="CCTV",CCTV-1 综合
@@ -87,12 +118,3 @@ http://74.91.26.218:82/live/cctv15hd.m3u8
 
 #EXTINF:-1 tvg-name="CCTV-17 农业农村" group-title="CCTV",CCTV-17 农业农村
 http://74.91.26.218:82/live/cctv17hd.m3u8
-
-# === BETA ===
-# Pluto permanece em Beta ate a validacao fisica na TV.
-# O player e o validador detectam automaticamente normalizacao/AES pelo HLS real.
-#EXTINF:-1 tvg-name="Pluto Desenhos Clássicos" group-title="Beta",Pluto · Desenhos Clássicos
-https://jmp2.uk/plu-655e5c4d2c46f3000877a54b.m3u8
-
-#EXTINF:-1 tvg-name="Pluto Cine Clássicos" group-title="Beta",Pluto · Cine Clássicos
-https://jmp2.uk/plu-5fa1612a669ba0000702017b.m3u8
