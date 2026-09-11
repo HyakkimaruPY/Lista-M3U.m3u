@@ -6,7 +6,9 @@
 
 Desde a V7.3.2 DYNCAT, as categorias nao sao fixas no firmware. A interface descobre automaticamente os valores distintos de `group-title` presentes na playlist. Portanto, criar, renomear ou remover uma categoria e somente uma alteracao no M3U.
 
-Grupos atuais: `Variedade`, `Filmes`, `Séries`, `CCTV` e `Beta`. `Beta` e apenas uma separacao editorial para testes; tecnicamente os canais passam pelo mesmo AUTOHLS dos demais.
+Grupos estaveis atuais: `Variedade`, `Filmes`, `Séries`, `CCTV`, `B • Filmes`, `B • Séries` e `B • Animações`.
+
+O prefixo `B •` identifica o bloco brasileiro Pluto que veio da playlist principal depois de o caminho AUTOHLS AES-128 ser aprovado fisicamente na TV. Ele e uma separacao editorial; tecnicamente esses canais passam pelo mesmo AUTOHLS dos demais.
 
 ## Regra principal: o M3U nao descreve o tratamento tecnico
 
@@ -58,7 +60,17 @@ Ao propor um canal novo, nao crie perfil manual. Coloque somente `#EXTINF`, `gro
 - se AES-128, descriptografar para MPEG-TS valido;
 - passar a bateria A/V do `ffprobe`/`ffmpeg`.
 
-A categoria `Beta` pode continuar sendo usada para organizar testes fisicos, mas ela nao ignora uma incompatibilidade tecnica comprovada.
+A antiga categoria `Beta` deixou de ser necessaria para os dois canais Pluto usados na prova fisica e para Novelissima: Novelissima foi promovida para `Variedade`, e o conjunto Pluto BR passou a usar categorias `B • ...` por conteudo.
+
+## Pluto BR promovido
+
+A promocao inicial copia somente entradas da playlist principal marcadas como portugues brasileiro/regiao BR:
+
+- `B • Filmes`: Pluto TV Cine Clássicos;
+- `B • Séries`: A Feiticeira, Diff’rent Strokes Arnold e MacGyver;
+- `B • Animações`: Nickelodeon Clássico, Pluto TV Desenhos Clássicos, Os Smurfs, Inspetor Bugiganga e Popeye.
+
+A origem editorial continua sendo `srhell02iptv.m3u`; o Old HLS mantem somente a URL e os metadados necessarios ao player legado.
 
 ## CCTV
 
