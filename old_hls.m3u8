@@ -17,6 +17,10 @@ https://stmv2.srvif.com/foratedio/foratedio/playlist.m3u8
 #EXTINF:-1 tvg-name="MasterChef Brasil" group-title="Variedade",MasterChef Brasil
 https://amg00627-amg00627c9-runtime-latam-2613.playouts.now.amagi.tv/playlist/amg00627-banijayfast-masterchefbrazil-runtimelatam/playlist.m3u8?ip=191.53.43.188&ua=Mozilla%2F5.0%20(Linux%3B%20Android%2013%3B%20Pixel%207)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F116.0.0.0%20Mobile%20Safari%2F537.36&dnt=0&app_bundle=com.ammo.runtime&app_name=runtime&app_store_url=https%3A%2F%2Fwww.runtime.tv%2Fdevices&content_episode=&content_season=&content_livestream=1&content_producer_name=REPLACEME&channel_name=run&network_name=&did=cc4f3f4efff6d0cdca401dd54c56ae6d&us_privacy=1YNN&gdpr_consent=1&gdpr=0&lmt=0&device_make=handset&device_model=&coppa=REPLACEME
 
+# Novelissima foi aprovada fisicamente na TV com AUTOHLS normalize.
+#EXTINF:-1 tvg-name="Novelíssima" group-title="Variedade",Novelíssima
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/12d72d1a2d184982808da4e7dc859aed/playlist.m3u8
+
 # === FILMES ===
 #EXTINF:-1 tvg-name="Classique TV" group-title="Filmes",Classique TV
 https://stmv1.srvif.com/classique/classique/playlist.m3u8
@@ -85,11 +89,8 @@ http://74.91.26.218:82/live/cctv15hd.m3u8
 http://74.91.26.218:82/live/cctv17hd.m3u8
 
 # === BETA ===
-# Os canais abaixo continuam isolados editorialmente, mas nao dependem de tag tecnica.
+# Pluto permanece em Beta ate a validacao fisica na TV.
 # O player e o validador detectam automaticamente normalizacao/AES pelo HLS real.
-#EXTINF:-1 tvg-name="Novelíssima" group-title="Beta",Novelíssima
-https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/12d72d1a2d184982808da4e7dc859aed/playlist.m3u8
-
 #EXTINF:-1 tvg-name="Pluto Desenhos Clássicos" group-title="Beta",Pluto · Desenhos Clássicos
 https://jmp2.uk/plu-655e5c4d2c46f3000877a54b.m3u8
 
