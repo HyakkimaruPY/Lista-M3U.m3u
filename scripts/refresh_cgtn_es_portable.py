@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
-"""Publica CGTN Español usando somente a fonte web portátil para clientes.
+"""Publica uma saída CGTN Español orientada ao decoder legado Philco.
 
-A fonte Yangshipin/CCTV pode ser útil para diagnóstico dentro do runner, mas
-não é publicada no bridge porque URLs geradas no GitHub Actions podem responder
-403 quando abertas pela TV. Este renovador usa o player web oficial da CGTN,
-mede o MPEG-TS real e publica um master com RESOLUTION/FRAME-RATE/CODECS e
-bitrate estimado, sem inventar parâmetros.
+O erro observado fisicamente na TV acontece depois do manifesto e do primeiro
+segmento MPEG-TS terem sido baixados com sucesso. Portanto, apenas validar que o
+upstream web é H.264 + AAC não basta: o stream web atual é 1920x1080 (~4 Mb/s)
+e já demonstrou não ser aceito pelo decoder da TV.
 
-Para o CGTN Español existe ainda um contrato de áudio legado explícito: a saída
-só é publicada quando o MPEG-TS real contém AAC-LC, 48 kHz e 2 canais. Assim o
-player Philco recebe um stream cujo áudio já está no perfil esperado e não
-precisa ganhar lógica especial para este canal.
+A política deste renovador é deliberadamente conservadora:
+  1. tentar primeiro os endpoints HLS legados diretos da própria CGTN Español;
+  2. aceitar somente MPEG-TS H.264 + AAC-LC estéreo e altura <= 720;
+  3. usar a captura do player web oficial apenas se ela também cair nesse perfil;
+  4. nunca promover novamente o 1080p conhecido como incompatível.
+
+A playlist pública continua estável em cgtn-runtime/cgtn-es.m3u8; somente o
+upstream interno selecionado pelo workflow muda.
 """
 from __future__ import annotations
 
@@ -19,6 +22,7 @@ import json
 import os
 import time
 from pathlib import Path
+from urllib.parse import urlparse
 
 import refresh_cgtn_es_tv as tv
 import refresh_cgtn_es_web as web
@@ -26,6 +30,16 @@ import refresh_cgtn_es_web as web
 LEGACY_AUDIO_PROFILE = "LC"
 LEGACY_AUDIO_RATE = 48000
 LEGACY_AUDIO_CHANNELS = 2
+MAX_LEGACY_HEIGHT = 720
+MAX_LEGACY_FPS = 60.5
+
+# Endpoints históricos/diretos da própria CGTN Español. O 1000e é normalmente
+# a representação SD/576p; 500e é mantido como fallback de menor taxa.
+LEGACY_DIRECT_CANDIDATES = (
+    ("cgtn-legacy-1000e", "https://livees.cgtn.com/1000e/prog_index.m3u8"),
+    ("cgtn-legacy-500e", "https://livees.cgtn.com/500e/prog_index.m3u8"),
+    ("cgtn-legacy-500e-http", "http://livees.cgtn.com/500e/prog_index.m3u8"),
+)
 
 
 def legacy_audio_ready(probe: dict) -> bool:
@@ -38,49 +52,115 @@ def legacy_audio_ready(probe: dict) -> bool:
 
 
 def legacy_video_ready(probe: dict) -> bool:
-    return str(probe.get("video_codec", "")).lower() == "h264"
+    height = int(probe.get("height") or 0)
+    fps = float(probe.get("fps") or 0)
+    return (
+        str(probe.get("video_codec", "")).lower() == "h264"
+        and 0 < height <= MAX_LEGACY_HEIGHT
+        and 0 < fps <= MAX_LEGACY_FPS
+    )
 
 
-def resolve_portable(timeout: int, attempts: int = 3) -> tuple[str, dict, dict]:
+def legacy_ready(probe: dict) -> bool:
+    return legacy_video_ready(probe) and legacy_audio_ready(probe)
+
+
+def describe_probe(probe: dict) -> str:
+    return (
+        f"{probe.get('width')}x{probe.get('height')} "
+        f"{probe.get('fps')}fps "
+        f"video={probe.get('video_codec')}/{probe.get('video_profile')} "
+        f"audio={probe.get('audio_codec')}/{probe.get('audio_profile')} "
+        f"{probe.get('audio_rate')}Hz/{probe.get('audio_channels')}ch "
+        f"bitrate={probe.get('bitrate_estimate')}"
+    )
+
+
+def resolve_direct_legacy(timeout: int) -> tuple[str, dict, dict, list[str]]:
+    errors: list[str] = []
+    for source, url in LEGACY_DIRECT_CANDIDATES:
+        try:
+            probe = tv.probe_media(url, {}, timeout)
+            if not legacy_ready(probe):
+                errors.append(f"{source}: outside legacy profile: {describe_probe(probe)}")
+                continue
+            final = str(probe.get("url") or url)
+            host = (urlparse(final).hostname or "").lower()
+            if host != "livees.cgtn.com":
+                errors.append(f"{source}: unexpected redirect host {host or '<none>'}")
+                continue
+            meta = {
+                "source": source,
+                "source_family": "cgtn-legacy-direct",
+                "no_special_headers": True,
+                "fallback_used": False,
+                "client_portable": True,
+                "legacy_audio_ready": True,
+                "legacy_video_ready": True,
+                "audio_delivery": "aac-lc-48000-stereo",
+                "video_delivery": "h264-max720p",
+                "selected_host": host,
+            }
+            return final, probe, meta, errors
+        except Exception as exc:
+            errors.append(f"{source}: {exc}")
+    raise RuntimeError(" | ".join(errors) if errors else "no direct legacy candidates")
+
+
+def resolve_web_safe(timeout: int, attempts: int = 3) -> tuple[str, dict, dict, list[str]]:
     errors: list[str] = []
     for attempt in range(1, attempts + 1):
         try:
             signed, capture = web.capture_web_player_url(max(35, timeout + 23))
             final, plain_ok, validation = web.validate_web_url(signed, timeout)
             probe = tv.probe_media(final, web.WEB_HEADERS, timeout)
-
-            if not legacy_video_ready(probe):
-                raise RuntimeError(
-                    "CGTN web stream is not H.264: "
-                    + str(probe.get("video_codec") or "unknown")
-                )
-            if not legacy_audio_ready(probe):
-                raise RuntimeError(
-                    "CGTN web audio is outside legacy contract: "
-                    f"codec={probe.get('audio_codec')} "
-                    f"profile={probe.get('audio_profile')} "
-                    f"rate={probe.get('audio_rate')} "
-                    f"channels={probe.get('audio_channels')}"
-                )
-
+            if not legacy_ready(probe):
+                raise RuntimeError("web representation outside legacy profile: " + describe_probe(probe))
             meta = {
                 **capture,
                 **validation,
-                "source": "cgtn-web-player-portable",
+                "source": "cgtn-web-player-legacy-safe",
+                "source_family": "cgtn-web-player",
                 "no_special_headers": bool(plain_ok),
-                "fallback_used": False,
+                "fallback_used": True,
                 "client_portable": True,
                 "capture_attempt": attempt,
                 "legacy_audio_ready": True,
+                "legacy_video_ready": True,
                 "audio_delivery": "aac-lc-48000-stereo",
-                "video_delivery": "h264",
+                "video_delivery": "h264-max720p",
+                "selected_host": (urlparse(final).hostname or "").lower(),
             }
-            return final, probe, meta
+            return final, probe, meta, errors
         except Exception as exc:
-            errors.append(f"attempt {attempt}: {exc}")
+            errors.append(f"web attempt {attempt}: {exc}")
             if attempt < attempts:
                 time.sleep(2)
-    raise RuntimeError("official CGTN portable source unavailable: " + " | ".join(errors))
+    raise RuntimeError(" | ".join(errors))
+
+
+def resolve_portable(timeout: int) -> tuple[str, dict, dict]:
+    diagnostics: list[str] = []
+    try:
+        media, probe, meta, notes = resolve_direct_legacy(timeout)
+        diagnostics.extend(notes)
+        meta["diagnostics"] = diagnostics
+        return media, probe, meta
+    except Exception as exc:
+        diagnostics.append("legacy-direct: " + str(exc))
+
+    try:
+        media, probe, meta, notes = resolve_web_safe(timeout)
+        diagnostics.extend(notes)
+        meta["diagnostics"] = diagnostics
+        return media, probe, meta
+    except Exception as exc:
+        diagnostics.append("web-safe: " + str(exc))
+
+    raise RuntimeError(
+        "no CGTN Español representation satisfies the legacy decoder contract: "
+        + " | ".join(diagnostics)
+    )
 
 
 def main() -> int:
@@ -97,9 +177,11 @@ def main() -> int:
     state = {
         "channel": "CGTN Español",
         "generated_at": int(time.time()),
-        "delivery_policy": "portable-web-only",
+        "delivery_policy": "legacy-tv-safe",
         "legacy_contract": {
             "video": "H.264",
+            "max_height": MAX_LEGACY_HEIGHT,
+            "max_fps": MAX_LEGACY_FPS,
             "audio_codec": "AAC",
             "audio_profile": LEGACY_AUDIO_PROFILE,
             "audio_rate": LEGACY_AUDIO_RATE,
