@@ -252,8 +252,6 @@ https://0472.org/hls/cgtn.m3u8
 http://145.239.5.177/214/index.m3u8
 
 #EXTINF:-1 tvg-id="CGTNSpanish.cn@SD" group-title="China • Internacional" x-source="IPTV-org" tvg-name="CGTN Spanish (720p)",CGTN Spanish (720p)
-#EXTVLCOPT:http-user-agent=qqlive
-#EXTVLCOPT:http-referrer=https://live.cctv.cn/
 https://raw.githubusercontent.com/HyakkimaruPY/Lista-M3U.m3u/cgtn-runtime/cgtn-es.m3u8
 
 #EXTINF:-1 tvg-id="DragonTVInternational.cn@SD" group-title="China • Internacional" x-source="IPTV-org" tvg-name="Dragon TV International",Dragon TV International
