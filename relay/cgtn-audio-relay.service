@@ -1,0 +1,26 @@
+[Unit]
+Description=CGTN Español audio-normalizing HLS relay
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+Environment=CGTN_OUTPUT_DIR=/var/www/html/cgtn-es
+Environment=CGTN_POLL_SECONDS=30
+Environment=CGTN_AUDIO_BITRATE=128k
+ExecStart=/usr/bin/python3 /opt/cgtn-relay/cgtn_audio_relay.py
+Restart=always
+RestartSec=3
+TimeoutStopSec=12
+
+# O processo só precisa de rede e escrita no diretório HLS.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/www/html/cgtn-es
+
+[Install]
+WantedBy=multi-user.target
