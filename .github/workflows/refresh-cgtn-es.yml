@@ -12,6 +12,7 @@ on:
       - 'scripts/refresh_cgtn_es_tv.py'
       - 'scripts/refresh_cgtn_es_web.py'
       - 'scripts/refresh_cgtn_es.py'
+      - 'relay/**'
       - '.github/workflows/refresh-cgtn-es.yml'
 
 permissions:
@@ -20,6 +21,9 @@ permissions:
 concurrency:
   group: cgtn-es-runtime
   cancel-in-progress: false
+
+env:
+  CGTN_RELAY_PUBLIC_URL: ${{ vars.CGTN_RELAY_PUBLIC_URL }}
 
 jobs:
   refresh:
@@ -31,7 +35,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Resolver representação TV-safe do CGTN Español
+      - name: Renovar fonte oficial do CGTN Español
         run: |
           python3 scripts/refresh_cgtn_es_portable.py \
             --output /tmp/cgtn-es.m3u8 \
@@ -40,39 +44,69 @@ jobs:
             --timeout 12
           echo '--- runtime state ---'
           cat /tmp/cgtn-es.json
-          echo '--- bridge manifest ---'
+          echo '--- discovery manifest ---'
           sed -E 's/(wsSecret|cKey|vkey|guid|flowid|accountinfo)=[^& ]+/\1=<redacted>/g' /tmp/cgtn-es.m3u8
 
-      - name: Validar contrato legado antes da publicação
+      - name: Validar fonte e contrato do relay
         run: |
           python3 - <<'PY'
           import json
-          s = json.load(open('/tmp/cgtn-es.json', encoding='utf-8'))
-          p = s.get('selected', {})
-          assert s.get('delivery_policy') == 'legacy-tv-safe', s
-          assert s.get('legacy_audio_ready') is True, s
-          assert s.get('legacy_video_ready') is True, s
-          assert s.get('audio_delivery') == 'aac-lc-48000-stereo', s
-          assert s.get('video_delivery') == 'h264-max720p', s
-          assert s.get('source_family') in {
-              'cgtn-direct-tv-safe',
-              'cgtn-carrier-tv-safe',
-              'cgtn-web-player',
-          }, s
+          s=json.load(open('/tmp/cgtn-es.json', encoding='utf-8'))
+          p=s.get('selected', {})
+          assert s.get('delivery_policy') == 'relay-audio-normalization', s
+          assert s.get('relay_required') is True, s
+          assert s.get('relay_video_mode') == 'copy', s
+          assert s.get('relay_audio_codec') == 'aac', s
+          assert s.get('relay_audio_profile') == 'LC', s
+          assert int(s.get('relay_audio_rate') or 0) == 48000, s
+          assert int(s.get('relay_audio_channels') or 0) == 2, s
+          assert int(s.get('relay_audio_bitrate') or 0) == 128000, s
           assert p.get('video_codec') == 'h264', p
-          assert 0 < int(p.get('height') or 0) <= 720, p
-          assert float(p.get('fps') or 0) <= 60.5, p
           assert p.get('audio_codec') == 'aac', p
-          assert str(p.get('audio_profile', '')).upper() == 'LC', p
-          assert int(p.get('audio_rate') or 0) == 48000, p
-          assert int(p.get('audio_channels') or 0) == 2, p
-          assert str(s.get('selected_host') or '').strip(), s
-          print('CGTN legacy contract OK:',
-                s.get('source'), s.get('source_family'),
-                p.get('width'), 'x', p.get('height'),
-                p.get('fps'), 'fps,',
-                'H.264 + AAC-LC 48 kHz stereo,',
-                'bitrate=', p.get('bitrate_estimate'))
+          print('source:', p.get('width'), 'x', p.get('height'), p.get('fps'), 'fps')
+          print('input audio:', p.get('audio_profile'), p.get('audio_rate'), 'Hz', p.get('audio_channels'), 'ch')
+          PY
+
+      - name: Provar normalização real AAC e MPEG-TS
+        shell: bash
+        run: |
+          set -euo pipefail
+          SOURCE="$(python3 - <<'PY'
+          import json
+          s=json.load(open('/tmp/cgtn-es.json', encoding='utf-8'))
+          print(s['selected']['url'])
+          PY
+          )"
+
+          timeout 45 ffmpeg -y -hide_banner -loglevel warning \
+            -rw_timeout 15000000 \
+            -user_agent 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36' \
+            -i "$SOURCE" \
+            -t 8 \
+            -map 0:v:0 -map 0:a:0 \
+            -c:v copy \
+            -c:a aac -profile:a aac_low -ar 48000 -ac 2 -b:a 128k \
+            -af 'aresample=async=1:first_pts=0' \
+            -mpegts_flags +resend_headers -muxdelay 0 -muxpreload 0 \
+            -max_muxing_queue_size 1024 \
+            -f mpegts /tmp/cgtn-normalized.ts
+
+          ffprobe -v error -show_streams -of json /tmp/cgtn-normalized.ts \
+            > /tmp/cgtn-normalized-probe.json
+          cat /tmp/cgtn-normalized-probe.json
+
+          python3 - <<'PY'
+          import json
+          d=json.load(open('/tmp/cgtn-normalized-probe.json', encoding='utf-8'))
+          streams=d.get('streams', [])
+          video=next(x for x in streams if x.get('codec_type') == 'video')
+          audio=next(x for x in streams if x.get('codec_type') == 'audio')
+          assert video.get('codec_name') == 'h264', video
+          assert audio.get('codec_name') == 'aac', audio
+          assert str(audio.get('profile', '')).upper() in {'LC', 'AAC LC'}, audio
+          assert int(audio.get('sample_rate') or 0) == 48000, audio
+          assert int(audio.get('channels') or 0) == 2, audio
+          print('normalized media OK: video=copy H.264; audio=AAC-LC 48k stereo')
           PY
 
       - name: Diagnosticar representação web atual
@@ -80,57 +114,69 @@ jobs:
         run: |
           python3 scripts/probe_cgtn_same_cdn.py
 
-      - name: Gravar URL estável nas playlists
+      - name: Gravar alvo estável nas playlists
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add cn.m3u srhell02iptv.m3u
           if ! git diff --cached --quiet; then
-            git commit -m 'Ajusta bridge TV-safe da CGTN Español [skip ci]'
+            if [ -n "${CGTN_RELAY_PUBLIC_URL:-}" ]; then
+              git commit -m 'Aponta CGTN Español para relay de áudio normalizado [skip ci]'
+            else
+              git commit -m 'Renova bridge de descoberta da CGTN Español [skip ci]'
+            fi
             git push origin HEAD:main
           fi
 
-      - name: Publicar bridge em branch runtime
+      - name: Publicar estado em branch runtime
         run: |
           git checkout --orphan cgtn-runtime-build
           git rm -rf .
           cp /tmp/cgtn-es.m3u8 ./cgtn-es.m3u8
           cp /tmp/cgtn-es.json ./cgtn-es.json
+          cp /tmp/cgtn-normalized-probe.json ./cgtn-normalized-probe.json
           cat > README.md <<'EOF'
           # CGTN Español runtime
 
-          Branch gerada automaticamente para o player legado Philco.
-          O endpoint público permanece estável; o workflow escolhe uma fonte do
-          mesmo CGTN Español somente depois de sondar o MPEG-TS real.
+          Esta branch publica a fonte oficial renovada e o estado consumido pelo
+          relay de áudio. `cgtn-es.m3u8` é a fonte de descoberta/fallback; ela não
+          é, por si só, um transcode.
 
-          Contrato físico: H.264, no máximo 720p, AAC-LC 48 kHz estéreo.
-          A fonte web 1080p não é promovida porque a reprodução física mostrou
-          falha de decoder mesmo após o segmento TS ser baixado com sucesso.
-          Mirrors CCTV/Yangshipin/China Mobile só entram se passarem o mesmo gate.
+          A correção de compatibilidade é feita no relay persistente:
+          - vídeo H.264: copy, sem recodificação;
+          - áudio: reencode real AAC-LC, 48 kHz, estéreo, 128 kb/s;
+          - saída: HLS MPEG-TS com cabeçalhos/timestamps remuxados.
+
+          Quando a variável de repositório `CGTN_RELAY_PUBLIC_URL` estiver
+          configurada, as playlists principais passam automaticamente a apontar
+          para esse HLS normalizado.
           EOF
-          git add cgtn-es.m3u8 cgtn-es.json README.md
-          git commit -m "Renova CGTN Español TV-safe $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          git add cgtn-es.m3u8 cgtn-es.json cgtn-normalized-probe.json README.md
+          git commit -m "Renova fonte CGTN Español $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           git push --force origin HEAD:cgtn-runtime
 
-      - name: Validar bridge público
+      - name: Validar publicação
         shell: bash
         run: |
           set -euo pipefail
           sleep 3
-          STABLE="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/cgtn-runtime/cgtn-es.m3u8"
-          curl --fail --location --retry 3 --retry-delay 2 "$STABLE" -o /tmp/public-cgtn.m3u8
-          grep -q '^#EXTM3U' /tmp/public-cgtn.m3u8
-          grep -q '^#EXT-X-STREAM-INF:' /tmp/public-cgtn.m3u8
-          grep -q 'RESOLUTION=' /tmp/public-cgtn.m3u8
-          grep -q 'FRAME-RATE=' /tmp/public-cgtn.m3u8
-          grep -q 'CODECS=' /tmp/public-cgtn.m3u8
-          grep -q 'mp4a.40.2' /tmp/public-cgtn.m3u8
+          STATE="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/cgtn-runtime/cgtn-es.json"
+          curl --fail --location --retry 3 --retry-delay 2 "$STATE?run=${GITHUB_RUN_ID}" -o /tmp/public-state.json
           python3 - <<'PY'
           import json
-          s=json.load(open('/tmp/cgtn-es.json', encoding='utf-8'))
-          p=s.get('selected',{})
-          assert 0 < int(p.get('height') or 0) <= 720, p
-          assert s.get('legacy_audio_ready') is True, s
-          assert s.get('legacy_video_ready') is True, s
-          print('public CGTN TV-safe:', s.get('source'), p.get('width'), 'x', p.get('height'), p.get('fps'), 'fps')
+          s=json.load(open('/tmp/public-state.json', encoding='utf-8'))
+          assert s.get('delivery_policy') == 'relay-audio-normalization', s
+          assert s.get('relay_required') is True, s
+          print('runtime source state published')
           PY
+
+          if [ -n "${CGTN_RELAY_PUBLIC_URL:-}" ]; then
+            echo "checking configured relay: $CGTN_RELAY_PUBLIC_URL"
+            curl --fail --location --retry 3 --retry-delay 2 \
+              "$CGTN_RELAY_PUBLIC_URL" -o /tmp/relay.m3u8
+            grep -q '^#EXTM3U' /tmp/relay.m3u8
+            grep -q '^#EXTINF:' /tmp/relay.m3u8
+            echo 'relay public HLS is live'
+          else
+            echo 'CGTN_RELAY_PUBLIC_URL is not configured yet; discovery state is ready.'
+          fi
