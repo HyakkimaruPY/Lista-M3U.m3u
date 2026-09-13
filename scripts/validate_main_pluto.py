@@ -24,6 +24,7 @@ def main() -> int:
     parser.add_argument("--retries", type=int, default=2)
     parser.add_argument("--timeout", type=int, default=25)
     parser.add_argument("--decode-seconds", type=int, default=4)
+    parser.add_argument("--limit", type=int, default=0, help="0 = todos os canais Pluto")
     parser.add_argument("--report-dir", default="reports/stream-validation/principal-pluto")
     parser.add_argument("--apply", action="store_true", help="Remove apenas falhas Pluto definitivas confirmadas")
     args = parser.parse_args()
@@ -34,6 +35,8 @@ def main() -> int:
     lines = raw.splitlines()
     entries = parse_playlist(lines)
     selected = [entry for entry in entries if is_pluto(entry)]
+    if args.limit > 0:
+        selected = selected[:args.limit]
 
     print(f"Validando {len(selected)} canais Pluto de {len(entries)} entradas totais em {playlist}...")
     results: list[Result] = []

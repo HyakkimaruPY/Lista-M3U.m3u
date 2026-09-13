@@ -105,13 +105,11 @@ jobs:
             --limit "$LIMIT"
             --report-dir "$REPORT_DIR"
           )
-          if [[ -n "${{ matrix.include_host }}" ]]; then
-            ARGS+=(--include-host "${{ matrix.include_host }}")
-          fi
           if [[ "${{ matrix.include_host }}" == "jmp2.uk" ]]; then
-            ARGS+=(--detect-pluto-slate)
+            python3 scripts/validate_main_pluto.py "${ARGS[@]}"
+          else
+            python3 scripts/validate_streams.py "${ARGS[@]}"
           fi
-          python3 scripts/validate_streams.py "${ARGS[@]}"
 
       - name: Procurar substitutos nas fontes chinesas
         if: matrix.repair_sources == true

@@ -136,6 +136,17 @@ def write_reports(report_dir: Path, records: list[dict[str, object]], changed: b
     (report_dir / "summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def needs_source_refresh(item: dict) -> bool:
+    """Investigate a detected logo loop without authorizing its removal."""
+    return item.get("host") == "jmp2.uk" and (
+        item.get("status") == "remove"
+        or (
+            item.get("status") == "uncertain"
+            and str(item.get("reason", "")).startswith("logo Pluto persistente:")
+        )
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Substitui IDs Pluto quebrados por IDs regionais atuais")
     parser.add_argument("--playlist", default="srhell02iptv.m3u")
@@ -159,7 +170,7 @@ def main() -> int:
     failed_lines = {
         int(item["line"])
         for item in report.get("results", [])
-        if item.get("status") == "remove" and item.get("host") == "jmp2.uk"
+        if needs_source_refresh(item)
     }
     # Mesmo host, namespaces diferentes: /plu-* é Pluto; /rok-* é Roku.
     failed = [
