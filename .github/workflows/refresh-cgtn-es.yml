@@ -20,7 +20,7 @@ permissions:
 
 concurrency:
   group: cgtn-es-runtime
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 env:
   CGTN_RELAY_PUBLIC_URL: ${{ vars.CGTN_RELAY_PUBLIC_URL }}
@@ -28,12 +28,19 @@ env:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 7
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Instalar ferramentas de mídia
+        run: |
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
+          ffmpeg -version | head -1
+          ffprobe -version | head -1
 
       - name: Renovar fonte oficial do CGTN Español
         run: |
@@ -67,7 +74,7 @@ jobs:
           print('input audio:', p.get('audio_profile'), p.get('audio_rate'), 'Hz', p.get('audio_channels'), 'ch')
           PY
 
-      - name: Provar normalização real AAC e MPEG-TS
+      - name: Gerar HLS de prova com áudio realmente normalizado
         shell: bash
         run: |
           set -euo pipefail
@@ -78,25 +85,41 @@ jobs:
           PY
           )"
 
-          timeout 45 ffmpeg -y -hide_banner -loglevel warning \
+          rm -rf /tmp/cgtn-test
+          mkdir -p /tmp/cgtn-test
+
+          # Vídeo segue byte a byte em copy. O áudio é decodificado e codificado
+          # novamente como AAC-LC/48 kHz/2ch; o MPEG-TS também é remuxado.
+          timeout 60 ffmpeg -y -hide_banner -loglevel warning \
             -rw_timeout 15000000 \
             -user_agent 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36' \
+            -fflags +genpts+discardcorrupt \
             -i "$SOURCE" \
-            -t 8 \
+            -t 12 \
             -map 0:v:0 -map 0:a:0 \
             -c:v copy \
             -c:a aac -profile:a aac_low -ar 48000 -ac 2 -b:a 128k \
             -af 'aresample=async=1:first_pts=0' \
             -mpegts_flags +resend_headers -muxdelay 0 -muxpreload 0 \
             -max_muxing_queue_size 1024 \
-            -f mpegts /tmp/cgtn-normalized.ts
+            -f hls \
+            -hls_segment_type mpegts \
+            -hls_time 2 \
+            -hls_list_size 0 \
+            -hls_playlist_type vod \
+            -hls_segment_filename '/tmp/cgtn-test/seg_%03d.ts' \
+            /tmp/cgtn-test/playlist.m3u8
 
-          ffprobe -v error -show_streams -of json /tmp/cgtn-normalized.ts \
+          ffprobe -v error -show_streams -of json /tmp/cgtn-test/playlist.m3u8 \
             > /tmp/cgtn-normalized-probe.json
           cat /tmp/cgtn-normalized-probe.json
+          cat /tmp/cgtn-test/playlist.m3u8
 
           python3 - <<'PY'
-          import json
+          import glob, json, sys
+          sys.path.insert(0, 'scripts')
+          import refresh_cgtn_es_tv as tv
+
           d=json.load(open('/tmp/cgtn-normalized-probe.json', encoding='utf-8'))
           streams=d.get('streams', [])
           video=next(x for x in streams if x.get('codec_type') == 'video')
@@ -106,7 +129,32 @@ jobs:
           assert str(audio.get('profile', '')).upper() in {'LC', 'AAC LC'}, audio
           assert int(audio.get('sample_rate') or 0) == 48000, audio
           assert int(audio.get('channels') or 0) == 2, audio
-          print('normalized media OK: video=copy H.264; audio=AAC-LC 48k stereo')
+
+          segments=sorted(glob.glob('/tmp/cgtn-test/*.ts'))
+          assert segments, 'HLS test has no TS segments'
+          with open(segments[0], 'rb') as f:
+              ts=tv.probe_ts(f.read())
+          assert ts.get('video_codec') == 'h264', ts
+          assert ts.get('audio_codec') == 'aac', ts
+          assert ts.get('audio_profile') == 'LC', ts
+          assert int(ts.get('audio_rate') or 0) == 48000, ts
+          assert int(ts.get('audio_channels') or 0) == 2, ts
+          print('normalized TS OK:', ts)
+          PY
+
+          python3 - <<'PY'
+          import json, os
+          path='/tmp/cgtn-es.json'
+          s=json.load(open(path, encoding='utf-8'))
+          repo=os.environ['GITHUB_REPOSITORY']
+          s['normalized_test_hls']=f'https://raw.githubusercontent.com/{repo}/cgtn-runtime/test/playlist.m3u8'
+          s['normalized_test_duration_seconds']=12
+          s['normalized_test_video']='copy'
+          s['normalized_test_audio']='AAC-LC 48000 Hz stereo 128 kb/s'
+          s['normalized_test_transport']='MPEG-TS'
+          with open(path, 'w', encoding='utf-8') as f:
+              json.dump(s, f, ensure_ascii=False, indent=2)
+              f.write('\n')
           PY
 
       - name: Diagnosticar representação web atual
@@ -128,13 +176,16 @@ jobs:
             git push origin HEAD:main
           fi
 
-      - name: Publicar estado em branch runtime
+      - name: Publicar estado e amostra na branch runtime
         run: |
           git checkout --orphan cgtn-runtime-build
           git rm -rf .
           cp /tmp/cgtn-es.m3u8 ./cgtn-es.m3u8
           cp /tmp/cgtn-es.json ./cgtn-es.json
           cp /tmp/cgtn-normalized-probe.json ./cgtn-normalized-probe.json
+          mkdir -p test
+          cp /tmp/cgtn-test/playlist.m3u8 test/playlist.m3u8
+          cp /tmp/cgtn-test/*.ts test/
           cat > README.md <<'EOF'
           # CGTN Español runtime
 
@@ -142,17 +193,16 @@ jobs:
           relay de áudio. `cgtn-es.m3u8` é a fonte de descoberta/fallback; ela não
           é, por si só, um transcode.
 
-          A correção de compatibilidade é feita no relay persistente:
-          - vídeo H.264: copy, sem recodificação;
-          - áudio: reencode real AAC-LC, 48 kHz, estéreo, 128 kb/s;
-          - saída: HLS MPEG-TS com cabeçalhos/timestamps remuxados.
+          `test/playlist.m3u8` é uma amostra curta realmente normalizada pelo
+          mesmo pipeline do relay: vídeo H.264 em copy, áudio reencodificado para
+          AAC-LC 48 kHz estéreo a 128 kb/s e saída MPEG-TS remuxada.
 
           Quando a variável de repositório `CGTN_RELAY_PUBLIC_URL` estiver
           configurada, as playlists principais passam automaticamente a apontar
-          para esse HLS normalizado.
+          para o HLS normalizado contínuo.
           EOF
-          git add cgtn-es.m3u8 cgtn-es.json cgtn-normalized-probe.json README.md
-          git commit -m "Renova fonte CGTN Español $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          git add cgtn-es.m3u8 cgtn-es.json cgtn-normalized-probe.json README.md test/
+          git commit -m "Renova fonte e teste CGTN Español $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           git push --force origin HEAD:cgtn-runtime
 
       - name: Validar publicação
@@ -160,14 +210,21 @@ jobs:
         run: |
           set -euo pipefail
           sleep 3
-          STATE="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/cgtn-runtime/cgtn-es.json"
-          curl --fail --location --retry 3 --retry-delay 2 "$STATE?run=${GITHUB_RUN_ID}" -o /tmp/public-state.json
+          BASE="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/cgtn-runtime"
+          curl --fail --location --retry 3 --retry-delay 2 \
+            "$BASE/cgtn-es.json?run=${GITHUB_RUN_ID}" -o /tmp/public-state.json
+          curl --fail --location --retry 3 --retry-delay 2 \
+            "$BASE/test/playlist.m3u8?run=${GITHUB_RUN_ID}" -o /tmp/public-test.m3u8
+          grep -q '^#EXTM3U' /tmp/public-test.m3u8
+          grep -q '^#EXTINF:' /tmp/public-test.m3u8
+
           python3 - <<'PY'
           import json
           s=json.load(open('/tmp/public-state.json', encoding='utf-8'))
           assert s.get('delivery_policy') == 'relay-audio-normalization', s
           assert s.get('relay_required') is True, s
-          print('runtime source state published')
+          assert str(s.get('normalized_test_hls') or '').endswith('/cgtn-runtime/test/playlist.m3u8'), s
+          print('runtime source + normalized HLS test published')
           PY
 
           if [ -n "${CGTN_RELAY_PUBLIC_URL:-}" ]; then
@@ -178,5 +235,5 @@ jobs:
             grep -q '^#EXTINF:' /tmp/relay.m3u8
             echo 'relay public HLS is live'
           else
-            echo 'CGTN_RELAY_PUBLIC_URL is not configured yet; discovery state is ready.'
+            echo 'CGTN_RELAY_PUBLIC_URL is not configured yet; normalized test HLS is available.'
           fi
