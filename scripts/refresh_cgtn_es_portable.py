@@ -7,7 +7,7 @@ upstream web é H.264 + AAC não basta: o stream web atual é 1920x1080 (~4 Mb/s
 e já demonstrou não ser aceito pelo decoder da TV.
 
 A política deste renovador é deliberadamente conservadora:
-  1. tentar primeiro os endpoints HLS legados diretos da própria CGTN Español;
+  1. tentar primeiro endpoints HLS diretos/oficiais da própria CGTN Español;
   2. aceitar somente MPEG-TS H.264 + AAC-LC estéreo e altura <= 720;
   3. usar a captura do player web oficial apenas se ela também cair nesse perfil;
   4. nunca promover novamente o 1080p conhecido como incompatível.
@@ -33,9 +33,11 @@ LEGACY_AUDIO_CHANNELS = 2
 MAX_LEGACY_HEIGHT = 720
 MAX_LEGACY_FPS = 60.5
 
-# Endpoints históricos/diretos da própria CGTN Español. O 1000e é normalmente
-# a representação SD/576p; 500e é mantido como fallback de menor taxa.
+# `livees.cgtn.com` deixou de resolver em 2026-09-13 no runner. A rota em
+# news.cgtn.com continua publicada para o CGTN Español SD/576p e passa a ser a
+# candidata primária. Mantemos os nomes antigos apenas como fallback/prova.
 LEGACY_DIRECT_CANDIDATES = (
+    ("cgtn-news-espanol-576p", "https://news.cgtn.com/resource/live/espanol/cgtn-e.m3u8"),
     ("cgtn-legacy-1000e", "https://livees.cgtn.com/1000e/prog_index.m3u8"),
     ("cgtn-legacy-500e", "https://livees.cgtn.com/500e/prog_index.m3u8"),
     ("cgtn-legacy-500e-http", "http://livees.cgtn.com/500e/prog_index.m3u8"),
@@ -65,6 +67,11 @@ def legacy_ready(probe: dict) -> bool:
     return legacy_video_ready(probe) and legacy_audio_ready(probe)
 
 
+def cgtn_host(host: str) -> bool:
+    host = (host or "").lower().rstrip(".")
+    return host == "cgtn.com" or host.endswith(".cgtn.com")
+
+
 def describe_probe(probe: dict) -> str:
     return (
         f"{probe.get('width')}x{probe.get('height')} "
@@ -86,12 +93,12 @@ def resolve_direct_legacy(timeout: int) -> tuple[str, dict, dict, list[str]]:
                 continue
             final = str(probe.get("url") or url)
             host = (urlparse(final).hostname or "").lower()
-            if host != "livees.cgtn.com":
-                errors.append(f"{source}: unexpected redirect host {host or '<none>'}")
+            if not cgtn_host(host):
+                errors.append(f"{source}: unexpected non-CGTN redirect host {host or '<none>'}")
                 continue
             meta = {
                 "source": source,
-                "source_family": "cgtn-legacy-direct",
+                "source_family": "cgtn-direct-tv-safe",
                 "no_special_headers": True,
                 "fallback_used": False,
                 "client_portable": True,
@@ -147,7 +154,7 @@ def resolve_portable(timeout: int) -> tuple[str, dict, dict]:
         meta["diagnostics"] = diagnostics
         return media, probe, meta
     except Exception as exc:
-        diagnostics.append("legacy-direct: " + str(exc))
+        diagnostics.append("direct-tv-safe: " + str(exc))
 
     try:
         media, probe, meta, notes = resolve_web_safe(timeout)
