@@ -21,6 +21,9 @@ https://amg00627-amg00627c9-runtime-latam-2613.playouts.now.amagi.tv/playlist/am
 #EXTINF:-1 tvg-name="Novelíssima" group-title="Variedade",Novelíssima
 https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/12d72d1a2d184982808da4e7dc859aed/playlist.m3u8
 
+#EXTINF:-1 tvg-name="CGTN Español" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9c/CGTN_Espanol.png" group-title="Variedade",CGTN Español
+https://livees.cgtn.com/1000e/prog_index.m3u8
+
 # === FILMES ===
 #EXTINF:-1 tvg-name="Classique TV" group-title="Filmes",Classique TV
 https://stmv1.srvif.com/classique/classique/playlist.m3u8
