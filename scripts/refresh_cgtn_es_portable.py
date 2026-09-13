@@ -6,11 +6,12 @@ segmento MPEG-TS terem sido baixados com sucesso. Portanto, apenas validar que o
 upstream web é H.264 + AAC não basta: o stream web atual é 1920x1080 (~4 Mb/s)
 e já demonstrou não ser aceito pelo decoder da TV.
 
-A política deste renovador é deliberadamente conservadora:
-  1. tentar primeiro endpoints HLS diretos/oficiais da própria CGTN Español;
-  2. aceitar somente MPEG-TS H.264 + AAC-LC estéreo e altura <= 720;
-  3. usar a captura do player web oficial apenas se ela também cair nesse perfil;
-  4. nunca promover novamente o 1080p conhecido como incompatível.
+Política:
+  1. tentar primeiro endpoints diretos da CGTN Español;
+  2. tentar rebroadcasts conhecidos CCTV/Yangshipin/China Mobile do mesmo canal;
+  3. aceitar somente MPEG-TS H.264 + AAC-LC estéreo e altura <= 720;
+  4. usar o player web oficial só se ele próprio cair nesse perfil;
+  5. nunca promover novamente o 1080p conhecido como incompatível.
 
 A playlist pública continua estável em cgtn-runtime/cgtn-es.m3u8; somente o
 upstream interno selecionado pelo workflow muda.
@@ -33,15 +34,24 @@ LEGACY_AUDIO_CHANNELS = 2
 MAX_LEGACY_HEIGHT = 720
 MAX_LEGACY_FPS = 60.5
 
-# `livees.cgtn.com` deixou de resolver em 2026-09-13 no runner. A rota em
-# news.cgtn.com continua publicada para o CGTN Español SD/576p e passa a ser a
-# candidata primária. Mantemos os nomes antigos apenas como fallback/prova.
-LEGACY_DIRECT_CANDIDATES = (
-    ("cgtn-news-espanol-576p", "https://news.cgtn.com/resource/live/espanol/cgtn-e.m3u8"),
-    ("cgtn-legacy-1000e", "https://livees.cgtn.com/1000e/prog_index.m3u8"),
-    ("cgtn-legacy-500e", "https://livees.cgtn.com/500e/prog_index.m3u8"),
-    ("cgtn-legacy-500e-http", "http://livees.cgtn.com/500e/prog_index.m3u8"),
+# source, url, family. Os mirrors abaixo são referências conhecidas do mesmo
+# CGTN Español; nenhum é publicado sem o probe real H.264/AAC <=720p passar.
+DIRECT_CANDIDATES = (
+    ("cgtn-news-espanol-576p", "https://news.cgtn.com/resource/live/espanol/cgtn-e.m3u8", "cgtn-direct-tv-safe"),
+    ("cgtn-legacy-1000e", "https://livees.cgtn.com/1000e/prog_index.m3u8", "cgtn-direct-tv-safe"),
+    ("cgtn-legacy-500e", "https://livees.cgtn.com/500e/prog_index.m3u8", "cgtn-direct-tv-safe"),
+    ("cgtn-carrier-ysp-ip", "http://121.51.249.103/tlivecloud-ipv6.ysp.cctv.cn/001/2010152503.m3u8", "cgtn-carrier-tv-safe"),
+    ("cgtn-carrier-gz-mobile-6284", "http://cdnrrs.gz.chinamobile.com/PLTV/88888888/224/3221226284/1/index.m3u8?fmt=ts2hls", "cgtn-carrier-tv-safe"),
+    ("cgtn-carrier-hz-mobile-1546", "http://117.148.179.176/PLTV/88888888/224/3221231546/index.m3u8", "cgtn-carrier-tv-safe"),
+    ("cgtn-carrier-zte-shaanxi", "http://zteres.sn.chinamobile.com:6060/yinhe/2/ch00000090990000002716/index.m3u8?virtualDomain=yinhe.live_hls.zte.com", "cgtn-carrier-tv-safe"),
 )
+
+TRUSTED_CARRIER_HOSTS = {
+    "121.51.249.103",
+    "cdnrrs.gz.chinamobile.com",
+    "117.148.179.176",
+    "zteres.sn.chinamobile.com",
+}
 
 
 def legacy_audio_ready(probe: dict) -> bool:
@@ -72,6 +82,15 @@ def cgtn_host(host: str) -> bool:
     return host == "cgtn.com" or host.endswith(".cgtn.com")
 
 
+def trusted_final_host(family: str, host: str) -> bool:
+    host = (host or "").lower().rstrip(".")
+    if family == "cgtn-direct-tv-safe":
+        return cgtn_host(host)
+    if family == "cgtn-carrier-tv-safe":
+        return host in TRUSTED_CARRIER_HOSTS or host.endswith(".chinamobile.com") or host.endswith(".cctv.cn")
+    return False
+
+
 def describe_probe(probe: dict) -> str:
     return (
         f"{probe.get('width')}x{probe.get('height')} "
@@ -85,7 +104,7 @@ def describe_probe(probe: dict) -> str:
 
 def resolve_direct_legacy(timeout: int) -> tuple[str, dict, dict, list[str]]:
     errors: list[str] = []
-    for source, url in LEGACY_DIRECT_CANDIDATES:
+    for source, url, family in DIRECT_CANDIDATES:
         try:
             probe = tv.probe_media(url, {}, timeout)
             if not legacy_ready(probe):
@@ -93,14 +112,14 @@ def resolve_direct_legacy(timeout: int) -> tuple[str, dict, dict, list[str]]:
                 continue
             final = str(probe.get("url") or url)
             host = (urlparse(final).hostname or "").lower()
-            if not cgtn_host(host):
-                errors.append(f"{source}: unexpected non-CGTN redirect host {host or '<none>'}")
+            if not trusted_final_host(family, host):
+                errors.append(f"{source}: unexpected redirect host {host or '<none>'}")
                 continue
             meta = {
                 "source": source,
-                "source_family": "cgtn-direct-tv-safe",
+                "source_family": family,
                 "no_special_headers": True,
-                "fallback_used": False,
+                "fallback_used": family != "cgtn-direct-tv-safe",
                 "client_portable": True,
                 "legacy_audio_ready": True,
                 "legacy_video_ready": True,
@@ -154,7 +173,7 @@ def resolve_portable(timeout: int) -> tuple[str, dict, dict]:
         meta["diagnostics"] = diagnostics
         return media, probe, meta
     except Exception as exc:
-        diagnostics.append("direct-tv-safe: " + str(exc))
+        diagnostics.append("direct/carrier-tv-safe: " + str(exc))
 
     try:
         media, probe, meta, notes = resolve_web_safe(timeout)
