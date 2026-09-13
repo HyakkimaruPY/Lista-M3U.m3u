@@ -39,37 +39,37 @@ jobs:
           import html, re
           from pathlib import Path
           raw = html.unescape(Path('/tmp/cgtn-page.html').read_text('utf-8', errors='replace')).replace('\\/', '/')
-          pats = [
-              r'https://espanol-livetx-h5\.cgtn\.com/[^"\'<>\\ ]+\.m3u8(?:\?[^"\'<>\\ ]+)?',
-              r'https://[^"\'<>\\ ]+\.cgtn\.com/[^"\'<>\\ ]+\.m3u8(?:\?[^"\'<>\\ ]+)?',
-          ]
-          found=[]
-          for pat in pats:
-              for u in re.findall(pat, raw):
-                  if u not in found: found.append(u)
-          print('HTML signed candidates:', len(found))
-          for u in found[:10]: print(u)
+          exact = list(dict.fromkeys(re.findall(r'https://espanol-livetx-h5\.cgtn\.com/[^"\'<>\\ ]+\.m3u8(?:\?[^"\'<>\\ ]+)?', raw)))
+          print('HTML livetx-h5 candidates:', len(exact))
+          for u in exact[:10]: print('HTML-LIVE', u)
           scripts = re.findall(r'<script[^>]+src=["\']([^"\']+)', raw, re.I)
           print('script src count:', len(scripts))
-          for s in scripts[:40]: print('SCRIPT', s)
+          for s in scripts[:20]: print('SCRIPT', s)
           PY
           if command -v google-chrome >/dev/null 2>&1; then CHROME=google-chrome;
           elif command -v chromium >/dev/null 2>&1; then CHROME=chromium;
           else CHROME=''; fi
           if [[ -n "$CHROME" ]]; then
-            timeout 35s "$CHROME" --headless --disable-gpu --no-sandbox --disable-dev-shm-usage \
-              --virtual-time-budget=12000 --dump-dom "$PAGE" >/tmp/cgtn-dom.html 2>/tmp/cgtn-chrome.err || true
+            rm -f /tmp/cgtn-netlog.json /tmp/cgtn-dom.html
+            timeout 40s "$CHROME" --headless --disable-gpu --no-sandbox --disable-dev-shm-usage \
+              --autoplay-policy=no-user-gesture-required --virtual-time-budget=15000 \
+              --log-net-log=/tmp/cgtn-netlog.json --net-log-capture-mode=IncludeSensitive \
+              --dump-dom "$PAGE" >/tmp/cgtn-dom.html 2>/tmp/cgtn-chrome.err || true
             echo "DOM bytes: $(wc -c </tmp/cgtn-dom.html 2>/dev/null || echo 0)"
+            echo "NETLOG bytes: $(wc -c </tmp/cgtn-netlog.json 2>/dev/null || echo 0)"
             python3 - <<'PY'
-          import html, re
+          import json, re
           from pathlib import Path
-          p=Path('/tmp/cgtn-dom.html')
-          raw=html.unescape(p.read_text('utf-8', errors='replace')).replace('\\/', '/') if p.exists() else ''
-          found=[]
-          for u in re.findall(r'https://espanol-livetx-h5\.cgtn\.com/[^"\'<>\\ ]+\.m3u8(?:\?[^"\'<>\\ ]+)?', raw):
-              if u not in found: found.append(u)
-          print('DOM signed candidates:', len(found))
-          for u in found[:10]: print(u)
+          p=Path('/tmp/cgtn-netlog.json')
+          raw=p.read_text('utf-8', errors='replace') if p.exists() else ''
+          urls=[]
+          for u in re.findall(r'https://espanol-livetx-h5\.cgtn\.com/[^"\\ ]+', raw):
+              u=u.replace('\\u0026','&').replace('\\/','/')
+              if u not in urls: urls.append(u)
+          print('NET livetx-h5 candidates:', len(urls))
+          for u in urls[:20]: print('NET-LIVE', u)
+          for key in ('wsSecret','wsTime','LSveOGBaBw41Ea7ukkVAUdKQ'):
+              print(key, 'present=', key in raw)
           PY
           else
             echo 'Chrome headless não disponível no runner'
