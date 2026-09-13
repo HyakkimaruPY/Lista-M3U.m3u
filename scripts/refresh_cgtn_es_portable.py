@@ -6,6 +6,11 @@ não é publicada no bridge porque URLs geradas no GitHub Actions podem responde
 403 quando abertas pela TV. Este renovador usa o player web oficial da CGTN,
 mede o MPEG-TS real e publica um master com RESOLUTION/FRAME-RATE/CODECS e
 bitrate estimado, sem inventar parâmetros.
+
+Para o CGTN Español existe ainda um contrato de áudio legado explícito: a saída
+só é publicada quando o MPEG-TS real contém AAC-LC, 48 kHz e 2 canais. Assim o
+player Philco recebe um stream cujo áudio já está no perfil esperado e não
+precisa ganhar lógica especial para este canal.
 """
 from __future__ import annotations
 
@@ -18,6 +23,23 @@ from pathlib import Path
 import refresh_cgtn_es_tv as tv
 import refresh_cgtn_es_web as web
 
+LEGACY_AUDIO_PROFILE = "LC"
+LEGACY_AUDIO_RATE = 48000
+LEGACY_AUDIO_CHANNELS = 2
+
+
+def legacy_audio_ready(probe: dict) -> bool:
+    return (
+        str(probe.get("audio_codec", "")).lower() == "aac"
+        and str(probe.get("audio_profile", "")).upper() == LEGACY_AUDIO_PROFILE
+        and int(probe.get("audio_rate") or 0) == LEGACY_AUDIO_RATE
+        and int(probe.get("audio_channels") or 0) == LEGACY_AUDIO_CHANNELS
+    )
+
+
+def legacy_video_ready(probe: dict) -> bool:
+    return str(probe.get("video_codec", "")).lower() == "h264"
+
 
 def resolve_portable(timeout: int, attempts: int = 3) -> tuple[str, dict, dict]:
     errors: list[str] = []
@@ -26,6 +48,21 @@ def resolve_portable(timeout: int, attempts: int = 3) -> tuple[str, dict, dict]:
             signed, capture = web.capture_web_player_url(max(35, timeout + 23))
             final, plain_ok, validation = web.validate_web_url(signed, timeout)
             probe = tv.probe_media(final, web.WEB_HEADERS, timeout)
+
+            if not legacy_video_ready(probe):
+                raise RuntimeError(
+                    "CGTN web stream is not H.264: "
+                    + str(probe.get("video_codec") or "unknown")
+                )
+            if not legacy_audio_ready(probe):
+                raise RuntimeError(
+                    "CGTN web audio is outside legacy contract: "
+                    f"codec={probe.get('audio_codec')} "
+                    f"profile={probe.get('audio_profile')} "
+                    f"rate={probe.get('audio_rate')} "
+                    f"channels={probe.get('audio_channels')}"
+                )
+
             meta = {
                 **capture,
                 **validation,
@@ -34,6 +71,9 @@ def resolve_portable(timeout: int, attempts: int = 3) -> tuple[str, dict, dict]:
                 "fallback_used": False,
                 "client_portable": True,
                 "capture_attempt": attempt,
+                "legacy_audio_ready": True,
+                "audio_delivery": "aac-lc-48000-stereo",
+                "video_delivery": "h264",
             }
             return final, probe, meta
         except Exception as exc:
@@ -58,6 +98,13 @@ def main() -> int:
         "channel": "CGTN Español",
         "generated_at": int(time.time()),
         "delivery_policy": "portable-web-only",
+        "legacy_contract": {
+            "video": "H.264",
+            "audio_codec": "AAC",
+            "audio_profile": LEGACY_AUDIO_PROFILE,
+            "audio_rate": LEGACY_AUDIO_RATE,
+            "audio_channels": LEGACY_AUDIO_CHANNELS,
+        },
         "selected": probe,
         **meta,
     }
