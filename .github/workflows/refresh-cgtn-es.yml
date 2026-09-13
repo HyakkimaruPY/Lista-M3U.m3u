@@ -3,10 +3,11 @@ name: Renovar CGTN Español
 on:
   workflow_dispatch:
   schedule:
-    - cron: '7,22,37,52 * * * *'
+    - cron: '*/5 * * * *'
   push:
     branches: [main]
     paths:
+      - 'scripts/refresh_cgtn_es_web.py'
       - 'scripts/refresh_cgtn_es.py'
       - '.github/workflows/refresh-cgtn-es.yml'
 
@@ -20,70 +21,16 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 4
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Diagnosticar player oficial CGTN Español
-        shell: bash
+      - name: Resolver CGTN Español pelo player oficial
         run: |
-          set -euo pipefail
-          PAGE='https://espanol.cgtn.com/en-directo'
-          UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36'
-          curl --fail --location --compressed --user-agent "$UA" "$PAGE" -o /tmp/cgtn-page.html
-          echo "HTML bytes: $(wc -c </tmp/cgtn-page.html)"
-          python3 - <<'PY'
-          import html, re
-          from pathlib import Path
-          raw = html.unescape(Path('/tmp/cgtn-page.html').read_text('utf-8', errors='replace')).replace('\\/', '/')
-          exact = list(dict.fromkeys(re.findall(r'https://espanol-livetx-h5\.cgtn\.com/[^"\'<>\\ ]+\.m3u8(?:\?[^"\'<>\\ ]+)?', raw)))
-          print('HTML livetx-h5 candidates:', len(exact))
-          for u in exact[:10]: print('HTML-LIVE', u)
-          scripts = re.findall(r'<script[^>]+src=["\']([^"\']+)', raw, re.I)
-          print('script src count:', len(scripts))
-          for s in scripts[:20]: print('SCRIPT', s)
-          PY
-          if command -v google-chrome >/dev/null 2>&1; then CHROME=google-chrome;
-          elif command -v chromium >/dev/null 2>&1; then CHROME=chromium;
-          else CHROME=''; fi
-          if [[ -n "$CHROME" ]]; then
-            rm -f /tmp/cgtn-netlog.json /tmp/cgtn-dom.html
-            timeout 40s "$CHROME" --headless --disable-gpu --no-sandbox --disable-dev-shm-usage \
-              --autoplay-policy=no-user-gesture-required --virtual-time-budget=15000 \
-              --log-net-log=/tmp/cgtn-netlog.json --net-log-capture-mode=IncludeSensitive \
-              --dump-dom "$PAGE" >/tmp/cgtn-dom.html 2>/tmp/cgtn-chrome.err || true
-            echo "DOM bytes: $(wc -c </tmp/cgtn-dom.html 2>/dev/null || echo 0)"
-            echo "NETLOG bytes: $(wc -c </tmp/cgtn-netlog.json 2>/dev/null || echo 0)"
-            python3 - <<'PY'
-          import json
-          from pathlib import Path
-          p=Path('/tmp/cgtn-netlog.json')
-          data=json.loads(p.read_text('utf-8', errors='replace')) if p.exists() else {}
-          hits=[]
-          def walk(v):
-              if isinstance(v, dict):
-                  for x in v.values(): walk(x)
-              elif isinstance(v, list):
-                  for x in v: walk(x)
-              elif isinstance(v, str):
-                  s=v.replace('\\u0026','&').replace('\\/','/')
-                  if ('wsSecret' in s or 'wsTime' in s or 'LSveOGBaBw41Ea7ukkVAUdKQ' in s) and s not in hits:
-                      hits.append(s)
-          walk(data)
-          print('network strings with auth/token:', len(hits))
-          for s in hits[:40]:
-              print('NET-HIT', s[:1600])
-          PY
-          else
-            echo 'Chrome headless não disponível no runner'
-          fi
-
-      - name: Resolver stream oficial e atualizar referências
-        run: |
-          python3 scripts/refresh_cgtn_es.py \
+          python3 scripts/refresh_cgtn_es_web.py \
             --output /tmp/cgtn-es.m3u8 \
             --state /tmp/cgtn-es.json \
             --patch-playlists \
@@ -91,7 +38,7 @@ jobs:
           echo '--- runtime state ---'
           cat /tmp/cgtn-es.json
           echo '--- bridge manifest ---'
-          sed -E 's/(cKey|vkey|guid|flowid)=[^& ]+/\1=<redacted>/g' /tmp/cgtn-es.m3u8
+          sed -E 's/(wsSecret|cKey|vkey|guid|flowid)=[^& ]+/\1=<redacted>/g' /tmp/cgtn-es.m3u8
 
       - name: Gravar URL estável nas playlists
         run: |
@@ -99,7 +46,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add cn.m3u srhell02iptv.m3u
           if ! git diff --cached --quiet; then
-            git commit -m 'Usa bridge renovável para CGTN Español [skip ci]'
+            git commit -m 'Ajusta bridge oficial da CGTN Español [skip ci]'
             git push origin HEAD:main
           fi
 
@@ -112,19 +59,34 @@ jobs:
           cat > README.md <<'EOF'
           # CGTN Español runtime
 
-          Branch gerada automaticamente. `cgtn-es.m3u8` aponta para o manifesto
-          oficial atual da CGTN Español obtido pela API pública Yangshipin/CCTV.
+          Branch gerada automaticamente. `cgtn-es.m3u8` aponta para o stream
+          usado pelo player oficial em https://espanol.cgtn.com/en-directo.
+          A URL assinada do CDN da CGTN é renovada automaticamente. Se o player
+          oficial não puder ser resolvido, o workflow usa Yangshipin/CCTV como fallback.
           A branch é substituída a cada renovação; não edite manualmente.
           EOF
           git add cgtn-es.m3u8 cgtn-es.json README.md
           git commit -m "Renova CGTN Español $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           git push --force origin HEAD:cgtn-runtime
 
-      - name: Validar URL pública estável
+      - name: Validar bridge e upstream
+        shell: bash
         run: |
+          set -euo pipefail
           sleep 3
-          curl --fail --location --retry 3 --retry-delay 2 \
-            --user-agent qqlive \
-            --referer https://live.cctv.cn/ \
-            "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/cgtn-runtime/cgtn-es.m3u8" \
-            | grep -q '^#EXTM3U'
+          STABLE="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/cgtn-runtime/cgtn-es.m3u8"
+          curl --fail --location --retry 3 --retry-delay 2 "$STABLE" -o /tmp/public-cgtn.m3u8
+          grep -q '^#EXTM3U' /tmp/public-cgtn.m3u8
+          UPSTREAM="$(grep -E '^https?://' /tmp/public-cgtn.m3u8 | head -1)"
+          test -n "$UPSTREAM"
+          SOURCE="$(python3 -c 'import json; print(json.load(open("/tmp/cgtn-es.json"))["source"])')"
+          if [[ "$SOURCE" == "cgtn-web-player" ]]; then
+            curl --fail --location --retry 2 --retry-delay 1 \
+              --user-agent 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36' \
+              --referer 'https://espanol.cgtn.com/en-directo' \
+              "$UPSTREAM" | grep -q '^#EXTM3U'
+          else
+            curl --fail --location --retry 2 --retry-delay 1 \
+              --user-agent qqlive --referer 'https://live.cctv.cn/' \
+              "$UPSTREAM" | grep -q '^#EXTM3U'
+          fi
