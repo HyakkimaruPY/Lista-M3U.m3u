@@ -7,6 +7,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'scripts/refresh_cgtn_es_tv.py'
       - 'scripts/refresh_cgtn_es_web.py'
       - 'scripts/refresh_cgtn_es.py'
       - '.github/workflows/refresh-cgtn-es.yml'
@@ -21,16 +22,16 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 5
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Resolver CGTN Español pelo player oficial
+      - name: Resolver CGTN Español em perfil TV-safe
         run: |
-          python3 scripts/refresh_cgtn_es_web.py \
+          python3 scripts/refresh_cgtn_es_tv.py \
             --output /tmp/cgtn-es.m3u8 \
             --state /tmp/cgtn-es.json \
             --patch-playlists \
@@ -46,7 +47,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add cn.m3u srhell02iptv.m3u
           if ! git diff --cached --quiet; then
-            git commit -m 'Ajusta bridge oficial da CGTN Español [skip ci]'
+            git commit -m 'Ajusta bridge TV-safe da CGTN Español [skip ci]'
             git push origin HEAD:main
           fi
 
@@ -59,17 +60,16 @@ jobs:
           cat > README.md <<'EOF'
           # CGTN Español runtime
 
-          Branch gerada automaticamente. `cgtn-es.m3u8` aponta para o stream
-          usado pelo player oficial em https://espanol.cgtn.com/en-directo.
-          A URL assinada do CDN da CGTN é renovada automaticamente. Se o player
-          oficial não puder ser resolvido, o workflow usa Yangshipin/CCTV como fallback.
-          A branch é substituída a cada renovação; não edite manualmente.
+          Branch gerada automaticamente para o player legado Philco. O workflow
+          sonda o stream oficial e prefere H.264/AAC em ate 720p; 1080p fica apenas
+          como ultimo recurso. O master inclui resolucao, frame-rate e codecs para
+          evitar selecao 0x0/fps=0 no AUTOHLS. A branch e substituida a cada renovacao.
           EOF
           git add cgtn-es.m3u8 cgtn-es.json README.md
-          git commit -m "Renova CGTN Español $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          git commit -m "Renova CGTN Español TV-safe $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           git push --force origin HEAD:cgtn-runtime
 
-      - name: Validar bridge e upstream
+      - name: Validar bridge TV-safe e upstream
         shell: bash
         run: |
           set -euo pipefail
@@ -77,10 +77,14 @@ jobs:
           STABLE="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/cgtn-runtime/cgtn-es.m3u8"
           curl --fail --location --retry 3 --retry-delay 2 "$STABLE" -o /tmp/public-cgtn.m3u8
           grep -q '^#EXTM3U' /tmp/public-cgtn.m3u8
+          grep -q '^#EXT-X-STREAM-INF:' /tmp/public-cgtn.m3u8
+          grep -q 'RESOLUTION=' /tmp/public-cgtn.m3u8
+          grep -q 'FRAME-RATE=' /tmp/public-cgtn.m3u8
+          grep -q 'CODECS=' /tmp/public-cgtn.m3u8
           UPSTREAM="$(grep -E '^https?://' /tmp/public-cgtn.m3u8 | head -1)"
           test -n "$UPSTREAM"
           SOURCE="$(python3 -c 'import json; print(json.load(open("/tmp/cgtn-es.json"))["source"])')"
-          if [[ "$SOURCE" == "cgtn-web-player" ]]; then
+          if [[ "$SOURCE" == cgtn-web-player* ]]; then
             curl --fail --location --retry 2 --retry-delay 1 \
               --user-agent 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36' \
               --referer 'https://espanol.cgtn.com/en-directo' \
@@ -90,3 +94,12 @@ jobs:
               --user-agent qqlive --referer 'https://live.cctv.cn/' \
               "$UPSTREAM" | grep -q '^#EXTM3U'
           fi
+          python3 - <<'PY'
+          import json
+          s=json.load(open('/tmp/cgtn-es.json'))
+          p=s.get('selected',{})
+          assert p.get('video_codec') == 'h264', p
+          assert p.get('audio_codec') == 'aac', p
+          assert int(p.get('height') or 0) <= 720 or s.get('source','').endswith('last-resort'), p
+          print('TV-safe selected:', p.get('width'), 'x', p.get('height'), p.get('fps'), 'fps', p.get('video_profile'), '+', p.get('audio_profile'))
+          PY
