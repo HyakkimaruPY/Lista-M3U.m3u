@@ -41,13 +41,12 @@ jobs:
           echo '--- runtime state ---'
           cat /tmp/cgtn-es.json
           echo '--- bridge manifest ---'
-          sed -E 's/(wsSecret|cKey|vkey|guid|flowid)=[^& ]+/\1=<redacted>/g' /tmp/cgtn-es.m3u8
+          sed -E 's/(wsSecret|cKey|vkey|guid|flowid|accountinfo)=[^& ]+/\1=<redacted>/g' /tmp/cgtn-es.m3u8
 
       - name: Validar contrato legado antes da publicação
         run: |
           python3 - <<'PY'
           import json
-          from urllib.parse import urlparse
           s = json.load(open('/tmp/cgtn-es.json', encoding='utf-8'))
           p = s.get('selected', {})
           assert s.get('delivery_policy') == 'legacy-tv-safe', s
@@ -55,6 +54,11 @@ jobs:
           assert s.get('legacy_video_ready') is True, s
           assert s.get('audio_delivery') == 'aac-lc-48000-stereo', s
           assert s.get('video_delivery') == 'h264-max720p', s
+          assert s.get('source_family') in {
+              'cgtn-direct-tv-safe',
+              'cgtn-carrier-tv-safe',
+              'cgtn-web-player',
+          }, s
           assert p.get('video_codec') == 'h264', p
           assert 0 < int(p.get('height') or 0) <= 720, p
           assert float(p.get('fps') or 0) <= 60.5, p
@@ -62,10 +66,9 @@ jobs:
           assert str(p.get('audio_profile', '')).upper() == 'LC', p
           assert int(p.get('audio_rate') or 0) == 48000, p
           assert int(p.get('audio_channels') or 0) == 2, p
-          host = (urlparse(str(p.get('url') or '')).hostname or '').lower()
-          assert host in {'livees.cgtn.com', 'espanol-livetx-h5.cgtn.com'}, (host, p)
+          assert str(s.get('selected_host') or '').strip(), s
           print('CGTN legacy contract OK:',
-                s.get('source'),
+                s.get('source'), s.get('source_family'),
                 p.get('width'), 'x', p.get('height'),
                 p.get('fps'), 'fps,',
                 'H.264 + AAC-LC 48 kHz stereo,',
@@ -97,13 +100,13 @@ jobs:
           # CGTN Español runtime
 
           Branch gerada automaticamente para o player legado Philco.
-          O endpoint público desta branch permanece estável, mas o workflow
-          escolhe somente uma representação que passe o contrato físico da TV:
-          MPEG-TS com H.264, no máximo 720p, e AAC-LC 48 kHz estéreo.
+          O endpoint público permanece estável; o workflow escolhe uma fonte do
+          mesmo CGTN Español somente depois de sondar o MPEG-TS real.
 
-          O fluxo legado direto da CGTN Español é preferido ao stream web 1080p.
-          O 1080p do player web não é promovido, mesmo sendo H.264/AAC, porque a
-          reprodução física mostrou falha de decoder após o segmento TS chegar.
+          Contrato físico: H.264, no máximo 720p, AAC-LC 48 kHz estéreo.
+          A fonte web 1080p não é promovida porque a reprodução física mostrou
+          falha de decoder mesmo após o segmento TS ser baixado com sucesso.
+          Mirrors CCTV/Yangshipin/China Mobile só entram se passarem o mesmo gate.
           EOF
           git add cgtn-es.m3u8 cgtn-es.json README.md
           git commit -m "Renova CGTN Español TV-safe $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
@@ -126,7 +129,7 @@ jobs:
           import json
           s=json.load(open('/tmp/cgtn-es.json', encoding='utf-8'))
           p=s.get('selected',{})
-          assert int(p.get('height') or 0) <= 720, p
+          assert 0 < int(p.get('height') or 0) <= 720, p
           assert s.get('legacy_audio_ready') is True, s
           assert s.get('legacy_video_ready') is True, s
           print('public CGTN TV-safe:', s.get('source'), p.get('width'), 'x', p.get('height'), p.get('fps'), 'fps')
