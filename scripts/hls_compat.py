@@ -31,7 +31,7 @@ NORMALIZE_PREFIXES = (
 FMP4_SUFFIXES = (".m4s", ".mp4", ".cmfv", ".cmfa")
 INHERITED_QUERY_KEYS = {
     "token", "auth", "authorization", "session", "sessionid", "sid", "sig", "signature",
-    "policy", "key-pair-id", "expires", "exp", "hdnea", "hdnts", "jwt", "access_token", "st", "e",
+    "policy", "key-pair-id", "expires", "exp", "hdnea", "hdnts", "jwt", "access_token", "st", "e", "wssecret", "wstime",
 }
 
 @dataclass
