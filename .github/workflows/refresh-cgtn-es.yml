@@ -58,18 +58,24 @@ jobs:
             echo "DOM bytes: $(wc -c </tmp/cgtn-dom.html 2>/dev/null || echo 0)"
             echo "NETLOG bytes: $(wc -c </tmp/cgtn-netlog.json 2>/dev/null || echo 0)"
             python3 - <<'PY'
-          import json, re
+          import json
           from pathlib import Path
           p=Path('/tmp/cgtn-netlog.json')
-          raw=p.read_text('utf-8', errors='replace') if p.exists() else ''
-          urls=[]
-          for u in re.findall(r'https://espanol-livetx-h5\.cgtn\.com/[^"\\ ]+', raw):
-              u=u.replace('\\u0026','&').replace('\\/','/')
-              if u not in urls: urls.append(u)
-          print('NET livetx-h5 candidates:', len(urls))
-          for u in urls[:20]: print('NET-LIVE', u)
-          for key in ('wsSecret','wsTime','LSveOGBaBw41Ea7ukkVAUdKQ'):
-              print(key, 'present=', key in raw)
+          data=json.loads(p.read_text('utf-8', errors='replace')) if p.exists() else {}
+          hits=[]
+          def walk(v):
+              if isinstance(v, dict):
+                  for x in v.values(): walk(x)
+              elif isinstance(v, list):
+                  for x in v: walk(x)
+              elif isinstance(v, str):
+                  s=v.replace('\\u0026','&').replace('\\/','/')
+                  if ('wsSecret' in s or 'wsTime' in s or 'LSveOGBaBw41Ea7ukkVAUdKQ' in s) and s not in hits:
+                      hits.append(s)
+          walk(data)
+          print('network strings with auth/token:', len(hits))
+          for s in hits[:40]:
+              print('NET-HIT', s[:1600])
           PY
           else
             echo 'Chrome headless não disponível no runner'
