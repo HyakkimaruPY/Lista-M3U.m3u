@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/refresh_cgtn_es_portable.py'
+      - 'scripts/probe_cgtn_same_cdn.py'
       - 'scripts/refresh_cgtn_es_tv.py'
       - 'scripts/refresh_cgtn_es_web.py'
       - 'scripts/refresh_cgtn_es.py'
@@ -23,7 +24,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 7
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,6 +42,10 @@ jobs:
           cat /tmp/cgtn-es.json
           echo '--- bridge manifest ---'
           sed -E 's/(wsSecret|cKey|vkey|guid|flowid)=[^& ]+/\1=<redacted>/g' /tmp/cgtn-es.m3u8
+
+      - name: Diagnosticar representações no mesmo CDN
+        run: |
+          python3 scripts/probe_cgtn_same_cdn.py
 
       - name: Gravar URL estável nas playlists
         run: |
