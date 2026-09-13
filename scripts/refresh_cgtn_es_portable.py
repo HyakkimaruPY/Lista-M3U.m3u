@@ -9,9 +9,10 @@ e já demonstrou não ser aceito pelo decoder da TV.
 Política:
   1. tentar primeiro endpoints diretos da CGTN Español;
   2. tentar rebroadcasts conhecidos CCTV/Yangshipin/China Mobile do mesmo canal;
-  3. aceitar somente MPEG-TS H.264 + AAC-LC estéreo e altura <= 720;
-  4. usar o player web oficial só se ele próprio cair nesse perfil;
-  5. nunca promover novamente o 1080p conhecido como incompatível.
+  3. resolver masters HLS e descer para uma variante <= 720p antes do probe TS;
+  4. aceitar somente MPEG-TS H.264 + AAC-LC estéreo e altura <= 720;
+  5. usar o player web oficial só se ele próprio cair nesse perfil;
+  6. nunca promover novamente o 1080p conhecido como incompatível.
 
 A playlist pública continua estável em cgtn-runtime/cgtn-es.m3u8; somente o
 upstream interno selecionado pelo workflow muda.
@@ -21,9 +22,10 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import time
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urljoin, urlparse
 
 import refresh_cgtn_es_tv as tv
 import refresh_cgtn_es_web as web
@@ -102,11 +104,105 @@ def describe_probe(probe: dict) -> str:
     )
 
 
+def _attr_int(attrs: str, key: str) -> int:
+    match = re.search(r"(?:^|,)" + re.escape(key) + r"=(\d+)", attrs, re.I)
+    return int(match.group(1)) if match else 0
+
+
+def _attr_resolution(attrs: str) -> tuple[int, int]:
+    match = re.search(r"(?:^|,)RESOLUTION=(\d+)x(\d+)", attrs, re.I)
+    return (int(match.group(1)), int(match.group(2))) if match else (0, 0)
+
+
+def master_variants(text: str, base_url: str) -> tuple[list[dict], list[str]]:
+    """Extrai variantes de um master HLS e prioriza a melhor <=720p.
+
+    Variantes declaradamente acima de 720p são descartadas antes de baixar
+    segmentos. Variantes sem RESOLUTION permanecem como candidatas e só são
+    aceitas depois do probe SPS real.
+    """
+    lines = [line.strip() for line in text.replace("\r\n", "\n").split("\n")]
+    variants: list[dict] = []
+    skipped: list[str] = []
+    for idx, line in enumerate(lines):
+        if not line.startswith("#EXT-X-STREAM-INF:"):
+            continue
+        attrs = line.split(":", 1)[1]
+        width, height = _attr_resolution(attrs)
+        bandwidth = _attr_int(attrs, "BANDWIDTH")
+        uri = ""
+        for nxt in lines[idx + 1 :]:
+            if not nxt:
+                continue
+            if nxt.startswith("#"):
+                continue
+            uri = urljoin(base_url, nxt)
+            break
+        if not uri:
+            continue
+        item = {
+            "url": uri,
+            "declared_width": width,
+            "declared_height": height,
+            "declared_bandwidth": bandwidth,
+        }
+        if height and height > MAX_LEGACY_HEIGHT:
+            skipped.append(f"skip master variant {width}x{height} bw={bandwidth}")
+            continue
+        variants.append(item)
+
+    # Conhecidas <=720p: maior resolução primeiro; sem resolução: depois.
+    variants.sort(
+        key=lambda item: (
+            1 if int(item.get("declared_height") or 0) > 0 else 0,
+            int(item.get("declared_height") or 0),
+            int(item.get("declared_bandwidth") or 0),
+        ),
+        reverse=True,
+    )
+    return variants, skipped
+
+
+def probe_hls_candidate(url: str, headers: dict[str, str] | None, timeout: int) -> tuple[dict, list[str]]:
+    """Sonda media playlist ou resolve master -> media playlist -> MPEG-TS."""
+    text, final = web.fetch_manifest(url, headers, timeout)
+    if "#EXT-X-STREAM-INF:" not in text:
+        return tv.probe_media(final, headers, timeout), []
+
+    variants, notes = master_variants(text, final)
+    if not variants:
+        detail = "; ".join(notes) if notes else "master has no usable variants"
+        raise RuntimeError("master HLS has no <=720p candidate: " + detail)
+
+    errors = list(notes)
+    first_probe: dict | None = None
+    for item in variants:
+        variant_url = str(item["url"])
+        try:
+            probe = tv.probe_media(variant_url, headers, timeout)
+            probe["master_url"] = final
+            probe["master_declared_width"] = item.get("declared_width", 0)
+            probe["master_declared_height"] = item.get("declared_height", 0)
+            probe["master_declared_bandwidth"] = item.get("declared_bandwidth", 0)
+            if first_probe is None:
+                first_probe = probe
+            if legacy_ready(probe):
+                return probe, errors
+            errors.append("variant outside legacy profile: " + describe_probe(probe))
+        except Exception as exc:
+            errors.append(f"variant {variant_url}: {exc}")
+
+    if first_probe is not None:
+        raise RuntimeError("master variants probed but none TV-safe: " + " | ".join(errors))
+    raise RuntimeError("master variants unavailable: " + " | ".join(errors))
+
+
 def resolve_direct_legacy(timeout: int) -> tuple[str, dict, dict, list[str]]:
     errors: list[str] = []
     for source, url, family in DIRECT_CANDIDATES:
         try:
-            probe = tv.probe_media(url, {}, timeout)
+            probe, probe_notes = probe_hls_candidate(url, {}, timeout)
+            errors.extend(f"{source}: {note}" for note in probe_notes)
             if not legacy_ready(probe):
                 errors.append(f"{source}: outside legacy profile: {describe_probe(probe)}")
                 continue
@@ -126,6 +222,7 @@ def resolve_direct_legacy(timeout: int) -> tuple[str, dict, dict, list[str]]:
                 "audio_delivery": "aac-lc-48000-stereo",
                 "video_delivery": "h264-max720p",
                 "selected_host": host,
+                "master_resolved": bool(probe.get("master_url")),
             }
             return final, probe, meta, errors
         except Exception as exc:
@@ -139,7 +236,8 @@ def resolve_web_safe(timeout: int, attempts: int = 3) -> tuple[str, dict, dict, 
         try:
             signed, capture = web.capture_web_player_url(max(35, timeout + 23))
             final, plain_ok, validation = web.validate_web_url(signed, timeout)
-            probe = tv.probe_media(final, web.WEB_HEADERS, timeout)
+            probe, probe_notes = probe_hls_candidate(final, web.WEB_HEADERS, timeout)
+            errors.extend(f"web attempt {attempt}: {note}" for note in probe_notes)
             if not legacy_ready(probe):
                 raise RuntimeError("web representation outside legacy profile: " + describe_probe(probe))
             meta = {
@@ -155,9 +253,10 @@ def resolve_web_safe(timeout: int, attempts: int = 3) -> tuple[str, dict, dict, 
                 "legacy_video_ready": True,
                 "audio_delivery": "aac-lc-48000-stereo",
                 "video_delivery": "h264-max720p",
-                "selected_host": (urlparse(final).hostname or "").lower(),
+                "selected_host": (urlparse(str(probe.get("url") or final)).hostname or "").lower(),
+                "master_resolved": bool(probe.get("master_url")),
             }
-            return final, probe, meta, errors
+            return str(probe.get("url") or final), probe, meta, errors
         except Exception as exc:
             errors.append(f"web attempt {attempt}: {exc}")
             if attempt < attempts:
