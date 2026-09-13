@@ -2,6 +2,7 @@
 # Old HLS - grade remota do player legado Philco
 # Categorias sao dinamicas; group-title define a navegacao na TV.
 # Compatibilidade HLS e detectada pelo AUTOHLS a partir do manifesto/segmentos.
+# Atualizacao 2026-09-13: expansao pequena com canais PT-BR da principal e Pluto BR.
 
 # === VARIEDADE ===
 #EXTINF:-1 tvg-name="Tela Brasil TV" group-title="Variedade",Tela Brasil TV
@@ -21,6 +22,11 @@ https://amg00627-amg00627c9-runtime-latam-2613.playouts.now.amagi.tv/playlist/am
 #EXTINF:-1 tvg-name="Novelíssima" group-title="Variedade",Novelíssima
 https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/12d72d1a2d184982808da4e7dc859aed/playlist.m3u8
 
+# Da playlist principal; mantido com o mesmo user-agent usado na origem.
+#EXTINF:-1 tvg-name="Rede Super" group-title="Variedade",Rede Super
+#EXTVLCOPT:http-user-agent=Lavf53.32.100
+https://tv02.zas.media:1936/redesuper/redesuper/playlist.m3u8
+
 #EXTINF:-1 tvg-name="CGTN Español" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/9/9c/CGTN_Espanol.png" group-title="Variedade",CGTN Español
 https://raw.githubusercontent.com/HyakkimaruPY/Lista-M3U.m3u/cgtn-runtime/cgtn-es.m3u8
 
@@ -30,6 +36,21 @@ https://stmv1.srvif.com/classique/classique/playlist.m3u8
 
 #EXTINF:-1 tvg-name="Urban Movies" group-title="Filmes",Urban Movies
 http://200.194.238.229:8383/live/urbanmovies/playlist.m3u8
+
+# Canais PT-BR copiados da playlist principal.
+#EXTINF:-1 tvg-name="Run-Ação" group-title="Filmes",Run-Ação
+#EXTVLCOPT:http-user-agent=Lavf53.32.100
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=2552
+
+#EXTINF:-1 tvg-name="Sony One" group-title="Filmes",Sony One
+#EXTVLCOPT:http-user-agent=Lavf53.32.100
+https://spt-sonyoneclassicas-1-br.samsung.wurl.tv/playlist.m3u8
+
+#EXTINF:-1 tvg-name="On Filmes" group-title="Filmes",On Filmes
+https://stream.ads.ottera.tv/playlist.m3u8?network_id=6178
+
+#EXTINF:-1 tvg-name="R • Western Bound em Português" group-title="Filmes",R • Western Bound em Português
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/f5db557dc5ea4552bb723690a52f5aee/playlist.m3u8
 
 # === SÉRIES ===
 #EXTINF:-1 tvg-name="Old School TV" group-title="Séries",Old School TV
@@ -41,10 +62,32 @@ http://200.194.238.229:8383/live/oldseries/playlist.m3u8
 #EXTINF:-1 tvg-name="Urban Series" group-title="Séries",Urban Series
 http://200.194.238.229:8383/live/urbanseries/playlist.m3u8
 
+# Canais PT-BR copiados da playlist principal.
+#EXTINF:-1 tvg-name="TV-Series" group-title="Séries",TV-Series
+#EXTVLCOPT:http-user-agent=Lavf53.32.100
+https://stmv1.srvif.com/tvserie/tvserie/playlist.m3u8
+
+#EXTINF:-1 tvg-name="R • Mr. Bean" group-title="Séries",R • Mr. Bean
+https://amg00627-banijay-amg00627c35-tcl-us-4282.playouts.now.amagi.tv/playlist/amg00627-banijayfast-mrbeanbr-tclus/playlist.m3u8
+
+#EXTINF:-1 tvg-name="R • Malhação Fast" group-title="Séries",R • Malhação Fast
+https://ssai2-ads.api.leiniao.com/global-adinsertion-api/hls/live/v2/f46d6f4717bc41758662e8c6700c1d68/playlist.m3u8
+
+# === ANIMAÇÕES ===
+#EXTINF:-1 tvg-name="Loading" group-title="Animações",Loading
+https://stmv1.srvif.com/loadingtv/loadingtv/playlist.m3u8
+
 # === B • FILMES / PLUTO BR ===
-# Canais Pluto brasileiros promovidos apos validacao fisica do caminho AUTOHLS AES-128.
+# Canais Pluto brasileiros; espanhol e ingles ficam fora desta grade.
 #EXTINF:-1 tvg-name="P • Pluto TV Cine Clássicos" group-title="B • Filmes",P • Pluto TV Cine Clássicos
 https://jmp2.uk/plu-5fa1612a669ba0000702017b.m3u8
+
+# Novos Pluto BR adicionados em 2026-09-13.
+#EXTINF:-1 tvg-name="P • Pluto TV Filmes Ação" group-title="B • Filmes",P • Pluto TV Filmes Ação
+https://jmp2.uk/plu-5f120f41b7d403000783a6d6.m3u8
+
+#EXTINF:-1 tvg-name="P • Pluto TV Filmes Nacionais" group-title="B • Filmes",P • Pluto TV Filmes Nacionais
+https://jmp2.uk/plu-5f5a545d0dbf7f0007c09408.m3u8
 
 # === B • SÉRIES / PLUTO BR ===
 #EXTINF:-1 tvg-name="P • A Feiticeira" group-title="B • Séries",P • A Feiticeira
@@ -55,6 +98,12 @@ https://jmp2.uk/plu-61f1d27a189ed10007b7393e.m3u8
 
 #EXTINF:-1 tvg-name="P • MacGyver" group-title="B • Séries",P • MacGyver
 https://jmp2.uk/plu-63eb9dc84e83e70008abea92.m3u8
+
+#EXTINF:-1 tvg-name="P • Pluto TV Novelas" group-title="B • Séries",P • Pluto TV Novelas
+https://jmp2.uk/plu-5f512365abe1f50007d3ff56.m3u8
+
+#EXTINF:-1 tvg-name="P • Pluto TV Retrô" group-title="B • Séries",P • Pluto TV Retrô
+https://jmp2.uk/plu-5f1212ad1728050007a523b8.m3u8
 
 # === B • ANIMAÇÕES / PLUTO BR ===
 #EXTINF:-1 tvg-name="P • Nickelodeon Clássico" group-title="B • Animações",P • Nickelodeon Clássico
@@ -71,6 +120,9 @@ https://jmp2.uk/plu-69162648d03565d6c8c8df97.m3u8
 
 #EXTINF:-1 tvg-name="P • Popeye" group-title="B • Animações",P • Popeye
 https://jmp2.uk/plu-677d93f37bffa600080795e7.m3u8
+
+#EXTINF:-1 tvg-name="P • Turma da Mônica" group-title="B • Animações",P • Turma da Mônica
+https://jmp2.uk/plu-5f997e44949bc70007a6941e.m3u8
 
 # === CCTV ===
 # Fontes CCTV gratuitas/diretas que passaram o gate legado/AUTOHLS.
