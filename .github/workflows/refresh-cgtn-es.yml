@@ -31,7 +31,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Resolver e normalizar contrato legado do CGTN Español
+      - name: Resolver representação TV-safe do CGTN Español
         run: |
           python3 scripts/refresh_cgtn_es_portable.py \
             --output /tmp/cgtn-es.m3u8 \
@@ -43,26 +43,37 @@ jobs:
           echo '--- bridge manifest ---'
           sed -E 's/(wsSecret|cKey|vkey|guid|flowid)=[^& ]+/\1=<redacted>/g' /tmp/cgtn-es.m3u8
 
-      - name: Validar áudio real antes da publicação
+      - name: Validar contrato legado antes da publicação
         run: |
           python3 - <<'PY'
           import json
+          from urllib.parse import urlparse
           s = json.load(open('/tmp/cgtn-es.json', encoding='utf-8'))
           p = s.get('selected', {})
+          assert s.get('delivery_policy') == 'legacy-tv-safe', s
           assert s.get('legacy_audio_ready') is True, s
+          assert s.get('legacy_video_ready') is True, s
           assert s.get('audio_delivery') == 'aac-lc-48000-stereo', s
+          assert s.get('video_delivery') == 'h264-max720p', s
           assert p.get('video_codec') == 'h264', p
+          assert 0 < int(p.get('height') or 0) <= 720, p
+          assert float(p.get('fps') or 0) <= 60.5, p
           assert p.get('audio_codec') == 'aac', p
           assert str(p.get('audio_profile', '')).upper() == 'LC', p
           assert int(p.get('audio_rate') or 0) == 48000, p
           assert int(p.get('audio_channels') or 0) == 2, p
+          host = (urlparse(str(p.get('url') or '')).hostname or '').lower()
+          assert host in {'livees.cgtn.com', 'espanol-livetx-h5.cgtn.com'}, (host, p)
           print('CGTN legacy contract OK:',
+                s.get('source'),
                 p.get('width'), 'x', p.get('height'),
                 p.get('fps'), 'fps,',
-                'H.264 + AAC-LC 48 kHz stereo')
+                'H.264 + AAC-LC 48 kHz stereo,',
+                'bitrate=', p.get('bitrate_estimate'))
           PY
 
-      - name: Diagnosticar representações no mesmo CDN
+      - name: Diagnosticar representação web atual
+        continue-on-error: true
         run: |
           python3 scripts/probe_cgtn_same_cdn.py
 
@@ -72,7 +83,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add cn.m3u srhell02iptv.m3u
           if ! git diff --cached --quiet; then
-            git commit -m 'Ajusta bridge web da CGTN Español [skip ci]'
+            git commit -m 'Ajusta bridge TV-safe da CGTN Español [skip ci]'
             git push origin HEAD:main
           fi
 
@@ -86,20 +97,19 @@ jobs:
           # CGTN Español runtime
 
           Branch gerada automaticamente para o player legado Philco.
-          A saída publicada usa somente a fonte do player web oficial da CGTN
-          (espanol.cgtn.com -> espanol-livetx-h5.cgtn.com). URLs Yangshipin/CCTV
-          podem ser usadas apenas para diagnóstico, nunca como URL entregue à TV.
+          O endpoint público desta branch permanece estável, mas o workflow
+          escolhe somente uma representação que passe o contrato físico da TV:
+          MPEG-TS com H.264, no máximo 720p, e AAC-LC 48 kHz estéreo.
 
-          O runtime só é publicado quando o MPEG-TS real passa o contrato legado:
-          vídeo H.264 e áudio AAC-LC, 48 kHz, 2 canais. O master inclui resolução,
-          frame-rate, codecs e bitrate medidos no fluxo para evitar metadados
-          indefinidos no player antigo.
+          O fluxo legado direto da CGTN Español é preferido ao stream web 1080p.
+          O 1080p do player web não é promovido, mesmo sendo H.264/AAC, porque a
+          reprodução física mostrou falha de decoder após o segmento TS chegar.
           EOF
           git add cgtn-es.m3u8 cgtn-es.json README.md
-          git commit -m "Renova CGTN Español web $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          git commit -m "Renova CGTN Español TV-safe $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           git push --force origin HEAD:cgtn-runtime
 
-      - name: Validar bridge web portátil
+      - name: Validar bridge público
         shell: bash
         run: |
           set -euo pipefail
@@ -112,32 +122,12 @@ jobs:
           grep -q 'FRAME-RATE=' /tmp/public-cgtn.m3u8
           grep -q 'CODECS=' /tmp/public-cgtn.m3u8
           grep -q 'mp4a.40.2' /tmp/public-cgtn.m3u8
-          UPSTREAM="$(grep -E '^https?://' /tmp/public-cgtn.m3u8 | head -1)"
-          test -n "$UPSTREAM"
-          python3 - "$UPSTREAM" <<'PY'
-          import json, sys, urllib.request
-          from urllib.parse import urlparse
-          url=sys.argv[1]
-          s=json.load(open('/tmp/cgtn-es.json'))
+          python3 - <<'PY'
+          import json
+          s=json.load(open('/tmp/cgtn-es.json', encoding='utf-8'))
           p=s.get('selected',{})
-          assert s.get('delivery_policy') == 'portable-web-only', s
-          assert s.get('client_portable') is True, s
+          assert int(p.get('height') or 0) <= 720, p
           assert s.get('legacy_audio_ready') is True, s
-          assert s.get('audio_delivery') == 'aac-lc-48000-stereo', s
-          assert str(s.get('source','')).startswith('cgtn-web-player'), s
-          assert urlparse(url).hostname == 'espanol-livetx-h5.cgtn.com', url
-          assert p.get('video_codec') == 'h264', p
-          assert p.get('audio_codec') == 'aac', p
-          assert str(p.get('audio_profile', '')).upper() == 'LC', p
-          assert int(p.get('audio_rate') or 0) == 48000, p
-          assert int(p.get('audio_channels') or 0) == 2, p
-          headers={} if s.get('no_special_headers', False) else {
-              'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
-              'Referer':'https://espanol.cgtn.com/en-directo',
-              'Accept':'application/vnd.apple.mpegurl,application/x-mpegURL,*/*',
-          }
-          with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=12) as r:
-              body=r.read(1024*1024).decode('utf-8','replace')
-          assert body.lstrip().startswith('#EXTM3U'), body[:80]
-          print('portable CGTN:', p.get('width'), 'x', p.get('height'), p.get('fps'), 'fps', p.get('video_profile'), '+', p.get('audio_profile'), p.get('audio_rate'), 'Hz', p.get('audio_channels'), 'ch')
+          assert s.get('legacy_video_ready') is True, s
+          print('public CGTN TV-safe:', s.get('source'), p.get('width'), 'x', p.get('height'), p.get('fps'), 'fps')
           PY
