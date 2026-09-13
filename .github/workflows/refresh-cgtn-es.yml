@@ -7,6 +7,7 @@ on:
   push:
     branches: [main]
     paths:
+      - 'scripts/refresh_cgtn_es_portable.py'
       - 'scripts/refresh_cgtn_es_tv.py'
       - 'scripts/refresh_cgtn_es_web.py'
       - 'scripts/refresh_cgtn_es.py'
@@ -22,16 +23,16 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 6
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Resolver CGTN Español em perfil TV-safe
+      - name: Resolver CGTN Español pelo player web oficial
         run: |
-          python3 scripts/refresh_cgtn_es_tv.py \
+          python3 scripts/refresh_cgtn_es_portable.py \
             --output /tmp/cgtn-es.m3u8 \
             --state /tmp/cgtn-es.json \
             --patch-playlists \
@@ -47,7 +48,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add cn.m3u srhell02iptv.m3u
           if ! git diff --cached --quiet; then
-            git commit -m 'Ajusta bridge TV-safe da CGTN Español [skip ci]'
+            git commit -m 'Ajusta bridge web da CGTN Español [skip ci]'
             git push origin HEAD:main
           fi
 
@@ -60,16 +61,17 @@ jobs:
           cat > README.md <<'EOF'
           # CGTN Español runtime
 
-          Branch gerada automaticamente para o player legado Philco. O workflow
-          sonda o stream oficial e prefere H.264/AAC em ate 720p; 1080p fica apenas
-          como ultimo recurso. O master inclui resolucao, frame-rate e codecs para
-          evitar selecao 0x0/fps=0 no AUTOHLS. A branch e substituida a cada renovacao.
+          Branch gerada automaticamente para o player legado Philco.
+          A saída publicada usa somente a fonte do player web oficial da CGTN
+          (espanol.cgtn.com -> espanol-livetx-h5.cgtn.com). URLs Yangshipin/CCTV
+          podem ser usadas apenas para diagnóstico, nunca como URL entregue à TV.
+          O master inclui resolução, frame-rate, codecs e bitrate medidos no fluxo.
           EOF
           git add cgtn-es.m3u8 cgtn-es.json README.md
-          git commit -m "Renova CGTN Español TV-safe $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          git commit -m "Renova CGTN Español web $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           git push --force origin HEAD:cgtn-runtime
 
-      - name: Validar bridge TV-safe e upstream
+      - name: Validar bridge web portátil
         shell: bash
         run: |
           set -euo pipefail
@@ -85,24 +87,23 @@ jobs:
           test -n "$UPSTREAM"
           python3 - "$UPSTREAM" <<'PY'
           import json, sys, urllib.request
+          from urllib.parse import urlparse
           url=sys.argv[1]
           s=json.load(open('/tmp/cgtn-es.json'))
           p=s.get('selected',{})
+          assert s.get('delivery_policy') == 'portable-web-only', s
+          assert s.get('client_portable') is True, s
+          assert str(s.get('source','')).startswith('cgtn-web-player'), s
+          assert urlparse(url).hostname == 'espanol-livetx-h5.cgtn.com', url
           assert p.get('video_codec') == 'h264', p
           assert p.get('audio_codec') == 'aac', p
-          assert int(p.get('height') or 0) <= 720 or s.get('source','').endswith('last-resort'), p
-          if s.get('no_special_headers', False):
-              headers={}
-          elif str(s.get('source','')).startswith('cgtn-web-player'):
-              headers={
-                  'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
-                  'Referer':'https://espanol.cgtn.com/en-directo',
-                  'Accept':'application/vnd.apple.mpegurl,application/x-mpegURL,*/*',
-              }
-          else:
-              headers={'User-Agent':'qqlive','Referer':'https://live.cctv.cn/','Accept':'application/vnd.apple.mpegurl,application/json,*/*'}
+          headers={} if s.get('no_special_headers', False) else {
+              'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36',
+              'Referer':'https://espanol.cgtn.com/en-directo',
+              'Accept':'application/vnd.apple.mpegurl,application/x-mpegURL,*/*',
+          }
           with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=12) as r:
               body=r.read(1024*1024).decode('utf-8','replace')
           assert body.lstrip().startswith('#EXTM3U'), body[:80]
-          print('TV-safe selected:', p.get('width'), 'x', p.get('height'), p.get('fps'), 'fps', p.get('video_profile'), '+', p.get('audio_profile'), 'plain=', s.get('no_special_headers'))
+          print('portable CGTN:', p.get('width'), 'x', p.get('height'), p.get('fps'), 'fps', p.get('video_profile'), '+', p.get('audio_profile'))
           PY
