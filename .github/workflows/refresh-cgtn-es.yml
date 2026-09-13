@@ -1,0 +1,76 @@
+name: Renovar CGTN Español
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/refresh_cgtn_es.py'
+      - '.github/workflows/refresh-cgtn-es.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cgtn-es-runtime
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Resolver stream oficial e atualizar referências
+        run: |
+          python3 scripts/refresh_cgtn_es.py \
+            --output /tmp/cgtn-es.m3u8 \
+            --state /tmp/cgtn-es.json \
+            --patch-playlists \
+            --timeout 12
+          echo '--- runtime state ---'
+          cat /tmp/cgtn-es.json
+          echo '--- bridge manifest ---'
+          sed -E 's/(cKey|vkey|guid|flowid)=[^& ]+/\1=<redacted>/g' /tmp/cgtn-es.m3u8
+
+      - name: Gravar URL estável nas playlists
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add cn.m3u srhell02iptv.m3u
+          if ! git diff --cached --quiet; then
+            git commit -m 'Usa bridge renovável para CGTN Español [skip ci]'
+            git push origin HEAD:main
+          fi
+
+      - name: Publicar bridge em branch runtime
+        run: |
+          git checkout --orphan cgtn-runtime-build
+          git rm -rf .
+          cp /tmp/cgtn-es.m3u8 ./cgtn-es.m3u8
+          cp /tmp/cgtn-es.json ./cgtn-es.json
+          cat > README.md <<'EOF'
+          # CGTN Español runtime
+
+          Branch gerada automaticamente. `cgtn-es.m3u8` aponta para o manifesto
+          oficial atual da CGTN Español obtido pela API pública Yangshipin/CCTV.
+          A branch é substituída a cada renovação; não edite manualmente.
+          EOF
+          git add cgtn-es.m3u8 cgtn-es.json README.md
+          git commit -m "Renova CGTN Español $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          git push --force origin HEAD:cgtn-runtime
+
+      - name: Validar URL pública estável
+        run: |
+          sleep 3
+          curl --fail --location --retry 3 --retry-delay 2 \
+            --user-agent qqlive \
+            --referer https://live.cctv.cn/ \
+            "https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/cgtn-runtime/cgtn-es.m3u8" \
+            | grep -q '^#EXTM3U'
