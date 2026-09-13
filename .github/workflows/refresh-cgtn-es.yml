@@ -27,6 +27,54 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Diagnosticar player oficial CGTN Español
+        shell: bash
+        run: |
+          set -euo pipefail
+          PAGE='https://espanol.cgtn.com/en-directo'
+          UA='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36'
+          curl --fail --location --compressed --user-agent "$UA" "$PAGE" -o /tmp/cgtn-page.html
+          echo "HTML bytes: $(wc -c </tmp/cgtn-page.html)"
+          python3 - <<'PY'
+          import html, re
+          from pathlib import Path
+          raw = html.unescape(Path('/tmp/cgtn-page.html').read_text('utf-8', errors='replace')).replace('\\/', '/')
+          pats = [
+              r'https://espanol-livetx-h5\.cgtn\.com/[^"\'<>\\ ]+\.m3u8(?:\?[^"\'<>\\ ]+)?',
+              r'https://[^"\'<>\\ ]+\.cgtn\.com/[^"\'<>\\ ]+\.m3u8(?:\?[^"\'<>\\ ]+)?',
+          ]
+          found=[]
+          for pat in pats:
+              for u in re.findall(pat, raw):
+                  if u not in found: found.append(u)
+          print('HTML signed candidates:', len(found))
+          for u in found[:10]: print(u)
+          scripts = re.findall(r'<script[^>]+src=["\']([^"\']+)', raw, re.I)
+          print('script src count:', len(scripts))
+          for s in scripts[:40]: print('SCRIPT', s)
+          PY
+          if command -v google-chrome >/dev/null 2>&1; then CHROME=google-chrome;
+          elif command -v chromium >/dev/null 2>&1; then CHROME=chromium;
+          else CHROME=''; fi
+          if [[ -n "$CHROME" ]]; then
+            timeout 35s "$CHROME" --headless --disable-gpu --no-sandbox --disable-dev-shm-usage \
+              --virtual-time-budget=12000 --dump-dom "$PAGE" >/tmp/cgtn-dom.html 2>/tmp/cgtn-chrome.err || true
+            echo "DOM bytes: $(wc -c </tmp/cgtn-dom.html 2>/dev/null || echo 0)"
+            python3 - <<'PY'
+          import html, re
+          from pathlib import Path
+          p=Path('/tmp/cgtn-dom.html')
+          raw=html.unescape(p.read_text('utf-8', errors='replace')).replace('\\/', '/') if p.exists() else ''
+          found=[]
+          for u in re.findall(r'https://espanol-livetx-h5\.cgtn\.com/[^"\'<>\\ ]+\.m3u8(?:\?[^"\'<>\\ ]+)?', raw):
+              if u not in found: found.append(u)
+          print('DOM signed candidates:', len(found))
+          for u in found[:10]: print(u)
+          PY
+          else
+            echo 'Chrome headless não disponível no runner'
+          fi
+
       - name: Resolver stream oficial e atualizar referências
         run: |
           python3 scripts/refresh_cgtn_es.py \
