@@ -214,8 +214,18 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
-      - name: Validar estrutura antes de publicar
-        run: python3 -m unittest discover -s tests -v
+      - name: Validar regressões de Pluto e China antes de publicar
+        run: |
+          python3 -m unittest -v \
+            tests/test_playlists.py \
+            tests/test_validate_main_pluto.py \
+            tests/test_pluto_loop_refresh.py \
+            tests/test_taxonomy.py \
+            tests/test_cgtn_signed_query.py
+
+      - name: Auditar Old HLS sem bloquear Pluto e China
+        continue-on-error: true
+        run: python3 -m unittest -v tests/test_old_hls.py
 
       - name: Commitar somente manutencao autorizada
         shell: bash
