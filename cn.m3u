@@ -339,8 +339,6 @@ https://xykt-fix.github.io/Y77.m3u8
 #EXTVLCOPT:http-user-agent=#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36
 https://cdn4.skygo.mn/live/disk1/CCTV-10/HLSv3-FTA/CCTV-10.m3u8
 
-#EXTINF:-1 tvg-id="CCTV11.cn@SD" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv11.png" group-title="China • Documentários e cultura" x-source="IPTV-org" tvg-name="CCTV-11",CCTV-11
-https://xykt-fix.github.io/play/a02b/index.m3u8
 
 #EXTINF:-1 tvg-id="CGTNDocumentary.cn@SD" group-title="China • Documentários e cultura" x-source="IPTV-org" tvg-name="CGTN Documentary (1080p)",CGTN Documentary (1080p)
 https://amg00405-rakutentv-cgtndocumentary-rakuten-0ql8j.amagi.tv/master.m3u8
@@ -1096,8 +1094,6 @@ http://120.39.52.202:5140/%E7%A6%8F%E5%BB%BA%E7%BB%BC%E5%90%88
 #EXTINF:-1 tvg-id="KangbaTV.cn@SD" group-title="China • Regionais e locais" x-source="IPTV-org" tvg-name="Kangba TV",Kangba TV
 http://110.185.237.164:8888/hls/30/index.m3u8
 
-#EXTINF:-1 tvg-id="CCTV15.cn@SD" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv15.png" group-title="China • Música" x-source="IPTV-org" tvg-name="CCTV-15 (1080p)",CCTV-15 (1080p)
-https://xykt-fix.github.io/play/a02e/index.m3u8
 
 #EXTINF:-1 tvg-id="CCTV15.cn@SD" tvg-logo="https://iptv.burningc4.com/tvg-logo/cctv15.png" group-title="China • Música" x-source="IPTV-org" tvg-name="CCTV-15 (720p)",CCTV-15 (720p)
 http://74.91.26.218:82/live/cctv15hd.m3u8
